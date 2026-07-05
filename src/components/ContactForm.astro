@@ -1,6 +1,10 @@
 ---
 import ObfuscatedLink from './ObfuscatedLink.astro';
 import ObfuscatedText from './ObfuscatedText.astro';
+
+// Clé publique du widget Cloudflare Turnstile (anti-spam).
+// Tant qu'elle est vide, le formulaire fonctionne avec le seul honeypot.
+const TURNSTILE_SITEKEY = '';
 ---
 
 <section class="contact" id="devis">
@@ -83,6 +87,9 @@ import ObfuscatedText from './ObfuscatedText.astro';
         Une erreur est survenue lors de l'envoi. Vous pouvez réessayer ou m'écrire directement par
         WhatsApp.
       </p>
+      {TURNSTILE_SITEKEY && (
+        <div class="cf-turnstile" data-sitekey={TURNSTILE_SITEKEY} data-theme="dark" data-language="fr"></div>
+      )}
       <div class="form-actions">
         <button type="submit" class="btn btn-gold" id="submit-btn">Envoyer ma demande</button>
         <button type="button" class="btn btn-whatsapp" id="whatsapp-send">
@@ -101,6 +108,10 @@ import ObfuscatedText from './ObfuscatedText.astro';
     </form>
   </div>
 </section>
+
+{TURNSTILE_SITEKEY && (
+  <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+)}
 
 <style>
   .contact {
@@ -379,8 +390,11 @@ import ObfuscatedText from './ObfuscatedText.astro';
       } else if (serverErrorEl) {
         serverErrorEl.hidden = false;
       }
+      // Réinitialise le captcha Turnstile pour un éventuel nouvel envoi
+      (window as any).turnstile?.reset?.();
     } catch {
       if (serverErrorEl) serverErrorEl.hidden = false;
+      (window as any).turnstile?.reset?.();
     } finally {
       if (submitBtn) {
         submitBtn.disabled = false;

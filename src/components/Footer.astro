@@ -106,7 +106,7 @@ const waMessage = 'Bonjour Richard, je souhaite des informations pour mon mariag
     gap: 0.7rem;
   }
 
-  .socials a {
+  .socials :global(a) {
     display: grid;
     place-items: center;
     width: 38px;
@@ -117,7 +117,7 @@ const waMessage = 'Bonjour Richard, je souhaite des informations pour mon mariag
     transition: border-color var(--transition), color var(--transition);
   }
 
-  .socials a:hover {
+  .socials :global(a:hover) {
     border-color: var(--gold);
     color: var(--gold-light);
   }
@@ -144,23 +144,28 @@ const waMessage = 'Bonjour Richard, je souhaite des informations pour mon mariag
     margin: 0.3rem 0;
   }
 
-  .footer-line a {
+  .footer-line :global(a) {
     color: inherit;
     text-decoration: none;
   }
 
-  .footer-line a:hover {
+  .footer-line :global(a:hover) {
     color: var(--gold-light);
   }
 
   .footer-bottom {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     justify-content: space-between;
     gap: 1rem;
     padding-top: 1.8rem;
     font-size: 0.85rem;
     color: rgba(255, 255, 255, 0.45);
+  }
+
+  .footer-bottom p {
+    margin: 0;
   }
 
   .legal {

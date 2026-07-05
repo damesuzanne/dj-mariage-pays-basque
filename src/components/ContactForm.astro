@@ -7,10 +7,10 @@ import ObfuscatedText from './ObfuscatedText.astro';
   <div class="container contact-grid">
     <div class="contact-intro reveal">
       <p class="eyebrow">Devis gratuit</p>
-      <h2 class="section-title">Vérifions ma disponibilité pour <em>votre date</em></h2>
+      <h2 class="section-title">Réservez <em>votre date</em></h2>
       <p>
-        Racontez-moi votre projet en quelques lignes. Je vous réponds sous 24h, sans engagement,
-        avec un devis clair et détaillé.
+        Votre date, votre lieu, vos envies : je vous réponds sous 24h avec un devis personnalisé et
+        gratuit.
       </p>
       <ul class="assurances">
         <li>Réponse sous 24h</li>
@@ -145,7 +145,7 @@ import ObfuscatedText from './ObfuscatedText.astro';
     gap: 1rem;
   }
 
-  .direct-item {
+  .direct :global(.direct-item) {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -158,7 +158,7 @@ import ObfuscatedText from './ObfuscatedText.astro';
     transition: border-color var(--transition), background var(--transition);
   }
 
-  .direct-item:hover {
+  .direct :global(.direct-item:hover) {
     border-color: rgba(198, 161, 91, 0.6);
     background: rgba(198, 161, 91, 0.08);
   }
@@ -174,12 +174,12 @@ import ObfuscatedText from './ObfuscatedText.astro';
     flex-shrink: 0;
   }
 
-  .direct-item strong {
+  .direct :global(strong) {
     display: block;
     font-size: 0.98rem;
   }
 
-  .direct-item small {
+  .direct :global(small) {
     color: rgba(255, 255, 255, 0.55);
   }
 

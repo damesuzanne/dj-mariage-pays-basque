@@ -171,6 +171,27 @@ import heroPhoto from '../assets/hero-mariage-biarritz.png';
     font-weight: 600;
   }
 
+  /* Les 3 chiffres restent sur une seule ligne même sur petit mobile :
+     chaque item se comprime plutôt que de faire passer la ligne */
+  @media (max-width: 560px) {
+    .hero-badges {
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      gap: 0.6rem;
+      font-size: 0.62rem;
+      line-height: 1.25;
+    }
+
+    .hero-badges li {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .hero-badges strong {
+      font-size: 1.25rem;
+    }
+  }
+
   .scroll-hint {
     position: absolute;
     left: 50%;

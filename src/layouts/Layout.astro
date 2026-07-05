@@ -11,6 +11,7 @@ import '@fontsource/outfit/500.css';
 import '@fontsource/outfit/600.css';
 import '@fontsource/outfit/700.css';
 import '../styles/global.css';
+import ObfuscatedLink from '../components/ObfuscatedLink.astro';
 
 interface Props {
   title: string;
@@ -122,17 +123,19 @@ const jsonLd = {
   </head>
   <body>
     <slot />
-    <a
+    <ObfuscatedLink
       id="whatsapp-float"
-      href="https://wa.me/33684331824?text=Bonjour%20Richard%2C%20je%20souhaite%20des%20informations%20pour%20mon%20mariage."
+      type="wa"
+      value="33684331824"
+      message="Bonjour Richard, je souhaite des informations pour mon mariage."
       target="_blank"
       rel="noopener"
-      aria-label="Discuter sur WhatsApp"
+      ariaLabel="Discuter sur WhatsApp"
     >
       <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
         <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.9 13.9c-.2.6-1.2 1.1-1.7 1.2-.4 0-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.9 1.7.3.2.5.1.7-.1l1-1.1c.2-.3.4-.2.7-.1l2.1 1c.3.2.5.3.6.4.1.2.1.7-.1 1.3z" fill="currentColor"/>
       </svg>
-    </a>
+    </ObfuscatedLink>
     <button id="to-top" aria-label="Revenir en haut de la page">
       <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
         <path d="M12 19V5m-7 7l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />

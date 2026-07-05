@@ -1,0 +1,13 @@
+---
+interface Props {
+  value: string;
+  tag?: string;
+  class?: string;
+}
+
+const { value, tag = 'span', class: className } = Astro.props;
+const Tag = tag;
+const encoded = Buffer.from(value, 'utf-8').toString('base64');
+---
+
+<Tag class={className} data-clink-text data-value={encoded}></Tag>

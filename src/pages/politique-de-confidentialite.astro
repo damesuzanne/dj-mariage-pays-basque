@@ -1,5 +1,7 @@
 ---
 import LegalLayout from '../layouts/LegalLayout.astro';
+import ObfuscatedLink from '../components/ObfuscatedLink.astro';
+import ObfuscatedText from '../components/ObfuscatedText.astro';
 ---
 
 <LegalLayout title="Politique de confidentialité">
@@ -7,8 +9,8 @@ import LegalLayout from '../layouts/LegalLayout.astro';
   <p>
     Richard NIVET — Richard DJ Event<br />
     10 chemin de Basladia, Bayonne<br />
-    Email : <a href="mailto:richarddjevent@gmail.com">richarddjevent@gmail.com</a><br />
-    Téléphone : <a href="tel:+33684331824">06 84 33 18 24</a>
+    Email : <ObfuscatedLink type="email" value="richarddjevent@gmail.com"><ObfuscatedText value="richarddjevent@gmail.com" /></ObfuscatedLink><br />
+    Téléphone : <ObfuscatedLink type="tel" value="+33684331824"><ObfuscatedText value="06 84 33 18 24" /></ObfuscatedLink>
   </p>
 
   <h3>2. Données collectées</h3>
@@ -57,7 +59,7 @@ import LegalLayout from '../layouts/LegalLayout.astro';
   </ul>
   <p>
     Pour exercer ces droits, contactez-nous par email :
-    <a href="mailto:richarddjevent@gmail.com">richarddjevent@gmail.com</a>
+    <ObfuscatedLink type="email" value="richarddjevent@gmail.com"><ObfuscatedText value="richarddjevent@gmail.com" /></ObfuscatedLink>
   </p>
 
   <h3>7. Cookies</h3>

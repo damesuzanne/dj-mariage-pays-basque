@@ -1,5 +1,7 @@
 ---
 import LegalLayout from '../layouts/LegalLayout.astro';
+import ObfuscatedLink from '../components/ObfuscatedLink.astro';
+import ObfuscatedText from '../components/ObfuscatedText.astro';
 ---
 
 <LegalLayout title="Mentions légales">
@@ -13,8 +15,8 @@ import LegalLayout from '../layouts/LegalLayout.astro';
     SIRET : 42218765800063<br />
     RCS Bayonne<br />
     TVA intracommunautaire : FR36422187658<br />
-    Téléphone : <a href="tel:+33684331824">06 84 33 18 24</a><br />
-    Email : <a href="mailto:richarddjevent@gmail.com">richarddjevent@gmail.com</a>
+    Téléphone : <ObfuscatedLink type="tel" value="+33684331824"><ObfuscatedText value="06 84 33 18 24" /></ObfuscatedLink><br />
+    Email : <ObfuscatedLink type="email" value="richarddjevent@gmail.com"><ObfuscatedText value="richarddjevent@gmail.com" /></ObfuscatedLink>
   </p>
 
   <h3>2. Hébergeur</h3>

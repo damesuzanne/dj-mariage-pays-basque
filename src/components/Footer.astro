@@ -1,5 +1,9 @@
 ---
+import ObfuscatedLink from './ObfuscatedLink.astro';
+import ObfuscatedText from './ObfuscatedText.astro';
+
 const year = new Date().getFullYear();
+const waMessage = 'Bonjour Richard, je souhaite des informations pour mon mariage.';
 ---
 
 <footer class="footer">
@@ -14,15 +18,15 @@ const year = new Date().getFullYear();
         <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/></svg>
         </a>
-        <a href="tel:+33684331824" aria-label="Téléphone">
+        <ObfuscatedLink type="tel" value="+33684331824" ariaLabel="Téléphone">
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 4h4l2 5-3 2a13 13 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 6a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="https://wa.me/33684331824" target="_blank" rel="noopener" aria-label="WhatsApp">
+        </ObfuscatedLink>
+        <ObfuscatedLink type="wa" value="33684331824" message={waMessage} target="_blank" rel="noopener" ariaLabel="WhatsApp">
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.9 13.9c-.2.6-1.2 1.1-1.7 1.2-.4 0-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.9 1.7.3.2.5.1.7-.1l1-1.1c.2-.3.4-.2.7-.1l2.1 1c.3.2.5.3.6.4.1.2.1.7-.1 1.3z" fill="currentColor"/></svg>
-        </a>
-        <a href="mailto:richarddjevent@gmail.com" aria-label="Email">
+        </ObfuscatedLink>
+        <ObfuscatedLink type="email" value="richarddjevent@gmail.com" ariaLabel="Email">
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M3 6h18v12H3zM3 7l9 6 9-6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
-        </a>
+        </ObfuscatedLink>
       </div>
     </div>
     <nav aria-label="Navigation pied de page">
@@ -36,8 +40,16 @@ const year = new Date().getFullYear();
     <div>
       <p class="footer-title">Contact</p>
       <p class="footer-line">Bayonne, Pays Basque & Landes</p>
-      <p class="footer-line"><a href="tel:+33684331824">06 84 33 18 24</a></p>
-      <p class="footer-line"><a href="mailto:richarddjevent@gmail.com">richarddjevent@gmail.com</a></p>
+      <p class="footer-line">
+        <ObfuscatedLink type="tel" value="+33684331824">
+          <ObfuscatedText value="06 84 33 18 24" tag="span" />
+        </ObfuscatedLink>
+      </p>
+      <p class="footer-line">
+        <ObfuscatedLink type="email" value="richarddjevent@gmail.com">
+          <ObfuscatedText value="richarddjevent@gmail.com" tag="span" />
+        </ObfuscatedLink>
+      </p>
       <p class="footer-line">7j/7 sur rendez-vous</p>
     </div>
   </div>

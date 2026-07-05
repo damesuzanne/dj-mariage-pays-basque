@@ -1,0 +1,62 @@
+---
+interface Props {
+  type: 'email' | 'tel' | 'wa';
+  value: string;
+  message?: string;
+  id?: string;
+  class?: string;
+  ariaLabel?: string;
+  target?: string;
+  rel?: string;
+}
+
+const { type, value, message, id, class: className, ariaLabel, target, rel } = Astro.props;
+
+const raw = type === 'wa' && message ? `${value}|${message}` : value;
+const encoded = Buffer.from(raw, 'utf-8').toString('base64');
+---
+
+<a
+  id={id}
+  href="#"
+  class={className}
+  aria-label={ariaLabel}
+  target={target}
+  rel={rel}
+  data-clink
+  data-type={type}
+  data-value={encoded}
+>
+  <slot />
+</a>
+
+<script>
+  function decode(value: string): string {
+    return atob(value);
+  }
+
+  function reveal(): void {
+    document.querySelectorAll<HTMLAnchorElement>('[data-clink]').forEach((el) => {
+      const type = el.dataset.type;
+      const raw = decode(el.dataset.value ?? '');
+      if (type === 'email') {
+        el.href = `mailto:${raw}`;
+      } else if (type === 'tel') {
+        el.href = `tel:${raw}`;
+      } else if (type === 'wa') {
+        const [phone, message] = raw.split('|');
+        el.href = `https://wa.me/${phone}${message ? `?text=${encodeURIComponent(message)}` : ''}`;
+      }
+      el.removeAttribute('data-clink');
+    });
+
+    document.querySelectorAll<HTMLElement>('[data-clink-text]').forEach((el) => {
+      el.textContent = decode(el.dataset.value ?? '');
+      el.removeAttribute('data-clink-text');
+    });
+  }
+
+  reveal();
+  document.addEventListener('astro:page-load', reveal);
+</script>
+

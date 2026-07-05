@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import heroPhoto from '../assets/hero-mariage-biarritz.png';
+import ObfuscatedLink from './ObfuscatedLink.astro';
 ---
 
 <section class="hero" id="accueil">
@@ -30,14 +31,16 @@ import heroPhoto from '../assets/hero-mariage-biarritz.png';
     </p>
     <div class="hero-actions">
       <a href="#devis" class="btn btn-gold">Vérifier mes disponibilités</a>
-      <a
-        href="https://wa.me/33684331824?text=Bonjour%20Richard%2C%20je%20souhaite%20des%20informations%20pour%20mon%20mariage."
+      <ObfuscatedLink
+        type="wa"
+        value="33684331824"
+        message="Bonjour Richard, je souhaite des informations pour mon mariage."
         class="btn btn-outline"
         target="_blank"
         rel="noopener"
       >
         WhatsApp direct
-      </a>
+      </ObfuscatedLink>
     </div>
     <ul class="hero-badges">
       <li><strong>200+</strong> mariages animés</li>

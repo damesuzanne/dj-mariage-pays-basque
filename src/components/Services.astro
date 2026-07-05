@@ -1,0 +1,426 @@
+---
+const services = [
+  {
+    id: 'eclairage',
+    title: 'Éclairage d’ambiance',
+    title2: '& Piste de danse',
+    desc: 'Mise en lumière de votre salle et projecteurs décoratifs pour une atmosphère élégante et festive.',
+    modalDesc:
+      'Transformez votre salle de réception en un lieu magique grâce à nos jeux de lumières professionnels.',
+    includes: [
+      'Projecteurs LED multi-couleurs haute puissance',
+      'Éclairage architectural de la salle',
+      'Piste de danse lumineuse interactive',
+      'Jeux de lumière synchronisés à la musique',
+      'Installation et désinstallation complète',
+    ],
+    ideal: 'Mariages de 50 à 300 invités',
+    icon: `<path d="M16 3v5"/><circle cx="16" cy="17" r="8"/><path d="M8.4 14h15.2M8.4 20h15.2"/><ellipse cx="16" cy="17" rx="3.4" ry="8"/><path d="M16 9v16" stroke-width="0.9" opacity="0.6"/><path d="M26 5.4l.7 1.9 1.9.7-1.9.7-.7 1.9-.7-1.9-1.9-.7 1.9-.7z" fill="currentColor" stroke="none"/><path d="M5.5 24.5l.5 1.3 1.3.5-1.3.5-.5 1.3-.5-1.3-1.3-.5 1.3-.5z" fill="currentColor" stroke="none" opacity="0.7"/>`,
+  },
+  {
+    id: 'photobooth',
+    title: 'Photobooth · borne photo',
+    desc: 'Des souvenirs instantanés pour vos invités, avec impressions illimitées et galerie en ligne.',
+    modalDesc:
+      'Offrez à vos invités des souvenirs instantanés inoubliables avec notre borne photo professionnelle.',
+    includes: [
+      'Borne photo professionnelle haute qualité',
+      'Impressions illimitées pendant toute la soirée',
+      'Large choix d’accessoires fun',
+      'Galerie photo en ligne partageable',
+      'Personnalisation du template photo',
+    ],
+    ideal: 'Animation parfaite pour tous les âges',
+    icon: `<rect x="4" y="9.5" width="24" height="17" rx="3.5"/><path d="M11 9.5L13.2 6h5.6L21 9.5"/><circle cx="16" cy="18" r="5.2"/><circle cx="16" cy="18" r="2.4"/><path d="M23.6 13.4h1.6" stroke-linecap="round"/><path d="M26.5 3.5l.6 1.7 1.7.6-1.7.6-.6 1.7-.6-1.7-1.7-.6 1.7-.6z" fill="currentColor" stroke="none"/>`,
+  },
+  {
+    id: 'video',
+    title: 'Vidéoprojection & Écran',
+    desc: 'Diaporamas, rétrospectives et projections sur écran géant pour émouvoir vos proches.',
+    modalDesc:
+      'Partagez vos plus beaux moments avec tous vos invités grâce à notre système de projection professionnel.',
+    includes: [
+      'Écran de projection grand format',
+      'Vidéoprojecteur Full HD haute luminosité',
+      'Système audio pour les vidéos',
+      'Lecture de diaporamas et vidéos',
+      'Possibilité de diffusion en direct',
+    ],
+    ideal: 'Parfait pour les cérémonies laïques et le vin d’honneur',
+    icon: `<rect x="3.5" y="6.5" width="25" height="16" rx="2.5"/><path d="M13.8 11.2l6 3.3-6 3.3z" stroke-linejoin="round"/><path d="M10.5 26.5h11M16 23v3.5"/><path d="M27 2.5l.6 1.7 1.7.6-1.7.6-.6 1.7-.6-1.7-1.7-.6 1.7-.6z" fill="currentColor" stroke="none"/><path d="M5.5 3.5l.4 1.2 1.2.4-1.2.4-.4 1.2-.4-1.2-1.2-.4 1.2-.4z" fill="currentColor" stroke="none" opacity="0.7"/>`,
+  },
+  {
+    id: 'fumee',
+    title: 'Machine à fumée lourde',
+    desc: 'Un nuage féerique au sol pour une ouverture de bal digne d’un conte.',
+    modalDesc:
+      'Créez un moment magique lors de votre ouverture de bal avec notre machine à fumée lourde professionnelle.',
+    includes: [
+      'Machine à fumée lourde professionnelle',
+      'Effet « nuage » au sol',
+      'Fluide professionnel inodore et non toxique',
+      'Déclenchement précis au moment de votre danse',
+      'Effet garanti même en extérieur couvert',
+    ],
+    ideal: 'Moment inoubliable pour votre première danse',
+    viewBox: '0 0 24 24',
+    icon: `<path fill="currentColor" stroke="none" d="M17.5,7H2.5c-1.4,0-2.5,1.1-2.5,2.5v1c0,1.2.9,2.2,2,2.4v10.6c0,.3.2.5.5.5s.5-.2.5-.5v-4.5h9v4.5c0,.3.2.5.5.5s.5-.2.5-.5v-4.5h4v4.5c0,.3.2.5.5.5s.5-.2.5-.5v-10.6c1.1-.2,2-1.2,2-2.4v-1c0-1.4-1.1-2.5-2.5-2.5ZM3,13h4v5H3v-5ZM8,18v-5h9v5h-9ZM19,10.5c0,.8-.7,1.5-1.5,1.5H2.5c-.8,0-1.5-.7-1.5-1.5v-1c0-.8.7-1.5,1.5-1.5h15c.8,0,1.5.7,1.5,1.5v1ZM24,4c0,1.5-.9,3-2.3,3.6-.2.1-.5,0-.7-.2-.1-.2,0-.5.2-.7,1-.5,1.7-1.6,1.7-2.7,0-1.7-1.3-3-3-3s-1.1.1-1.6.4c-.2.1-.4,0-.5,0-.9-.6-2.2-.5-3.1.2-.2.2-.5.2-.7,0-.8-.7-2-.9-2.9-.3-.2,0-.3,0-.5,0-.4-.2-.8-.3-1.2-.3-1.4,0-2.5,1.1-2.5,2.5v1c0,.3-.2.5-.5.5s-.5-.2-.5-.5v-1C6,1.6,7.6,0,9.5,0s1,.1,1.5.3c1.1-.6,2.5-.4,3.5.3,1.1-.8,2.6-.8,3.7-.2C18.8.2,19.4,0,20,0,22.2,0,24,1.8,24,4h0Z"/>`,
+  },
+  {
+    id: 'gourmand',
+    title: 'Barbe à papa & Pop-corn',
+    desc: 'Un stand gourmand qui régale petits et grands pendant le vin d’honneur.',
+    modalDesc: 'Régalez petits et grands avec notre animation gourmande !',
+    includes: [
+      'Stand vintage professionnel avec décoration',
+      'Machine à barbe à papa',
+      'Machine à pop-corn',
+      'Cornets et emballages personnalisés',
+      'Service en continu pendant 3 à 4 heures',
+      'Consommables illimités',
+    ],
+    ideal: 'Animation parfaite pour l’apéritif ou le cocktail',
+    viewBox: '0 0 512 512',
+    icon: `<path fill="currentColor" stroke="none" d="M234.7,106.7v21.3c-35.3,0-64,28.7-64,64h-21.3c0-47.1,38.3-85.3,85.3-85.3ZM277.3,149.3v21.3c35.3,0,64,28.7,64,64h21.3c0-47.1-38.3-85.3-85.3-85.3ZM457.4,274.6l-43.2,237.4H97.8l-43.2-237.4C23.1,265.8,0,236.9,0,202.7s22.2-62.4,53.8-71.5c3.9-35.7,32-63.5,67.1-66.8,10.3-29.8,41.3-50,75.2-41C208.2,8.6,226,0,245.3,0,272.9,0,296.8,17.5,305.6,42.8c21.5-1.3,41.8,8.4,54.5,25.3,7.8-2.7,15.8-4.1,23.9-4.1,38.7,0,70.5,29.5,74.3,67.2,31.6,9.2,53.7,38,53.7,71.5s-23.1,63.1-54.6,71.9h0ZM190,490.7l-8.6-159.4c0-30-23.9-53.9-53.3-53.9h-51.2l38.8,213.3h74.4ZM296.7,490.7l12.6-160.3c-.2-29.2-24-53-53.3-53s-53.3,23.9-53.3,53.3l8.7,160h85.4ZM435.2,277.3h-51.2c-29.4,0-53.3,23.9-53.3,53.3l-12.6,160h78.3l38.8-213.3h0ZM490.7,202.7c0-26-18.7-48.1-44.4-52.4l-8.9-1.5v-9c0-30.5-23.9-54.4-53.3-54.4s-15.7,1.9-23.3,5.6l-9.2,4.5-4.9-9c-7.5-13.8-21.8-22.5-37.3-22.5s-6,.4-9.3,1.1l-10.9,2.4-1.9-11c-3.6-20.4-21.2-35.2-41.9-35.2s-28.2,7.6-36.1,20.2l-4.7,7.5-8.2-3.2c-5.6-2.2-10.3-3.2-15-3.2-20.2,0-37.8,14.4-41.8,34.2l-1.7,8.6-10.9-.2c-28.3,0-52.2,24-52.2,53.4v9l-8.9,2.6c-25.7,4.4-44.4,26.4-44.4,52.4s23.9,53.3,53.3,53.3h53.3c27.1,0,50.9,14.5,64,36.2,13.1-21.7,36.9-36.2,64-36.2s50.8,14.5,63.9,36.1c13.1-21.5,36.9-36.1,64.1-36.1h53.3c29.4,0,53.3-23.9,53.3-53.3h0Z"/>`,
+  },
+  {
+    id: 'sonorisation',
+    title: 'Sonorisation cérémonie',
+    title2: '& Vin d’honneur',
+    desc: 'Micros HF et ambiance musicale discrète pour vos discours et moments d’émotion.',
+    modalDesc:
+      'Assurez une qualité sonore parfaite pour votre cérémonie et votre vin d’honneur.',
+    includes: [
+      'Système de sonorisation mobile adapté au lieu',
+      'Micro sans fil HF pour les discours',
+      'Micro cravate pour l’officiant',
+      'Diffusion de musique d’ambiance',
+      'Régie discrète et professionnelle',
+      'Installation rapide et retrait discret',
+    ],
+    ideal: 'Cérémonies laïques, religieuses et cocktails jusqu’à 150 personnes',
+    icon: `<rect x="12" y="3.5" width="8" height="13" rx="4"/><path d="M12 8h8M12 12h8" stroke-width="0.9" opacity="0.6"/><path d="M8 13a8 8 0 0 0 16 0M16 21v4.5M11 28.5h10c0-1.7-2.2-3-5-3s-5 1.3-5 3z" stroke-linejoin="round"/><path d="M26.5 4.5l.6 1.7 1.7.6-1.7.6-.6 1.7-.6-1.7-1.7-.6 1.7-.6z" fill="currentColor" stroke="none"/><path d="M5.5 6.5l.4 1.2 1.2.4-1.2.4-.4 1.2-.4-1.2-1.2-.4 1.2-.4z" fill="currentColor" stroke="none" opacity="0.7"/>`,
+  },
+];
+---
+
+<section class="services" id="prestations">
+  <div class="container">
+    <p class="eyebrow reveal">Prestations & options</p>
+    <h2 class="section-title reveal">Bien plus qu'un DJ <em>derrière ses platines</em></h2>
+    <p class="section-intro reveal">
+      Chaque prestation s'adapte à votre lieu, votre programme et vos envies. Cliquez sur une carte
+      pour voir le détail de ce qui est inclus.
+    </p>
+    <div class="services-grid">
+      {services.map((service) => (
+        <button class="card reveal" data-dialog={`dialog-${service.id}`} type="button">
+          <div class="card-icon">
+            <svg
+              viewBox={service.viewBox ?? '0 0 32 32'}
+              width="30"
+              height="30"
+              aria-hidden="true"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.4"
+              stroke-linecap="round"
+              set:html={service.icon}
+            />
+          </div>
+          <h3>{service.title}{service.title2 && <><br />{service.title2}</>}</h3>
+          <p>{service.desc}</p>
+          <span class="card-more">
+            Voir le détail
+            <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+              <path d="M5 12h14m-6-6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  {services.map((service) => (
+    <dialog class="service-dialog" id={`dialog-${service.id}`} aria-labelledby={`dialog-title-${service.id}`}>
+      <button class="dialog-close" data-close aria-label="Fermer">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </button>
+      <div class="dialog-icon">
+        <svg
+          viewBox={service.viewBox ?? '0 0 32 32'}
+          width="34"
+          height="34"
+          aria-hidden="true"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.4"
+          stroke-linecap="round"
+          set:html={service.icon}
+        />
+      </div>
+      <h3 class="dialog-title" id={`dialog-title-${service.id}`}>
+        {service.title}{service.title2 && <><br />{service.title2}</>}
+      </h3>
+      <p class="dialog-desc">{service.modalDesc}</p>
+      <p class="dialog-section-title">Ce qui est inclus</p>
+      <ul class="dialog-list">
+        {service.includes.map((item) => (
+          <li>
+            <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true">
+              <path d="M4 10.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            {item}
+          </li>
+        ))}
+      </ul>
+      <p class="dialog-section-title">Idéal pour</p>
+      <p class="dialog-ideal">{service.ideal}</p>
+      <a href="#devis" class="btn btn-gold dialog-cta" data-close>Demander un devis pour cette option</a>
+    </dialog>
+  ))}
+</section>
+
+<style>
+  .services {
+    /* Semi-transparent : laisse voir la photo sticky derrière la section */
+    background: rgba(13, 17, 28, 0.82);
+    color: var(--white);
+  }
+
+  .services .section-title {
+    color: var(--white);
+  }
+
+  .services .section-intro {
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
+  }
+
+  .card {
+    font: inherit;
+    text-align: left;
+    color: inherit;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* Effet verre : flou de la photo sticky visible derrière la carte */
+    background: rgba(255, 255, 255, 0.08);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: var(--radius);
+    padding: 2rem 1.7rem;
+    box-shadow: 0 14px 40px -20px rgba(0, 0, 0, 0.5);
+    transition: transform var(--transition), border-color var(--transition), background var(--transition);
+  }
+
+  .card:hover,
+  .card:focus-visible {
+    transform: translateY(-6px);
+    border-color: rgba(198, 161, 91, 0.55);
+    background: rgba(198, 161, 91, 0.12);
+  }
+
+  .card:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+
+  .card-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, rgba(198, 161, 91, 0.25), rgba(198, 161, 91, 0.08));
+    color: var(--gold-light);
+    margin-bottom: 1.3rem;
+  }
+
+  .card h3 {
+    color: var(--white);
+    font-size: 1.35rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .card p {
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.96rem;
+    margin: 0 0 1.2rem;
+  }
+
+  .card-more {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    transition: gap var(--transition);
+  }
+
+  .card:hover .card-more {
+    gap: 0.75rem;
+  }
+
+  /* ===== Modale ===== */
+  .service-dialog {
+    width: min(560px, calc(100vw - 2.5rem));
+    max-height: min(84dvh, 720px);
+    border: 1px solid rgba(198, 161, 91, 0.35);
+    border-radius: var(--radius);
+    background: var(--night);
+    color: var(--white);
+    padding: 2.4rem 2.2rem 2.2rem;
+    box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.8);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(198, 161, 91, 0.45) transparent;
+  }
+
+  .service-dialog::backdrop {
+    background: rgba(8, 11, 18, 0.72);
+    backdrop-filter: blur(6px);
+  }
+
+  .service-dialog[open] {
+    animation: dialog-in 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @keyframes dialog-in {
+    from {
+      opacity: 0;
+      transform: translateY(18px) scale(0.97);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service-dialog[open] {
+      animation: none;
+    }
+  }
+
+  .dialog-close {
+    position: absolute;
+    top: 1.1rem;
+    right: 1.1rem;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: border-color var(--transition), color var(--transition);
+  }
+
+  .dialog-close:hover {
+    border-color: var(--gold);
+    color: var(--gold-light);
+  }
+
+  .dialog-icon {
+    width: 62px;
+    height: 62px;
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, rgba(198, 161, 91, 0.3), rgba(198, 161, 91, 0.1));
+    color: var(--gold-light);
+    margin-bottom: 1.4rem;
+  }
+
+  .dialog-title {
+    color: var(--white);
+    font-size: 1.75rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .dialog-desc {
+    color: rgba(255, 255, 255, 0.72);
+    margin: 0 0 1.6rem;
+  }
+
+  .dialog-section-title {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 0.8rem;
+  }
+
+  .dialog-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.6rem;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .dialog-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+    font-size: 0.96rem;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .dialog-list svg {
+    flex-shrink: 0;
+    color: var(--gold);
+    transform: translateY(2px);
+  }
+
+  .dialog-ideal {
+    color: rgba(255, 255, 255, 0.72);
+    margin: 0 0 1.8rem;
+  }
+
+  .dialog-cta {
+    width: 100%;
+  }
+
+  @media (max-width: 960px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 620px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+    .service-dialog {
+      padding: 2rem 1.4rem 1.6rem;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.card[data-dialog]').forEach((card) => {
+    const dialog = document.getElementById(card.dataset.dialog ?? '') as HTMLDialogElement | null;
+    if (!dialog) return;
+    card.addEventListener('click', () => dialog.showModal());
+  });
+
+  document.querySelectorAll<HTMLDialogElement>('.service-dialog').forEach((dialog) => {
+    dialog.querySelectorAll('[data-close]').forEach((el) =>
+      el.addEventListener('click', () => dialog.close())
+    );
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  });
+</script>

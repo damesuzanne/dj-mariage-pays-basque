@@ -1,0 +1,145 @@
+---
+const faqs = [
+  {
+    q: 'Dans quelle zone intervenez-vous comme DJ mariage ?',
+    a: 'J’interviens comme DJ mariage dans tout le Pays Basque et les Landes : Bayonne, Biarritz, Anglet, Saint-Jean-de-Luz, Hendaye, Hossegor, Capbreton, Dax et leurs alentours. Pour un lieu plus éloigné, contactez-moi : tout est envisageable.',
+  },
+  {
+    q: 'Combien de temps à l’avance faut-il réserver un DJ pour son mariage ?',
+    a: 'Je recommande de réserver votre DJ mariage 6 à 12 mois avant la date, surtout pour la haute saison au Pays Basque et dans les Landes (mai à septembre). N’hésitez pas à vérifier mes disponibilités même en dernière minute.',
+  },
+  {
+    q: 'Peut-on choisir la musique de notre soirée ?',
+    a: 'Bien sûr, c’est même essentiel. Nous construisons ensemble la playlist : vos titres incontournables, vos interdits, l’ambiance souhaitée pour chaque moment. Je m’adapte ensuite en direct à votre piste de danse.',
+  },
+  {
+    q: 'Quel matériel utilisez-vous ?',
+    a: 'Du matériel professionnel haut de gamme : sonorisation adaptée à la taille de votre salle, éclairages, micros HF pour les discours, et un système de secours pour parer à toute éventualité.',
+  },
+  {
+    q: 'Comment fonctionne le photobooth ?',
+    a: 'La borne photo est installée et décorée sur place. Vos invités repartent avec leurs impressions instantanées et vous recevez l’ensemble des photos dans une galerie en ligne après le mariage.',
+  },
+  {
+    q: 'Animez-vous aussi le vin d’honneur et la cérémonie ?',
+    a: 'Oui. Je propose une sonorisation discrète pour la cérémonie (laïque ou religieuse, selon le lieu) et une ambiance musicale élégante pour le vin d’honneur, avec micro pour les prises de parole.',
+  },
+  {
+    q: 'Comment se passe la réservation ?',
+    a: 'Premier échange par téléphone ou WhatsApp pour vérifier ma disponibilité, puis un rendez-vous pour définir vos envies. Un devis gratuit et détaillé vous est envoyé sous 24h, et un acompte confirme la date.',
+  },
+];
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<section class="faq" id="faq">
+  <div class="container faq-inner">
+    <div class="faq-head reveal">
+      <p class="eyebrow">Questions fréquentes</p>
+      <h2 class="section-title">Tout ce que <em>vous vous demandez</em></h2>
+      <p class="section-intro">
+        Une autre question ? Écrivez-moi directement, je réponds sous 24h.
+      </p>
+      <a href="#devis" class="btn btn-dark">Poser ma question</a>
+    </div>
+    <div class="faq-list">
+      {faqs.map((f) => (
+        <details class="reveal">
+          <summary>
+            {f.q}
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+
+<style>
+  .faq {
+    background: var(--cream);
+  }
+
+  .faq-inner {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: start;
+  }
+
+  .faq-head {
+    position: sticky;
+    top: 110px;
+  }
+
+  .faq-list {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  details {
+    background: var(--white);
+    border-radius: 14px;
+    border: 1px solid rgba(16, 21, 34, 0.07);
+    padding: 1.15rem 1.4rem;
+    transition: border-color var(--transition), box-shadow var(--transition);
+  }
+
+  details[open] {
+    border-color: rgba(198, 161, 91, 0.5);
+    box-shadow: 0 14px 34px -24px rgba(16, 21, 34, 0.35);
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary svg {
+    flex-shrink: 0;
+    color: var(--gold);
+    transition: transform var(--transition);
+  }
+
+  details[open] summary svg {
+    transform: rotate(180deg);
+  }
+
+  details p {
+    margin: 0.9rem 0 0.2rem;
+    color: var(--ink-soft);
+    font-size: 0.97rem;
+  }
+
+  @media (max-width: 860px) {
+    .faq-inner {
+      grid-template-columns: 1fr;
+    }
+    .faq-head {
+      position: static;
+    }
+  }
+</style>

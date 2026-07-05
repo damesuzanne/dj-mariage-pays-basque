@@ -1,0 +1,5 @@
+Déposez vos photos ici (jpg, png ou webp).
+Exemples de noms utiles :
+- richard-portrait.jpg  (photo pour la section « À propos »)
+- hero.jpg              (grande photo d'ambiance pour l'accueil)
+- galerie-01.jpg, galerie-02.jpg… (photos de soirées pour une galerie)

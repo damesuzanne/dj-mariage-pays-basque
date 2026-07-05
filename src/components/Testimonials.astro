@@ -1,0 +1,152 @@
+---
+const testimonials = [
+  {
+    initials: 'SM',
+    name: 'Sophie & Mathieu',
+    period: 'Été 2025',
+    text: 'Richard a été parfait pour notre mariage ! Ambiance au top, piste de danse pleine toute la soirée. Nos invités en parlent encore.',
+  },
+  {
+    initials: 'JC',
+    name: 'Julie & Clément',
+    period: 'Printemps 2025',
+    text: 'Très professionnel, ponctuel et sympathique. Il a su s’adapter à toutes les générations présentes.',
+  },
+  {
+    initials: 'CL',
+    name: 'Camille & Lucas',
+    period: 'Été 2025',
+    text: 'Le photobooth a été un vrai succès et la machine à fumée pour l’ouverture de bal, magique. Merci pour tout !',
+  },
+  {
+    initials: 'MA',
+    name: 'Marion & Antoine',
+    period: 'Automne 2024',
+    text: 'Un accompagnement de A à Z, des conseils précieux et une playlist qui nous ressemblait vraiment.',
+  },
+  {
+    initials: 'TB',
+    name: 'Théo & Bérénice',
+    period: 'Été 2024',
+    text: 'Sonorisation impeccable pour la cérémonie laïque, transitions parfaites toute la soirée. On recommande les yeux fermés.',
+  },
+  {
+    initials: 'ER',
+    name: 'Élodie & Romain',
+    period: 'Printemps 2024',
+    text: 'Réactif dès le premier contact, à l’écoute de nos envies. La soirée est passée trop vite !',
+  },
+];
+---
+
+<section class="testimonials" id="avis">
+  <div class="container">
+    <p class="eyebrow reveal">Témoignages</p>
+    <h2 class="section-title reveal">Ils m'ont confié <em>leur plus beau jour</em></h2>
+    <p class="section-intro reveal">
+      Plus de 200 mariages animés au Pays Basque et dans les Landes, et autant de couples heureux.
+    </p>
+    <div class="testimonials-grid">
+      {testimonials.map((t) => (
+        <figure class="quote reveal">
+          <div class="stars" aria-label="5 étoiles sur 5">★★★★★</div>
+          <blockquote>{t.text}</blockquote>
+          <figcaption>
+            <span class="avatar">{t.initials}</span>
+            <span>
+              <strong>{t.name}</strong>
+              <small>{t.period}</small>
+            </span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials {
+    background: var(--cream-deep);
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
+  }
+
+  .quote {
+    margin: 0;
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 1.9rem 1.7rem;
+    box-shadow: 0 10px 30px -20px rgba(16, 21, 34, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .stars {
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    font-size: 0.95rem;
+  }
+
+  blockquote {
+    margin: 0;
+    font-size: 0.99rem;
+    color: var(--ink-soft);
+    font-style: italic;
+    flex-grow: 1;
+  }
+
+  blockquote::before {
+    content: '« ';
+    color: var(--gold);
+  }
+
+  blockquote::after {
+    content: ' »';
+    color: var(--gold);
+  }
+
+  figcaption {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .avatar {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--night);
+    color: var(--gold-light);
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+  }
+
+  figcaption strong {
+    display: block;
+    font-size: 0.95rem;
+  }
+
+  figcaption small {
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 960px) {
+    .testimonials-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 620px) {
+    .testimonials-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

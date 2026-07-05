@@ -1,0 +1,17 @@
+# Dépendances
+node_modules/
+
+# Build Astro
+dist/
+.astro/
+
+# Env
+.env
+.env.production
+
+# Système
+.DS_Store
+
+# Éditeurs
+.vscode/
+.idea/

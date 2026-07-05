@@ -1,0 +1,162 @@
+---
+import '@fontsource/playfair-display/400.css';
+import '@fontsource/playfair-display/500.css';
+import '@fontsource/playfair-display/600.css';
+import '@fontsource/playfair-display/700.css';
+import '@fontsource/playfair-display/400-italic.css';
+import '@fontsource/playfair-display/700-italic.css';
+import '@fontsource/outfit/300.css';
+import '@fontsource/outfit/400.css';
+import '@fontsource/outfit/500.css';
+import '@fontsource/outfit/600.css';
+import '@fontsource/outfit/700.css';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+
+const siteUrl = 'https://djmariagepaysbasque.fr';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': ['LocalBusiness', 'EntertainmentBusiness'],
+      '@id': `${siteUrl}/#business`,
+      name: 'Richard DJ Event',
+      alternateName: ['DJ Mariage Pays Basque', 'DJ Mariage Landes'],
+      slogan: 'Votre mariage mérite une piste de danse inoubliable',
+      description:
+        "DJ professionnel spécialisé dans l'animation de mariages au Pays Basque et dans les Landes : sonorisation, éclairage, photobooth et animations. Plus de 200 mariages animés à Bayonne, Biarritz, Anglet, Saint-Jean-de-Luz, Hossegor et Dax.",
+      url: siteUrl,
+      telephone: '+33684331824',
+      email: 'richarddjevent@gmail.com',
+      founder: { '@type': 'Person', name: 'Richard Nivet' },
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '10 chemin de Basladia',
+        addressLocality: 'Bayonne',
+        postalCode: '64100',
+        addressRegion: 'Nouvelle-Aquitaine',
+        addressCountry: 'FR',
+      },
+      geo: { '@type': 'GeoCoordinates', latitude: 43.4929, longitude: -1.4748 },
+      areaServed: [
+        { '@type': 'AdministrativeArea', name: 'Pays Basque' },
+        { '@type': 'AdministrativeArea', name: 'Landes' },
+        { '@type': 'City', name: 'Bayonne' },
+        { '@type': 'City', name: 'Biarritz' },
+        { '@type': 'City', name: 'Anglet' },
+        { '@type': 'City', name: 'Saint-Jean-de-Luz' },
+        { '@type': 'City', name: 'Hendaye' },
+        { '@type': 'City', name: 'Hossegor' },
+        { '@type': 'City', name: 'Capbreton' },
+        { '@type': 'City', name: 'Dax' },
+      ],
+      priceRange: '€€',
+      openingHours: 'Mo-Su 09:00-20:00',
+      knowsAbout: [
+        'DJ mariage',
+        'Animation de mariage',
+        'Sonorisation de cérémonie laïque',
+        'Éclairage de piste de danse',
+        'Photobooth mariage',
+        'Ouverture de bal',
+      ],
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Prestations DJ mariage Pays Basque & Landes',
+        itemListElement: [
+          "Animation DJ complète de mariage (vin d'honneur, repas, soirée dansante)",
+          "Éclairage d'ambiance et piste de danse",
+          'Photobooth (borne photo) avec impressions illimitées',
+          'Vidéoprojection et écran géant',
+          "Machine à fumée lourde pour l'ouverture de bal",
+          'Stand barbe à papa et pop-corn',
+          "Sonorisation de cérémonie et vin d'honneur",
+        ].map((name) => ({
+          '@type': 'Offer',
+          itemOffered: { '@type': 'Service', name, areaServed: ['Pays Basque', 'Landes'] },
+        })),
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      url: siteUrl,
+      name: 'DJ Mariage Pays Basque · Richard DJ Event',
+      inLanguage: 'fr-FR',
+      publisher: { '@id': `${siteUrl}/#business` },
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${siteUrl}/#webpage`,
+      url: siteUrl,
+      name: 'DJ Mariage Pays Basque & Landes · Richard DJ Event',
+      isPartOf: { '@id': `${siteUrl}/#website` },
+      about: { '@id': `${siteUrl}/#business` },
+      inLanguage: 'fr-FR',
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="fr_FR" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <slot />
+    <a
+      id="whatsapp-float"
+      href="https://wa.me/33684331824?text=Bonjour%20Richard%2C%20je%20souhaite%20des%20informations%20pour%20mon%20mariage."
+      target="_blank"
+      rel="noopener"
+      aria-label="Discuter sur WhatsApp"
+    >
+      <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+        <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.9 13.9c-.2.6-1.2 1.1-1.7 1.2-.4 0-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.9 1.7.3.2.5.1.7-.1l1-1.1c.2-.3.4-.2.7-.1l2.1 1c.3.2.5.3.6.4.1.2.1.7-.1 1.3z" fill="currentColor"/>
+      </svg>
+    </a>
+    <button id="to-top" aria-label="Revenir en haut de la page">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <path d="M12 19V5m-7 7l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          }
+        },
+        { threshold: 0.12 }
+      );
+      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+      const toTop = document.getElementById('to-top');
+      const toggleToTop = () => toTop?.classList.toggle('is-visible', window.scrollY > 600);
+      toggleToTop();
+      window.addEventListener('scroll', toggleToTop, { passive: true });
+      toTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    </script>
+  </body>
+</html>

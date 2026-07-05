@@ -1,0 +1,211 @@
+---
+import { Image } from 'astro:assets';
+import heroPhoto from '../assets/hero-mariage-biarritz.png';
+---
+
+<section class="hero" id="accueil">
+  <div class="hero-bg" aria-hidden="true">
+    <Image
+      src={heroPhoto}
+      alt=""
+      class="hero-photo"
+      widths={[768, 1280, 1920]}
+      sizes="100vw"
+      format="webp"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="hero-overlay"></div>
+    <div class="grain"></div>
+  </div>
+  <div class="container hero-inner">
+    <p class="hero-kicker">Bayonne · Pays Basque · Landes</p>
+    <h2 class="hero-title">
+      <span>Votre mariage mérite</span>
+      <span class="accent">une piste de danse inoubliable</span>
+    </h2>
+    <p class="hero-sub">
+      DJ professionnel spécialisé mariages depuis plus de 10 ans.
+      Réponse sous 24h, appel direct, devis gratuit.
+    </p>
+    <div class="hero-actions">
+      <a href="#devis" class="btn btn-gold">Vérifier mes disponibilités</a>
+      <a
+        href="https://wa.me/33684331824?text=Bonjour%20Richard%2C%20je%20souhaite%20des%20informations%20pour%20mon%20mariage."
+        class="btn btn-outline"
+        target="_blank"
+        rel="noopener"
+      >
+        WhatsApp direct
+      </a>
+    </div>
+    <ul class="hero-badges">
+      <li><strong>200+</strong> mariages animés</li>
+      <li><strong>10 ans</strong> d'expérience</li>
+      <li><strong>100%</strong> clients satisfaits</li>
+    </ul>
+  </div>
+  <a href="#atouts" class="scroll-hint" aria-label="Descendre">
+    <span></span>
+  </a>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    background: var(--night);
+    color: var(--white);
+    overflow: hidden;
+    /* padding-bottom généreux : réserve la zone de l'icône de scroll
+       même quand le contenu dépasse la hauteur de l'écran */
+    padding: 7rem 0 7.5rem;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+  }
+
+  /* Voile sombre pour garder le texte lisible sur la photo */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(16, 21, 34, 0.88) 0%,
+      rgba(16, 21, 34, 0.72) 45%,
+      rgba(16, 21, 34, 0.92) 100%
+    );
+  }
+
+  .grain {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 26px 26px;
+    mask-image: linear-gradient(to bottom, transparent, black 30%, black 75%, transparent);
+  }
+
+  .hero-inner {
+    position: relative;
+    max-width: 780px;
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .hero-kicker {
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: var(--gold-light);
+    margin-bottom: 1.4rem;
+  }
+
+  /* Taille fluide calibrée pour que chaque ligne tienne entière,
+     de l'iPhone au grand écran */
+  .hero-title {
+    font-size: clamp(1.5rem, 6.4vw, 3.4rem);
+    color: var(--white);
+    margin-bottom: 1.2rem;
+  }
+
+  .hero-title span {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .hero-title .accent {
+    background: linear-gradient(120deg, var(--gold-light), var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .hero-sub {
+    font-size: 1.12rem;
+    color: rgba(255, 255, 255, 0.75);
+    max-width: 540px;
+    margin: 0 auto 2.4rem;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3.2rem;
+  }
+
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2.6rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.92rem;
+  }
+
+  .hero-badges strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    color: var(--gold-light);
+    font-weight: 600;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    left: 50%;
+    bottom: 2rem;
+    transform: translateX(-50%);
+    width: 26px;
+    height: 44px;
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
+    border-radius: 999px;
+    display: flex;
+    justify-content: center;
+    padding-top: 8px;
+  }
+
+  .scroll-hint span {
+    width: 3px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--gold-light);
+    animation: drop 1.8s ease-in-out infinite;
+  }
+
+  @keyframes drop {
+    0% { transform: translateY(0); opacity: 1; }
+    70% { transform: translateY(14px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 0; }
+  }
+
+  /* Écrans bas : l'icône de scroll n'apporte rien, on la retire */
+  @media (max-height: 780px), (max-width: 480px) {
+    .scroll-hint {
+      display: none;
+    }
+    .hero {
+      padding-bottom: 5rem;
+    }
+  }
+</style>

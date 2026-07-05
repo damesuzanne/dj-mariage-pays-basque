@@ -1,0 +1,16 @@
+{
+  "name": "dj-mariage-pays-basque",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@fontsource/outfit": "^5.2.8",
+    "@fontsource/playfair-display": "^5.2.8",
+    "astro": "^5.1.0"
+  }
+}

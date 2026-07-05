@@ -12,5 +12,8 @@
     "@fontsource/outfit": "^5.2.8",
     "@fontsource/playfair-display": "^5.2.8",
     "astro": "^5.1.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.107.0"
   }
 }

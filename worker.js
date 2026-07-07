@@ -45,9 +45,20 @@ async function handleContact(request, env) {
       payload.append(key, value)
     }
 
-    const w3f = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: payload })
-    const result = await w3f.json()
-    return json(result, w3f.status)
+    const w3f = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { Accept: 'application/json' },
+      body: payload,
+    })
+    // Web3Forms renvoie du JSON en cas de succès ; en cas d'erreur il peut renvoyer
+    // une page HTML → on gère les deux pour ne jamais planter.
+    const text = await w3f.text()
+    try {
+      const result = JSON.parse(text)
+      return json(result, w3f.status)
+    } catch (_) {
+      return json({ success: false, message: 'Envoi refusé par Web3Forms.' }, w3f.status || 400)
+    }
   } catch (_) {
     return json({ success: false, message: 'Erreur serveur.' }, 500)
   }

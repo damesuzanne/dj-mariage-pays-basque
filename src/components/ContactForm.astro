@@ -4,7 +4,7 @@ import ObfuscatedText from './ObfuscatedText.astro';
 
 // Clé publique (site key) du widget hCaptcha (anti-spam).
 // Tant qu'elle est vide, le formulaire fonctionne avec le seul honeypot.
-const HCAPTCHA_SITEKEY = '';
+const HCAPTCHA_SITEKEY = 'c65237ea-9460-4b38-9468-3f4e632efc2c';
 ---
 
 <section class="contact" id="devis">
@@ -90,6 +90,7 @@ const HCAPTCHA_SITEKEY = '';
       {HCAPTCHA_SITEKEY && (
         <div class="h-captcha" data-captcha="true" data-sitekey={HCAPTCHA_SITEKEY}></div>
       )}
+      <p class="form-error" id="form-error-captcha" hidden>Merci de valider le captcha anti-spam.</p>
       <div class="form-actions">
         <button type="submit" class="btn btn-gold" id="submit-btn">Envoyer ma demande</button>
         <button type="button" class="btn btn-whatsapp" id="whatsapp-send">
@@ -371,6 +372,14 @@ const HCAPTCHA_SITEKEY = '';
 
     const payload = new FormData(form);
     payload.set('message', buildMessage(data));
+
+    // Le captcha hCaptcha doit être validé s'il est présent
+    const captchaEl = document.getElementById('form-error-captcha');
+    if (form.querySelector('.h-captcha') && !payload.get('h-captcha-response')) {
+      if (captchaEl) captchaEl.hidden = false;
+      return;
+    }
+    if (captchaEl) captchaEl.hidden = true;
 
     if (submitBtn) {
       submitBtn.disabled = true;

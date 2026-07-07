@@ -397,6 +397,8 @@ const HCAPTCHA_SITEKEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2';
         if (successEl) successEl.hidden = false;
         form.reset();
       } else if (serverErrorEl) {
+        // Affiche temporairement le message exact renvoyé par Web3Forms (debug)
+        serverErrorEl.textContent = 'Erreur : ' + (result.message || 'inconnue');
         serverErrorEl.hidden = false;
       }
       // Réinitialise le captcha hCaptcha pour un éventuel nouvel envoi

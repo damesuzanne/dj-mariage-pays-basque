@@ -2,9 +2,9 @@
 import ObfuscatedLink from './ObfuscatedLink.astro';
 import ObfuscatedText from './ObfuscatedText.astro';
 
-// Sitekey hCaptcha PARTAGÉE de Web3Forms (obligatoire sur le plan gratuit :
-// c'est Web3Forms qui détient la clé secrète et valide le jeton côté serveur).
-const HCAPTCHA_SITEKEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2';
+// Clé publique (site key) du widget Cloudflare Turnstile.
+// Tant qu'elle est vide, le widget n'apparaît pas et le Worker se contente du honeypot.
+const TURNSTILE_SITEKEY = '';
 ---
 
 <section class="contact" id="devis">
@@ -44,9 +44,7 @@ const HCAPTCHA_SITEKEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2';
     </div>
 
     <form class="form reveal" id="quote-form" novalidate>
-      <input type="hidden" name="access_key" value="da4ca0ba-5d3d-4629-9c65-a6d4b0ef5341" />
       <input type="hidden" name="subject" value="Nouvelle demande de devis — djmariagepaysbasque.fr" />
-      <input type="hidden" name="from_name" value="Site DJ Mariage Pays Basque" />
       <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
       <div class="row">
         <label>
@@ -87,10 +85,9 @@ const HCAPTCHA_SITEKEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2';
         Une erreur est survenue lors de l'envoi. Vous pouvez réessayer ou m'écrire directement par
         WhatsApp.
       </p>
-      {HCAPTCHA_SITEKEY && (
-        <div class="h-captcha" data-captcha="true" data-sitekey={HCAPTCHA_SITEKEY}></div>
+      {TURNSTILE_SITEKEY && (
+        <div class="cf-turnstile ct-captcha" data-sitekey={TURNSTILE_SITEKEY} data-theme="dark" data-language="fr"></div>
       )}
-      <p class="form-error" id="form-error-captcha" hidden>Merci de valider le captcha anti-spam.</p>
       <div class="form-actions">
         <button type="submit" class="btn btn-gold" id="submit-btn">Envoyer ma demande</button>
         <button type="button" class="btn btn-whatsapp" id="whatsapp-send">
@@ -110,8 +107,8 @@ const HCAPTCHA_SITEKEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2';
   </div>
 </section>
 
-{HCAPTCHA_SITEKEY && (
-  <script is:inline src="https://js.hcaptcha.com/1/api.js" async defer></script>
+{TURNSTILE_SITEKEY && (
+  <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 )}
 
 <style>
@@ -254,6 +251,10 @@ const HCAPTCHA_SITEKEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2';
     resize: vertical;
   }
 
+  .ct-captcha {
+    margin-bottom: 0.4rem;
+  }
+
   .form-actions {
     display: flex;
     flex-wrap: wrap;
@@ -372,14 +373,7 @@ const HCAPTCHA_SITEKEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2';
 
     const payload = new FormData(form);
     payload.set('message', buildMessage(data));
-
-    // Le captcha hCaptcha doit être validé s'il est présent
-    const captchaEl = document.getElementById('form-error-captcha');
-    if (form.querySelector('.h-captcha') && !payload.get('h-captcha-response')) {
-      if (captchaEl) captchaEl.hidden = false;
-      return;
-    }
-    if (captchaEl) captchaEl.hidden = true;
+    payload.set('name', `${data.prenom} ${data.nom}`);
 
     if (submitBtn) {
       submitBtn.disabled = true;
@@ -387,7 +381,8 @@ const HCAPTCHA_SITEKEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2';
     }
 
     try {
-      const response = await fetch('https://api.web3forms.com/submit', {
+      // Envoi vers notre Worker Cloudflare (valide le captcha, garde la clé secrète)
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { Accept: 'application/json' },
         body: payload,
@@ -397,15 +392,12 @@ const HCAPTCHA_SITEKEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2';
         if (successEl) successEl.hidden = false;
         form.reset();
       } else if (serverErrorEl) {
-        // Affiche temporairement le message exact renvoyé par Web3Forms (debug)
-        serverErrorEl.textContent = 'Erreur : ' + (result.message || 'inconnue');
         serverErrorEl.hidden = false;
       }
-      // Réinitialise le captcha hCaptcha pour un éventuel nouvel envoi
-      (window as any).hcaptcha?.reset?.();
+      (window as any).turnstile?.reset?.();
     } catch {
       if (serverErrorEl) serverErrorEl.hidden = false;
-      (window as any).hcaptcha?.reset?.();
+      (window as any).turnstile?.reset?.();
     } finally {
       if (submitBtn) {
         submitBtn.disabled = false;

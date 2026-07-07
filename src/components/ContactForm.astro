@@ -2,9 +2,9 @@
 import ObfuscatedLink from './ObfuscatedLink.astro';
 import ObfuscatedText from './ObfuscatedText.astro';
 
-// Clé publique (site key) du widget hCaptcha (anti-spam).
-// Tant qu'elle est vide, le formulaire fonctionne avec le seul honeypot.
-const HCAPTCHA_SITEKEY = 'c65237ea-9460-4b38-9468-3f4e632efc2c';
+// Sitekey hCaptcha PARTAGÉE de Web3Forms (obligatoire sur le plan gratuit :
+// c'est Web3Forms qui détient la clé secrète et valide le jeton côté serveur).
+const HCAPTCHA_SITEKEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2';
 ---
 
 <section class="contact" id="devis">

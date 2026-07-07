@@ -50,15 +50,12 @@ async function handleContact(request, env) {
       headers: { Accept: 'application/json' },
       body: payload,
     })
-    // Web3Forms renvoie du JSON en cas de succès ; en cas d'erreur il peut renvoyer
-    // une page HTML → on gère les deux pour ne jamais planter.
-    const text = await w3f.text()
-    try {
-      const result = JSON.parse(text)
-      return json(result, w3f.status)
-    } catch (_) {
-      return json({ success: false, message: 'Envoi refusé par Web3Forms.' }, w3f.status || 400)
+    // Web3Forms renvoie parfois du JSON, parfois une page HTML. On se base sur le
+    // code HTTP (200 = succès) pour être robuste dans tous les cas.
+    if (w3f.ok) {
+      return json({ success: true })
     }
+    return json({ success: false, message: 'Envoi refusé par Web3Forms.' }, w3f.status || 400)
   } catch (_) {
     return json({ success: false, message: 'Erreur serveur.' }, 500)
   }

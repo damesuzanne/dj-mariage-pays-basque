@@ -5,3 +5,4 @@ main = "worker.js"
 [assets]
 directory = "./dist"
 binding = "ASSETS"
+not_found_handling = "404-page"

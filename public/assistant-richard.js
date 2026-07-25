@@ -469,7 +469,21 @@
               payload.append("lieu", answers.venue || answers.location || "");
               payload.append("message", messageLines.join("\n"));
               payload.append("cf-turnstile-response", turnstileToken);
-              var response = await fetch(config.contactEndpoint || "/api/contact", {
+              var captchaPayload = new FormData();
+              captchaPayload.append("cf-turnstile-response", turnstileToken);
+              var captchaResponse = await fetch("/api/contact/verify", {
+                method: "POST",
+                headers: { Accept: "application/json" },
+                body: captchaPayload,
+              });
+              var captchaResult = await captchaResponse.json();
+              if (!captchaResponse.ok || !captchaResult.success) throw new Error(captchaResult.message || "Captcha refusé");
+              payload.delete("cf-turnstile-response");
+              payload.delete("botcheck");
+              payload.append("access_key", "3f6d1840-64d1-4521-bb72-95d8b95071e5");
+              payload.append("from_name", "Assistant Richard DJ");
+              payload.append("name", firstName + " " + lastName);
+              var response = await fetch("https://api.web3forms.com/submit", {
                 method: "POST",
                 headers: { Accept: "application/json" },
                 body: payload,
@@ -813,4 +827,3 @@
 })();
 
     })();
-  

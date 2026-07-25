@@ -3,8 +3,11 @@ export default {
     const url = new URL(request.url)
 
     // Endpoint du formulaire de contact (POST uniquement)
-    if (url.pathname === '/api/contact' && request.method === 'POST') {
-      return handleContact(request, env)
+    if (
+      (url.pathname === '/api/contact' || url.pathname === '/api/contact/verify') &&
+      request.method === 'POST'
+    ) {
+      return handleCaptchaVerification(request, env)
     }
 
     // Tout le reste → fichiers statiques du site
@@ -12,7 +15,7 @@ export default {
   },
 }
 
-async function handleContact(request, env) {
+async function handleCaptchaVerification(request, env) {
   try {
     const formData = await request.formData()
 
@@ -36,49 +39,10 @@ async function handleContact(request, env) {
       }
     }
 
-    // Transmission à Web3Forms — la clé Web3Forms reste côté serveur
-    const payload = new FormData()
-    payload.append('access_key', env.WEB3FORMS_KEY)
-    payload.append('from_name', 'Site DJ Mariage Pays Basque')
-    for (const [key, value] of formData.entries()) {
-      if (key === 'cf-turnstile-response' || key === 'botcheck') continue
-      payload.append(key, value)
-    }
-
-    const w3f = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        Origin: 'https://djmariagepaysbasque.fr',
-        Referer: 'https://djmariagepaysbasque.fr/',
-      },
-      body: payload,
-    })
-
-    // Un statut HTTP 200 peut malgré tout contenir { success: false }.
-    // On vérifie donc le contenu avant d’annoncer l’envoi au visiteur.
-    const responseText = await w3f.text()
-    let providerResult = null
-    try {
-      providerResult = JSON.parse(responseText)
-    } catch (_) {
-      // Certaines réponses de succès historiques de Web3Forms étaient en HTML.
-    }
-
-    const providerAccepted = providerResult
-      ? providerResult.success === true
-      : w3f.ok
-
-    console.log('Web3Forms delivery', {
-      httpStatus: w3f.status,
-      accepted: providerAccepted,
-      message: providerResult?.message ?? providerResult?.body?.message ?? 'Réponse non JSON',
-    })
-
-    if (w3f.ok && providerAccepted) {
-      return json({ success: true })
-    }
-    return json({ success: false, message: 'Le service e-mail a refusé l’envoi.' }, 502)
+    // L’offre gratuite Web3Forms refuse les appels provenant d’un serveur.
+    // Le Worker valide donc uniquement Turnstile ; le navigateur transmet
+    // ensuite le formulaire directement à Web3Forms avec sa clé publique.
+    return json({ success: true })
   } catch (_) {
     return json({ success: false, message: 'Erreur serveur.' }, 500)
   }

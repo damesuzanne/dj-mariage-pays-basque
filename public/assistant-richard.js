@@ -222,9 +222,20 @@
     var form = document.createElement("form");
     form.className = "form";
     form.innerHTML = "<label>" + label + inputHtml + "</label><button type='submit'>" + buttonLabel + "</button>";
+    addFormMenuButton(form);
     conversation.appendChild(form);
     scrollEnd();
     return form;
+  }
+
+  function addFormMenuButton(form) {
+    if (form.querySelector(".menu-return")) return;
+    var button = document.createElement("button");
+    button.className = "menu-return";
+    button.type = "button";
+    button.textContent = "Revenir au menu principal";
+    button.addEventListener("click", reset);
+    form.appendChild(button);
   }
 
   function showMulti(step) {
@@ -241,6 +252,7 @@
         "<div class='multi-list'>" + options + "</div>" +
         "<div class='multi-actions'><button class='select-all' type='button'>Tout sélectionner</button><button type='submit'>" +
         escapeHtml(step.buttonLabel || "Valider mes choix") + "</button></div>";
+      addFormMenuButton(form);
       var selectAll = form.querySelector(".select-all");
       selectAll.addEventListener("click", function () {
         var boxes = Array.from(form.querySelectorAll("input[type='checkbox']"));
@@ -554,6 +566,7 @@
           "<label>E-mail<input name='email' value='camille@exemple.fr' readonly></label>" +
           "<label>Téléphone<input name='phone' value='06 00 00 00 00' readonly></label>" +
         "</div><button type='submit'>" + (mode === "callback" ? "Demander mon rappel" : "Envoyer ma demande") + "</button>";
+      addFormMenuButton(form);
       form.addEventListener("submit", function (event) {
         event.preventDefault();
         answers.firstName = "Camille";

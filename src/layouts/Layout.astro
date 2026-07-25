@@ -16,9 +16,10 @@ import ObfuscatedLink from '../components/ObfuscatedLink.astro';
 interface Props {
   title: string;
   description: string;
+  noindex?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, noindex = false } = Astro.props;
 
 const siteUrl = 'https://djmariagepaysbasque.fr';
 
@@ -113,6 +114,7 @@ const jsonLd = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
@@ -121,7 +123,7 @@ const jsonLd = {
     <link rel="icon" href="/favicon-richard.png?v=1" type="image/png" />
     <link rel="shortcut icon" href="/favicon-richard.png?v=1" type="image/png" />
     <link rel="apple-touch-icon" href="/favicon-richard.png?v=1" />
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    {!noindex && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
   <body>
     <slot />

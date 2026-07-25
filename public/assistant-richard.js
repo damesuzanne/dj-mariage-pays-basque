@@ -51,6 +51,7 @@
     ".grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.form label{display:block;color:var(--ink);font-family:var(--control-font);font-size:11.5px;font-weight:800}",
     ".form input{display:block;width:100%;margin-top:4px;border:1px solid #d8d3ca;border-radius:10px;padding:11px;color:var(--ink);background:#fffdf9;font-size:14px}",
     ".form button{width:100%;margin-top:9px;border:0;border-radius:10px;padding:12px;color:white;background:var(--accent);font-family:var(--control-font);font-size:13.5px;font-weight:850}",
+    ".form .menu-return{border:1px solid color-mix(in srgb,var(--accent) 35%,white);color:var(--accent-dark);background:white}",
     ".consent{display:flex!important;align-items:flex-start;gap:9px;margin-top:10px!important;font-family:var(--control-font);font-size:11.5px!important;font-weight:600!important;line-height:1.45}.consent input{flex:0 0 18px;width:18px;height:18px;margin:1px 0 0;accent-color:var(--accent)}.form-error{display:none;margin:9px 0 0;color:#a32620;font-size:12px;font-weight:700}.secure-note{display:flex;align-items:center;gap:6px;margin:9px 0 0;color:#667085;font-size:11px;line-height:1.4}.turnstile-slot{min-height:65px;margin-top:9px;overflow:hidden}.live-success{border:1px solid color-mix(in srgb,var(--accent) 35%,white);border-radius:16px;padding:15px;color:var(--ink);background:var(--soft);font-size:13px;line-height:1.55}.live-success>strong{display:block;margin-bottom:7px;font-family:var(--control-font);font-size:17px}.live-success p{margin:7px 0}",
     ".multi-list{display:grid;gap:7px;margin:10px 0}.form label.multi-option{display:flex;align-items:center;gap:10px;border:1px solid #e4e0d8;border-radius:11px;padding:11px;color:var(--ink);background:#fffdf9;font-family:var(--control-font);font-size:14px;font-weight:700;line-height:1.35}.multi-option input{flex:0 0 18px;width:18px;height:18px;margin:0;accent-color:var(--accent)}.multi-option span{display:block;flex:1;font-size:14px}.multi-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.multi-actions button{margin-top:0}.multi-actions .select-all{border:1px solid color-mix(in srgb,var(--accent) 35%,white);color:var(--accent-dark);background:white}",
     ".break{margin:14px 0;border:2px solid #17181a;border-radius:18px;padding:15px;color:#f7f7f7;background:#303236;box-shadow:0 12px 28px rgba(0,0,0,.2);text-align:center}",
@@ -425,7 +426,9 @@
           (config.realLive ? "<div class='turnstile-slot'></div>" : "") +
           "<p class='secure-note'>🔒 Protection antispam Cloudflare Turnstile.</p>" +
           "<p class='form-error'>Vérifiez vos coordonnées et acceptez l’utilisation de vos informations.</p>" +
-          "<button type='submit'>" + (mode === "callback" ? "Demander à être rappelé" : "Envoyer ma demande") + "</button>";
+          "<button type='submit'>" + (mode === "callback" ? "Demander à être rappelé" : "Envoyer ma demande") + "</button>" +
+          "<button class='menu-return' type='button'>Revenir au menu principal</button>";
+        realForm.querySelector(".menu-return").addEventListener("click", reset);
         realForm.addEventListener("submit", async function (event) {
           event.preventDefault();
           var firstName = realForm.elements.firstName.value.trim();

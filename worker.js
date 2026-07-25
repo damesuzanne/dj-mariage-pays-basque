@@ -13,21 +13,12 @@ export default {
     // Tout le reste → fichiers statiques du site
     const response = await env.ASSETS.fetch(request)
 
-    // Garantit une vraie réponse HTTP 404 avec la page personnalisée.
-    // Le statut 404 est essentiel pour que les moteurs de recherche
-    // n'indexent pas une adresse inexistante comme une page valide.
+    // Redirige les adresses inexistantes vers la page 404 personnalisée.
+    // La page d'arrivée porte une directive noindex afin de rester exclue
+    // des résultats de recherche tout en étant visible dans tous les navigateurs.
     if (response.status === 404 && request.method === 'GET') {
-      const notFoundUrl = new URL('/404.html', url)
-      const notFoundResponse = await env.ASSETS.fetch(new Request(notFoundUrl, request))
-      const headers = new Headers(notFoundResponse.headers)
-      headers.set('Cache-Control', 'public, max-age=300')
-      headers.set('X-Robots-Tag', 'noindex, follow')
-
-      return new Response(notFoundResponse.body, {
-        status: 404,
-        statusText: 'Not Found',
-        headers,
-      })
+      const notFoundUrl = new URL('/404', url)
+      return Response.redirect(notFoundUrl.toString(), 302)
     }
 
     return response

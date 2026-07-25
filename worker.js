@@ -47,15 +47,38 @@ async function handleContact(request, env) {
 
     const w3f = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
-      headers: { Accept: 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        Origin: 'https://djmariagepaysbasque.fr',
+        Referer: 'https://djmariagepaysbasque.fr/',
+      },
       body: payload,
     })
-    // Web3Forms renvoie parfois du JSON, parfois une page HTML. On se base sur le
-    // code HTTP (200 = succès) pour être robuste dans tous les cas.
-    if (w3f.ok) {
+
+    // Un statut HTTP 200 peut malgré tout contenir { success: false }.
+    // On vérifie donc le contenu avant d’annoncer l’envoi au visiteur.
+    const responseText = await w3f.text()
+    let providerResult = null
+    try {
+      providerResult = JSON.parse(responseText)
+    } catch (_) {
+      // Certaines réponses de succès historiques de Web3Forms étaient en HTML.
+    }
+
+    const providerAccepted = providerResult
+      ? providerResult.success === true
+      : w3f.ok
+
+    console.log('Web3Forms delivery', {
+      httpStatus: w3f.status,
+      accepted: providerAccepted,
+      message: providerResult?.message ?? providerResult?.body?.message ?? 'Réponse non JSON',
+    })
+
+    if (w3f.ok && providerAccepted) {
       return json({ success: true })
     }
-    return json({ success: false, message: 'Envoi refusé par Web3Forms.' }, w3f.status || 400)
+    return json({ success: false, message: 'Le service e-mail a refusé l’envoi.' }, 502)
   } catch (_) {
     return json({ success: false, message: 'Erreur serveur.' }, 500)
   }

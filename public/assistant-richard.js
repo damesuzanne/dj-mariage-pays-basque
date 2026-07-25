@@ -85,7 +85,7 @@
     "<aside class='panel' aria-label='" + (isRealAssistant ? "Assistant Richard DJ" : "Démonstration de l’assistant") + "'>" +
       "<header class='head'>" +
         "<div class='identity'><span class='avatar'><span class='bubble'></span></span><span><strong>" + escapeHtml(config.name) + "</strong><small>" + headerStatus + "</small></span></div>" +
-        "<div class='head-actions'><button class='home' type='button'>Menu</button><button class='close' type='button' aria-label='Fermer'>×</button></div>" +
+        "<div class='head-actions'><button class='home' type='button'>Menu principal</button><button class='close' type='button' aria-label='Fermer'>×</button></div>" +
       "</header>" +
       "<div class='conversation' aria-live='polite'></div>" +
       "<footer class='foot'>" + footerText + "</footer>" +
@@ -114,12 +114,19 @@
     scrollEnd();
   }
 
-  function addChoices(items, key, isInfo) {
+  function addChoices(items, key, isInfo, allowMenuShortcut) {
     var group = document.createElement("div");
     group.className = "choices";
     var choices = items.slice();
-    if (isInfo && !choices.some(function (choice) { return choice[1] === "demo_end"; })) {
+    if (!isRealAssistant && isInfo && !choices.some(function (choice) { return choice[1] === "demo_end"; })) {
       choices.push(["Terminer la démonstration", "demo_end"]);
+    }
+    if (
+      isRealAssistant &&
+      allowMenuShortcut !== false &&
+      !choices.some(function (choice) { return choice[1] === "start"; })
+    ) {
+      choices.push(["Revenir au menu principal", "start"]);
     }
 
     choices.forEach(function (choice) {
@@ -143,6 +150,16 @@
           group.remove();
           addMessage(label, "user");
           var destination = next.replace(/^tel:|^mailto:/, "");
+          if (isRealAssistant) {
+            addMessage(
+              next.indexOf("tel:") === 0
+                ? "L’appel vers " + destination + " va s’ouvrir sur votre appareil."
+                : "Votre messagerie va s’ouvrir avec l’adresse " + destination + " préremplie."
+            );
+            addChoices([["Revenir au menu principal", "start"]]);
+            window.location.href = next;
+            return;
+          }
           addMessage(
             next.indexOf("tel:") === 0
               ? "Sur un téléphone, l’appel vers " + destination + " s’ouvrirait automatiquement. Aucun appel réel n’est lancé dans cette démonstration."
@@ -196,7 +213,7 @@
     if (step.dateInput) return showDateInput(step);
     window.setTimeout(function () {
       addMessage(step.message);
-      addChoices(step.choices || [], step.key, step.info);
+      addChoices(step.choices || [], step.key, step.info, id !== config.start);
     }, 180);
   }
 
@@ -633,6 +650,7 @@
   }
 
   function addHtags() {
+    if (isRealAssistant) return;
     var item = document.createElement("div");
     item.className = "htags";
     item.innerHTML =
@@ -646,6 +664,7 @@
   }
 
   function showDemoEnd() {
+    if (isRealAssistant) return reset();
     window.setTimeout(function () {
       addBreak("Vous venez de tester une fonctionnalité de l’assistant. Aucune donnée personnelle n’a été collectée.");
       addHtags();

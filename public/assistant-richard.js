@@ -29,7 +29,7 @@
     "*,*:before,*:after{box-sizing:border-box}",
     "button,a,input{font:inherit}",
     "button{cursor:pointer}",
-    ".launcher{position:fixed;left:24px;bottom:24px;z-index:2147483000;display:flex;align-items:center;gap:10px;border:0;border-radius:999px;padding:10px 15px 10px 10px;color:white;background:var(--accent);box-shadow:0 20px 55px rgba(0,0,0,.25)}",
+    ".launcher{position:fixed;left:24px;bottom:24px;z-index:2147483000;display:flex;align-items:center;gap:10px;border:0;border-radius:999px;padding:10px 15px 10px 10px;color:var(--accent-dark);background:var(--accent);box-shadow:0 20px 55px rgba(0,0,0,.25)}",
     ".launcher-icon,.avatar{display:grid;place-items:center;width:39px;height:39px;border-radius:50%;color:var(--accent);background:white}",
     ".bubble{position:relative;width:18px;height:14px;border:2px solid currentColor;border-radius:5px}",
     ".bubble:after{content:'';position:absolute;left:3px;bottom:-5px;width:6px;height:6px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;background:white;transform:skewY(-35deg)}",

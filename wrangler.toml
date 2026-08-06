@@ -6,3 +6,8 @@ main = "worker.js"
 directory = "./dist"
 binding = "ASSETS"
 not_found_handling = "404-page"
+# Sans ce réglage, Cloudflare sert les fichiers statiques directement sans
+# jamais passer par worker.js : le correctif de Content-Type (charset UTF-8
+# sur robots.txt/llms.txt) ne s'appliquerait jamais. Même piège documenté
+# dans permisetdeclaration-astro/wrangler.toml.
+run_worker_first = true

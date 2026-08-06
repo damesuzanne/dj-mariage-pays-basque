@@ -193,7 +193,10 @@ const waMessage = 'Bonjour Richard, je souhaite des informations pour mon mariag
     margin-top: 1.4rem;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
     font-size: 0.82rem;
-    color: rgba(255, 255, 255, 0.4);
+    /* Contraste insuffisant en 0.4 sur le fond #0b0f1a (~3,8:1, audit
+       PageSpeed du 6 août 2026, seuil WCAG AA 4,5:1) : remonté à 0.62
+       (~7,2:1). */
+    color: rgba(255, 255, 255, 0.62);
   }
 
   .sub-footer p {
@@ -204,13 +207,17 @@ const waMessage = 'Bonjour Richard, je souhaite des informations pour mon mariag
     color: var(--gold);
   }
 
+  /* Lien distingué du texte environnant par la couleur ET le poids (pas
+     seulement la couleur, cf. audit « liens identifiables » du 6 août
+     2026) — pas de soulignement, choix de design du footer conservé. */
   .sub-footer a {
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--gold-light);
+    font-weight: 600;
     text-decoration: none;
   }
 
   .sub-footer a:hover {
-    color: var(--gold-light);
+    color: var(--gold);
   }
 
   @media (max-width: 820px) {

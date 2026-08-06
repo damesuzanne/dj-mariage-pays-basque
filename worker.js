@@ -13,6 +13,15 @@ export default {
     // Tout le reste → fichiers statiques du site
     const response = await env.ASSETS.fetch(request)
 
+    // robots.txt/llms.txt servis en text/plain sans charset par défaut : sur
+    // certains user-agents (constaté en dev), l'absence de charset fait
+    // deviner un mauvais encodage et casse les accents. Forcé en UTF-8.
+    if (url.pathname === '/llms.txt' || url.pathname === '/robots.txt') {
+      const headers = new Headers(response.headers)
+      headers.set('Content-Type', 'text/plain; charset=utf-8')
+      return new Response(response.body, { status: response.status, statusText: response.statusText, headers })
+    }
+
     // Redirige les adresses inexistantes vers la page 404 personnalisée.
     // La page d'arrivée porte une directive noindex afin de rester exclue
     // des résultats de recherche tout en étant visible dans tous les navigateurs.

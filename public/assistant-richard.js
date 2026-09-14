@@ -29,11 +29,11 @@
     "*,*:before,*:after{box-sizing:border-box}",
     "button,a,input{font:inherit}",
     "button{cursor:pointer}",
-    ".launcher{position:fixed;left:24px;bottom:24px;z-index:2147483000;display:flex;align-items:center;gap:10px;border:0;border-radius:999px;padding:10px 15px 10px 10px;color:var(--accent-dark);background:var(--accent);box-shadow:0 20px 55px rgba(0,0,0,.25)}",
+    ".launcher{position:fixed;left:24px;bottom:24px;z-index:2147483000;display:flex;align-items:center;border:0;border-radius:999px;padding:10px;color:var(--accent-dark);background:var(--accent);box-shadow:0 20px 55px rgba(0,0,0,.25);overflow:hidden}",
     ".launcher-icon,.avatar{display:grid;place-items:center;width:39px;height:39px;border-radius:50%;color:var(--accent);background:white}",
     ".bubble{position:relative;width:18px;height:14px;border:2px solid currentColor;border-radius:5px}",
     ".bubble:after{content:'';position:absolute;left:3px;bottom:-5px;width:6px;height:6px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;background:white;transform:skewY(-35deg)}",
-    ".launcher{max-width:calc(100dvw - 48px);font-family:var(--control-font)}.launcher strong{display:block;overflow:hidden;font-size:14px;text-overflow:ellipsis;white-space:nowrap}.launcher small{display:block;margin-top:2px;font-size:11px;opacity:.82}",
+    ".launcher{max-width:calc(100dvw - 48px);font-family:var(--control-font)}.launcher-copy{width:0;max-width:0;margin-left:0;overflow:hidden;opacity:0;white-space:nowrap;transition:max-width .24s ease,opacity .18s ease,margin-left .24s ease}.launcher strong{display:block;overflow:hidden;font-size:14px;text-overflow:ellipsis;white-space:nowrap}.launcher small{display:block;margin-top:2px;font-size:11px;opacity:.82}@media(hover:hover) and (pointer:fine){.launcher:hover .launcher-copy,.launcher:focus-visible .launcher-copy{width:auto;max-width:190px;margin-left:10px;opacity:1}}",
     ".panel{position:fixed;left:24px;bottom:24px;z-index:2147483001;display:none;width:min(420px,calc(100dvw - 48px));height:min(700px,calc(100dvh - 48px));max-height:calc(100dvh - 48px);overflow:hidden;border:1px solid rgba(0,0,0,.08);border-radius:24px;background:white;box-shadow:0 24px 70px rgba(0,0,0,.25)}",
     ".panel.open{display:grid;grid-template-rows:auto 1fr auto}",
     ".head{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:3px solid var(--accent);padding:14px 15px;color:white;background:var(--header);font-family:var(--control-font)}",
@@ -69,19 +69,19 @@
     ".cta{border:0;color:white;background:#e94a60}.restart{margin-top:7px;border:1px solid rgba(255,255,255,.28);color:white;background:transparent}",
     ".foot{border-top:1px solid #ece8e1;padding:10px;color:#667085;background:white;text-align:center;font-size:10.5px}",
     "@media(max-width:900px){.panel{height:min(680px,calc(100dvh - 32px));max-height:calc(100dvh - 32px);bottom:16px}.message{font-size:15px}.choice{font-size:14px}}",
-    "@media(max-width:620px){.launcher{left:max(12px,env(safe-area-inset-left));right:max(12px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));width:max-content;max-width:calc(100dvw - 24px);padding-right:13px}.panel{inset:max(8px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));width:auto;height:auto;max-width:none;max-height:none;border-radius:18px}.head{padding:12px}.avatar{width:35px;height:35px}.identity strong{font-size:14px}.identity small{font-size:10.5px}.head-actions{gap:4px}.home{padding:7px 9px}.close{width:34px;height:34px}.conversation{padding:12px}.message{max-width:94%;font-size:15px}.choice{font-size:14px}.form input{font-size:16px}.grid{grid-template-columns:1fr}}"
+    "@media(max-width:620px){.launcher{left:max(12px,env(safe-area-inset-left));right:auto;bottom:max(12px,env(safe-area-inset-bottom));width:max-content;max-width:calc(100dvw - 24px);padding:10px}.launcher-copy{display:none}.panel{inset:max(8px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));width:auto;height:auto;max-width:none;max-height:none;border-radius:18px}.head{padding:12px}.avatar{width:35px;height:35px}.identity strong{font-size:14px}.identity small{font-size:10.5px}.head-actions{gap:4px}.home{padding:7px 9px}.close{width:34px;height:34px}.conversation{padding:12px}.message{max-width:94%;font-size:15px}.choice{font-size:14px}.form input{font-size:16px}.grid{grid-template-columns:1fr}}"
   ].join("");
 
   var isRealAssistant = Boolean(config.realLive);
   var launcherStatus = isRealAssistant ? "Réponse immédiate" : "Réponse immédiate · Démo";
-  var headerStatus = isRealAssistant ? "En ligne" : "En ligne · Simulation interactive";
+  var headerStatus = isRealAssistant ? "En ligne · Réponse immédiate" : "En ligne · Simulation interactive";
   var footerText = isRealAssistant ? "Vos informations sont sécurisées et transmises uniquement à Richard DJ." : "Démonstration : aucune donnée n’est collectée.";
 
   root.innerHTML =
     "<style>" + css + "</style>" +
     "<button class='launcher' aria-label='" + (isRealAssistant ? "Ouvrir l’assistant Richard DJ" : "Ouvrir la démonstration") + "'>" +
       "<span class='launcher-icon'><span class='bubble'></span></span>" +
-      "<span><strong>" + escapeHtml(config.launcher) + "</strong><small>" + launcherStatus + "</small></span>" +
+      "<span class='launcher-copy'><strong>" + escapeHtml(config.launcher) + "</strong><small>" + launcherStatus + "</small></span>" +
     "</button>" +
     "<aside class='panel' aria-label='" + (isRealAssistant ? "Assistant Richard DJ" : "Démonstration de l’assistant") + "'>" +
       "<header class='head'>" +

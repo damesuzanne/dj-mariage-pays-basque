@@ -94,4 +94,4 @@
     }
   }
 
-.about-photo{aspect-ratio:4/5;object-fit:cover;object-position:75% center}.about-title span{white-space:normal;text-wrap:balance}.about-title{font-size:clamp(1.8rem,6.3cqw,2.75rem)}.about-content .eyebrow{color:var(--gold)}.frame-caption{font-size:.86rem;letter-spacing:.1em;margin:0;padding:4px 8px}.about-visual{min-width:0}.about-content{min-width:0}@media(max-width:860px){.about-visual{width:100%;max-width:440px}.about-photo{aspect-ratio:5/4}.about-title{font-size:clamp(1.8rem,6.3cqw,2.5rem)}}
+.about-photo{aspect-ratio:4/5;object-fit:cover;object-position:75% center}.about-content .eyebrow{color:var(--gold)}.frame-caption{margin:0;padding:4px 8px}.about-visual{min-width:0}.about-content{min-width:0}@media(max-width:860px){.about-visual{width:100%;max-width:440px}.about-photo{aspect-ratio:5/4}}

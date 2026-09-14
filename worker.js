@@ -22,6 +22,21 @@ export default {
       return new Response(response.body, { status: response.status, statusText: response.statusText, headers })
     }
 
+    // Fiche contact vCard : type MIME explicite + UTF-8 (accents lus
+    // correctement à l'import). Servie « inline » : c'est ce qui permet à
+    // Safari iOS d'ouvrir directement la fiche « Ajouter aux contacts ».
+    // Une Content-Disposition « attachment » casse ce comportement sur iOS
+    // (le fichier part dans Fichiers sans rien afficher). Sur ordinateur,
+    // le navigateur télécharge quand même le .vcf (aucun visualiseur natif)
+    // et l'attribut download du lien fournit le nom de fichier.
+    if (url.pathname === '/richard-dj-event.vcf') {
+      const headers = new Headers(response.headers)
+      headers.set('Content-Type', 'text/vcard; charset=utf-8')
+      headers.set('Content-Disposition', 'inline; filename="richard-dj-event.vcf"')
+      headers.set('Cache-Control', 'public, max-age=3600')
+      return new Response(response.body, { status: response.status, statusText: response.statusText, headers })
+    }
+
     // Redirige les adresses inexistantes vers la page 404 personnalisée.
     // La page d'arrivée porte une directive noindex afin de rester exclue
     // des résultats de recherche tout en étant visible dans tous les navigateurs.

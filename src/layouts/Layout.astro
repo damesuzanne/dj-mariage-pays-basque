@@ -12,6 +12,8 @@ import '@fontsource/outfit/600.css';
 import '@fontsource/outfit/700.css';
 import '../styles/global.css';
 import ObfuscatedLink from '../components/ObfuscatedLink.astro';
+import logoFavicon from '../assets/logo-favicon-98x98.png';
+import richardPhoto from '../assets/richard-dj.png';
 
 interface Props {
   title: string;
@@ -22,6 +24,22 @@ interface Props {
 const { title, description, noindex = false } = Astro.props;
 
 const siteUrl = 'https://djmariagepaysbasque.fr';
+const logoUrl = new URL(logoFavicon.src, siteUrl).toString();
+const imageUrl = new URL(richardPhoto.src, siteUrl).toString();
+
+// Témoignages réels de /src/components/Testimonials.astro (section #avis) —
+// repris sans note chiffrée : les 5 étoiles affichées y sont un élément
+// visuel fixe (pas une donnée saisie par les mariés), donc aucune
+// `reviewRating` n'est ajoutée pour ne pas fabriquer une note qui n'existe
+// pas réellement (contrairement à un vrai avis Google avec note associée).
+const temoignages = [
+  { name: 'Sophie & Mathieu', text: 'Richard a été parfait pour notre mariage ! Ambiance au top, piste de danse pleine toute la soirée. Nos invités en parlent encore.' },
+  { name: 'Julie & Clément', text: 'Très professionnel, ponctuel et sympathique. Il a su s’adapter à toutes les générations présentes.' },
+  { name: 'Camille & Lucas', text: 'Le photobooth a été un vrai succès et la machine à fumée pour l’ouverture de bal, magique. Merci pour tout !' },
+  { name: 'Marion & Antoine', text: 'Un accompagnement de A à Z, des conseils précieux et une playlist qui nous ressemblait vraiment.' },
+  { name: 'Théo & Bérénice', text: 'Sonorisation impeccable pour la cérémonie laïque, transitions parfaites toute la soirée. On recommande les yeux fermés.' },
+  { name: 'Élodie & Romain', text: 'Réactif dès le premier contact, à l’écoute de nos envies. La soirée est passée trop vite !' },
+];
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -37,6 +55,12 @@ const jsonLd = {
       url: siteUrl,
       telephone: '+33684331824',
       email: 'richarddjevent@gmail.com',
+      logo: logoUrl,
+      image: imageUrl,
+      sameAs: [
+        'https://www.facebook.com/RichardDJevent/',
+        'https://www.instagram.com/richard.dj.event/',
+      ],
       founder: { '@type': 'Person', name: 'Richard Nivet' },
       address: {
         '@type': 'PostalAddress',
@@ -85,6 +109,11 @@ const jsonLd = {
           itemOffered: { '@type': 'Service', name, areaServed: ['Pays Basque', 'Landes'] },
         })),
       },
+      review: temoignages.map((t) => ({
+        '@type': 'Review',
+        author: { '@type': 'Person', name: t.name },
+        reviewBody: t.text,
+      })),
     },
     {
       '@type': 'WebSite',
@@ -120,9 +149,10 @@ const jsonLd = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:locale" content="fr_FR" />
-    <link rel="icon" href="/favicon-richard.png?v=1" type="image/png" />
-    <link rel="shortcut icon" href="/favicon-richard.png?v=1" type="image/png" />
-    <link rel="apple-touch-icon" href="/favicon-richard.png?v=1" />
+    <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-richard.png?v=2" type="image/png" />
+    <link rel="shortcut icon" href="/favicon-richard.png?v=2" type="image/png" />
+    <link rel="apple-touch-icon" href="/favicon-richard.png?v=2" />
     {!noindex && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
   <body>

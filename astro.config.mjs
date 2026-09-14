@@ -10,5 +10,11 @@ export default defineConfig({
     // le CSS ne coûte rien et supprime la requête bloquante.
     inlineStylesheets: 'always',
   },
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      // La page /link-tree/ est un hub de liens en noindex : on la garde
+      // hors du sitemap pour rester cohérent avec la balise robots.
+      filter: (page) => !page.includes('/link-tree'),
+    }),
+  ],
 });

@@ -1,0 +1,403 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const phone = '+33684331824';
+const phoneDisplay = '06 84 33 18 24';
+const email = 'richarddjevent@gmail.com';
+const waMessage = 'Bonjour Richard, je souhaite des informations pour mon événement.';
+const waUrl = `https://wa.me/33684331824?text=${encodeURIComponent(waMessage)}`;
+---
+
+<Layout
+  title="Liens · Richard DJ Event — DJ Pays Basque & Landes"
+  description="Tous les liens utiles de Richard DJ Event : site, demande de devis, téléphone, WhatsApp, e-mail, Facebook et Instagram. DJ pour bars, clubs, mariages, séminaires et soirées privées au Pays Basque et dans les Landes."
+  noindex
+>
+  <main class="linktree">
+    <div class="glow glow-one" aria-hidden="true"></div>
+    <div class="glow glow-two" aria-hidden="true"></div>
+
+    <div class="lt-inner">
+      <img class="lt-badge" src="/logo-monogram.png" width="96" height="96" alt="Logo Richard DJ Event" />
+      <h1 class="lt-name">Richard <em>DJ Event</em></h1>
+      <p class="lt-tagline">Bars · Clubs · Mariages · Séminaires · Privés</p>
+      <p class="lt-loc">Pays Basque &amp; Landes</p>
+
+      <nav class="lt-links" aria-label="Liens Richard DJ Event">
+        <a class="lt-link lt-primary" href="/#devis">
+          <span class="lt-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20"><rect x="3.5" y="4.5" width="17" height="16" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 9.5h17M8 3v3m8-3v3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M7.5 13.5l2.2 2.2 4.3-4.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="lt-txt">Vérifier mes disponibilités<small>Devis gratuit sous 24 h</small></span>
+          <span class="lt-go" aria-hidden="true">→</span>
+        </a>
+
+        <a class="lt-link" href="/">
+          <span class="lt-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 12h17M12 3.5c2.5 2.4 3.9 5.4 3.9 8.5S14.5 18.1 12 20.5C9.5 18.1 8.1 15.1 8.1 12S9.5 5.9 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+          </span>
+          <span class="lt-txt">Site officiel<small>djmariagepaysbasque.fr</small></span>
+          <span class="lt-go" aria-hidden="true">→</span>
+        </a>
+
+        <a class="lt-link" href={`tel:${phone}`}>
+          <span class="lt-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M5 4h4l2 5-3 2a13 13 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 6a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="lt-txt">Appeler<small>{phoneDisplay}</small></span>
+          <span class="lt-go" aria-hidden="true">→</span>
+        </a>
+
+        <a class="lt-link" href={waUrl} target="_blank" rel="noopener">
+          <span class="lt-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.9 13.9c-.2.6-1.2 1.1-1.7 1.2-.4 0-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.9 1.7.3.2.5.1.7-.1l1-1.1c.2-.3.4-.2.7-.1l2.1 1c.3.2.5.3.6.4.1.2.1.7-.1 1.3z" fill="currentColor"/></svg>
+          </span>
+          <span class="lt-txt">WhatsApp<small>Réponse rapide en journée</small></span>
+          <span class="lt-go" aria-hidden="true">→</span>
+        </a>
+
+        <a class="lt-link" href={`mailto:${email}`}>
+          <span class="lt-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M3 6h18v12H3zM3 7l9 6 9-6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="lt-txt">E-mail<small>{email}</small></span>
+          <span class="lt-go" aria-hidden="true">→</span>
+        </a>
+
+        <a class="lt-link" href="https://www.facebook.com/RichardDJevent/" target="_blank" rel="noopener">
+          <span class="lt-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H16.7V3.6c-.3 0-1.3-.1-2.45-.1-2.45 0-4.1 1.5-4.1 4.25v2.15H7.3V13h2.85v8z" fill="currentColor"/></svg>
+          </span>
+          <span class="lt-txt">Facebook<small>@RichardDJevent</small></span>
+          <span class="lt-go" aria-hidden="true">→</span>
+        </a>
+
+        <a class="lt-link" href="https://www.instagram.com/richard.dj.event/" target="_blank" rel="noopener">
+          <span class="lt-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/></svg>
+          </span>
+          <span class="lt-txt">Instagram<small>@richard.dj.event</small></span>
+          <span class="lt-go" aria-hidden="true">→</span>
+        </a>
+      </nav>
+
+      <div class="lt-cta">
+        <a class="lt-vcard" id="lt-vcard-link" href="/richard-dj-event.vcf" download>
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Enregistrer le contact
+        </a>
+        <button class="lt-vcard" type="button" id="lt-share">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3v13m0-13l-4 4m4-4l4 4M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Partager le contact
+        </button>
+      </div>
+      <p class="lt-inapp" id="lt-inapp" hidden>
+        Vous ouvrez cette page dans une application (Instagram, Facebook…). Pour enregistrer la
+        fiche contact, touchez le menu <span aria-hidden="true">•••</span> en haut à droite puis
+        « Ouvrir dans le navigateur ».
+      </p>
+      <p class="lt-share-note" id="lt-share-note" hidden>Lien copié dans le presse-papiers</p>
+
+      <div class="lt-foot">
+        <a href="/mentions-legales">Mentions légales</a>
+        <span aria-hidden="true">·</span>
+        <a href="/politique-de-confidentialite">Confidentialité</a>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const btn = document.getElementById('lt-share');
+  const note = document.getElementById('lt-share-note');
+
+  // Navigateurs intégrés (Instagram, Facebook, TikTok…) : ils ne savent pas
+  // télécharger un fichier .vcf. On affiche une aide et, sur iOS, on tente
+  // de rebasculer vers Safari au clic sur « Enregistrer le contact ».
+  const ua = navigator.userAgent || '';
+  const inApp = /Instagram|FBAN|FBAV|FB_IAB|FBIOS|Line\/|MicroMessenger|TikTok|musical_ly|Snapchat|Pinterest|OkHttp/i.test(ua);
+  const isIOS = /iPhone|iPad|iPod/i.test(ua);
+  const vcardLink = document.getElementById('lt-vcard-link') as HTMLAnchorElement | null;
+
+  if (inApp) {
+    const banner = document.getElementById('lt-inapp');
+    if (banner) banner.hidden = false;
+
+    vcardLink?.addEventListener('click', (event) => {
+      const vcf = 'https://djmariagepaysbasque.fr/richard-dj-event.vcf';
+      if (isIOS) {
+        event.preventDefault();
+        window.location.href = 'x-safari-' + vcf;
+        window.setTimeout(() => {
+          window.location.href = vcf;
+        }, 600);
+      }
+    });
+  }
+
+  const showNote = (msg: string) => {
+    if (!note) return;
+    note.textContent = msg;
+    note.hidden = false;
+    window.setTimeout(() => {
+      note.hidden = true;
+    }, 3200);
+  };
+
+  btn?.addEventListener('click', async () => {
+    const url = 'https://djmariagepaysbasque.fr/link-tree/';
+    const shareData: ShareData = {
+      title: 'Richard DJ Event',
+      text: 'Richard DJ Event — DJ Pays Basque & Landes. Bars, clubs, mariages, séminaires, soirées privées. 06 84 33 18 24',
+      url,
+    };
+
+    // 1. Partage de la fiche vCard en pièce jointe (mobiles compatibles)
+    try {
+      const res = await fetch('/richard-dj-event.vcf');
+      const blob = await res.blob();
+      const file = new File([blob], 'richard-dj-event.vcf', { type: 'text/vcard' });
+      if (navigator.canShare?.({ files: [file] })) {
+        await navigator.share({ ...shareData, files: [file] });
+        return;
+      }
+    } catch (_) {
+      /* on tente la suite */
+    }
+
+    // 2. Partage classique (lien + texte)
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        return;
+      } catch (err) {
+        if ((err as DOMException)?.name === 'AbortError') return;
+      }
+    }
+
+    // 3. Repli : copie du lien
+    try {
+      await navigator.clipboard.writeText(url);
+      showNote('Lien copié dans le presse-papiers');
+    } catch (_) {
+      showNote(url);
+    }
+  });
+</script>
+
+<style>
+  .linktree {
+    position: relative;
+    min-height: 100dvh;
+    overflow: hidden;
+    display: grid;
+    place-items: start center;
+    padding: clamp(3rem, 8vw, 5.5rem) 1rem clamp(3rem, 8vw, 5rem);
+    color: var(--white);
+    background:
+      radial-gradient(circle at 50% 12%, rgba(198, 161, 91, 0.18), transparent 40%),
+      linear-gradient(150deg, var(--night), #171e2e 58%, #0c101a);
+  }
+
+  .lt-inner {
+    position: relative;
+    z-index: 1;
+    width: min(460px, 100%);
+    text-align: center;
+  }
+
+  .lt-badge {
+    display: block;
+    width: 92px;
+    height: 92px;
+    margin: 0 auto 1.3rem;
+    border-radius: 50%;
+    box-shadow: 0 0 0 9px rgba(198, 161, 91, 0.07);
+  }
+
+  .lt-name {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 6vw, 2.3rem);
+    color: var(--white);
+    margin: 0 0 0.5rem;
+  }
+
+  .lt-name em {
+    font-style: normal;
+    color: var(--gold-light);
+    font-weight: 400;
+  }
+
+  .lt-tagline {
+    margin: 0 auto 0.3rem;
+    max-width: 22rem;
+    font-size: clamp(0.68rem, 3vw, 0.82rem);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .lt-loc {
+    margin: 0 0 2.2rem;
+    font-size: 0.92rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .lt-links {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .lt-link {
+    display: flex;
+    align-items: center;
+    gap: 0.95rem;
+    padding: 0.95rem 1.1rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--white);
+    text-decoration: none;
+    text-align: left;
+    transition: transform var(--transition), border-color var(--transition), background var(--transition);
+  }
+
+  .lt-link:hover {
+    transform: translateY(-2px);
+    border-color: var(--gold-light);
+    background: rgba(198, 161, 91, 0.1);
+  }
+
+  .lt-primary {
+    border-color: rgba(198, 161, 91, 0.55);
+    background: linear-gradient(120deg, rgba(198, 161, 91, 0.22), rgba(227, 201, 143, 0.12));
+  }
+
+  .lt-ico {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: var(--gold-light);
+  }
+
+  .lt-txt {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+    font-weight: 600;
+    font-size: 0.98rem;
+  }
+
+  .lt-txt small {
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.55);
+    word-break: break-word;
+  }
+
+  .lt-go {
+    flex: none;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 1.1rem;
+    transition: transform var(--transition), color var(--transition);
+  }
+
+  .lt-link:hover .lt-go {
+    color: var(--gold-light);
+    transform: translateX(3px);
+  }
+
+  .lt-cta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.7rem;
+    margin-top: 1.6rem;
+  }
+
+  .lt-vcard {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.7rem 1.35rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+    color: rgba(255, 255, 255, 0.82);
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color var(--transition), color var(--transition);
+  }
+
+  .lt-vcard:hover {
+    border-color: var(--gold-light);
+    color: var(--gold-light);
+  }
+
+  .lt-share-note {
+    margin: 0.9rem 0 0;
+    font-size: 0.82rem;
+    color: var(--gold-light);
+    word-break: break-word;
+  }
+
+  .lt-inapp {
+    margin: 1rem auto 0;
+    max-width: 24rem;
+    padding: 0.7rem 0.9rem;
+    border-radius: 12px;
+    border: 1px solid rgba(198, 161, 91, 0.35);
+    background: rgba(198, 161, 91, 0.08);
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .lt-foot {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 2rem;
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .lt-foot a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .lt-foot a:hover {
+    color: var(--gold-light);
+  }
+
+  .glow {
+    position: absolute;
+    border: 1px solid rgba(198, 161, 91, 0.12);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .glow-one {
+    top: -180px;
+    left: -170px;
+    width: 460px;
+    height: 460px;
+  }
+
+  .glow-two {
+    right: -220px;
+    bottom: -260px;
+    width: 600px;
+    height: 600px;
+  }
+</style>

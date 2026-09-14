@@ -1,0 +1,97 @@
+
+  .about {
+    background: var(--cream);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: center;
+  }
+
+  .frame {
+    background: var(--night);
+    border-radius: var(--radius);
+    padding: 1.6rem 1.6rem 1.2rem;
+    box-shadow: var(--shadow);
+    text-align: center;
+    position: relative;
+  }
+
+  .frame::before {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border: 1px solid rgba(198, 161, 91, 0.4);
+    border-radius: calc(var(--radius) - 8px);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .about-photo {
+    width: 100%;
+    height: auto;
+    border-radius: calc(var(--radius) - 10px);
+    display: block;
+    margin-bottom: 1.1rem;
+  }
+
+  .frame-caption {
+    color: var(--gold-light);
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .about-content {
+    container-type: inline-size;
+  }
+
+  /* Chaque segment du titre reste sur sa propre ligne, sans coupure :
+     la taille s'ajuste à la largeur de la colonne (cqw) */
+  .about-title {
+    font-size: clamp(1.25rem, 5.4cqw, 2.75rem);
+  }
+
+  .about-title span {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .about-content p {
+    color: var(--ink-soft);
+  }
+
+  .strengths {
+    list-style: none;
+    padding: 0;
+    margin: 1.8rem 0 2.4rem;
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .strengths li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 500;
+  }
+
+  .strengths svg {
+    flex-shrink: 0;
+    color: var(--gold);
+  }
+
+  @media (max-width: 860px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+    .about-visual {
+      max-width: 380px;
+      margin-inline: auto;
+    }
+  }
+
+.about-photo{aspect-ratio:4/5;object-fit:cover;object-position:75% center}.about-title span{white-space:normal;text-wrap:balance}.about-title{font-size:clamp(1.8rem,6.3cqw,2.75rem)}.about-content .eyebrow{color:var(--gold)}.frame-caption{font-size:.86rem;letter-spacing:.1em;margin:0;padding:4px 8px}.about-visual{min-width:0}.about-content{min-width:0}@media(max-width:860px){.about-visual{width:100%;max-width:440px}.about-photo{aspect-ratio:5/4}.about-title{font-size:clamp(1.8rem,6.3cqw,2.5rem)}}

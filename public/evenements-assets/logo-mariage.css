@@ -1,0 +1,58 @@
+  .brand {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .brand a {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+    color: var(--white);
+    font-family: var(--font-body);
+  }
+
+  .brand-mark {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--gold-light);
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .brand-name {
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .brand-name em {
+    font-style: normal;
+    color: var(--gold-light);
+    font-weight: 400;
+  }
+
+  .brand-tagline {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+
+.brand {font-family:var(--font-display);letter-spacing:-0.02em;}
+@font-face{font-family:Outfit;font-weight:400;font-style:normal;src:url(outfit-latin-400-normal.woff2) format("woff2");}
+@font-face{font-family:Outfit;font-weight:500;font-style:normal;src:url(outfit-latin-500-normal.woff2) format("woff2");}
+@font-face{font-family:Outfit;font-weight:600;font-style:normal;src:url(outfit-latin-600-normal.woff2) format("woff2");}

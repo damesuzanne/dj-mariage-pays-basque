@@ -2,6 +2,14 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url)
 
+    // Adresse unique : www.djmariagepaysbasque.fr redirige vers
+    // djmariagepaysbasque.fr (01/10/26 : le www pointait encore vers
+    // l'ancien hébergement WordPress et renvoyait une erreur 522).
+    if (url.hostname === 'www.djmariagepaysbasque.fr') {
+      url.hostname = 'djmariagepaysbasque.fr'
+      return Response.redirect(url.toString(), 301)
+    }
+
     // Endpoint du formulaire de contact (POST uniquement)
     if (
       (url.pathname === '/api/contact' || url.pathname === '/api/contact/verify') &&

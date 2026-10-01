@@ -154,6 +154,15 @@ const jsonLd = {
     <link rel="shortcut icon" href="/favicon-richard.png?v=2" type="image/png" />
     <link rel="apple-touch-icon" href="/favicon-richard.png?v=2" />
     {!noindex && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+    {/* Cloudflare Web Analytics (01/10/26) : mesure d'audience sans cookie. Installation
+       manuelle obligatoire : l'injection automatique ne passe pas sur un site servi par
+       un Worker. */}
+    <script
+      is:inline
+      type="module"
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"token": "84621dc9dcd34417936da961495aad88"}'
+    ></script>
   </head>
   <body>
     <slot />

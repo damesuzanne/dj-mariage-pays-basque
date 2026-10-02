@@ -1,0 +1,71 @@
+---
+// Bloc « zone d'intervention » : rappelle que Richard couvre aussi l'autre secteur
+// (Pays Basque / Landes), sans lien dans le texte (le lien est dans le pied de page).
+---
+
+<section class="zone" id="zone">
+  <div class="container zone-inner">
+    <div class="reveal">
+      <p class="eyebrow">Zone d'intervention</p>
+      <h2 class="section-title">Le Pays Basque, <em>et aussi les Landes</em></h2>
+      <p class="zone-text">
+        Richard anime des mariages dans tout le Pays Basque, de la côte aux villages de
+        l'intérieur, et se déplace aussi dans les Landes voisines : côte landaise, Dax, Mont-de-Marsan.
+        Le déplacement éventuel est précisé dans le devis.
+      </p>
+    </div>
+    <ul class="zone-cities reveal" aria-label="Exemples de communes">
+      <li>Bayonne</li>
+      <li>Biarritz</li>
+      <li>Anglet</li>
+      <li>Saint-Jean-de-Luz</li>
+      <li>Hendaye</li>
+      <li>Hossegor</li>
+      <li>Capbreton</li>
+      <li>Dax</li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .zone {
+    background: var(--night);
+    color: var(--white);
+  }
+  .zone-inner {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: center;
+  }
+  .zone .section-title {
+    color: var(--white);
+  }
+  .zone .section-title em {
+    color: var(--gold-light);
+  }
+  .zone p.zone-text {
+    color: rgba(255, 255, 255, 0.72);
+    margin-top: 1rem;
+  }
+  .zone-cities {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .zone-cities li {
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(198, 161, 91, 0.45);
+    border-radius: 999px;
+    font-size: 0.92rem;
+    color: var(--gold-light);
+  }
+  @media (max-width: 860px) {
+    .zone-inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

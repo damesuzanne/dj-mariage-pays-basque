@@ -14,6 +14,7 @@ import '../styles/global.css';
 import ObfuscatedLink from '../components/ObfuscatedLink.astro';
 import logoFavicon from '../assets/logo-favicon-98x98.png';
 import richardPhoto from '../assets/richard-dj.png';
+import { getImage } from 'astro:assets';
 
 interface Props {
   title: string;
@@ -25,7 +26,10 @@ const { title, description, noindex = false } = Astro.props;
 
 const siteUrl = 'https://djmariagepaysbasque.fr';
 const logoUrl = new URL(logoFavicon.src, siteUrl).toString();
-const imageUrl = new URL(richardPhoto.src, siteUrl).toString();
+// Image de partage (réseaux, JSON-LD) : version JPEG 1200 px, la photo source pèse ~3 Mo.
+const ogImage = await getImage({ src: richardPhoto, width: 1200, format: 'jpg', quality: 80 });
+const imageUrl = new URL(ogImage.src, siteUrl).toString();
+const pageUrl = new URL(Astro.url.pathname, siteUrl).toString();
 
 // Témoignages réels de /src/components/Testimonials.astro (section #avis) —
 // repris sans note chiffrée : les 5 étoiles affichées y sont un élément
@@ -60,6 +64,7 @@ const jsonLd = {
       sameAs: [
         'https://www.facebook.com/RichardDJevent/',
         'https://www.instagram.com/richard.dj.event/',
+        'https://djmariagelandes.fr/',
       ],
       founder: { '@type': 'Person', name: 'Richard Nivet' },
       address: {
@@ -124,9 +129,11 @@ const jsonLd = {
     },
     {
       '@type': 'WebPage',
-      '@id': `${siteUrl}/#webpage`,
-      url: siteUrl,
-      name: 'DJ Mariage Pays Basque & Landes · Richard DJ Event',
+      '@id': `${pageUrl}#webpage`,
+      url: pageUrl,
+      name: title,
+      description,
+      primaryImageOfPage: { '@type': 'ImageObject', url: imageUrl },
       isPartOf: { '@id': `${siteUrl}/#website` },
       about: { '@id': `${siteUrl}/#business` },
       inLanguage: 'fr-FR',
@@ -148,6 +155,14 @@ const jsonLd = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="Richard DJ Event" />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:alt" content="Richard aux platines lors d'un mariage" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
     <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
     <link rel="icon" href="/favicon-richard.png?v=2" type="image/png" />
     <link rel="shortcut icon" href="/favicon-richard.png?v=2" type="image/png" />

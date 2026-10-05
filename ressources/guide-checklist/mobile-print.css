@@ -23,4 +23,9 @@
  .fields.inline{grid-template-columns:1fr}
  .timeline{padding-left:18px}
  .dot{left:-28px}
+
+ /* Sommaire : le mode d'emploi doit tenir en entier sur la page 2 */
+ .toc li a{padding:2.2mm 0}
+ .toc .mode,.mode{font-size:8pt!important;line-height:1.32!important;padding:3mm 4mm!important;margin-top:3mm}
+ .toc .mode b,.mode b{font-size:6.5pt}
 }

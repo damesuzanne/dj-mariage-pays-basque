@@ -1,4 +1,5 @@
 ---
+import { fr } from '../utils/typo';
 /**
  * Encart « Recevoir la ressource » des articles du blog.
  * - variant "encart" : visuel + formulaire prénom/e-mail (à placer 2 fois par article) ;
@@ -34,7 +35,7 @@ const TURNSTILE_SITEKEY = '0x4AAAAAADxOwNEZbVFGF9_e';
   <aside class="rc-band">
     <svg class="rc-band-sprig" viewBox="0 0 220 24" aria-hidden="true"><path d="M2 12 H98 M122 12 H218" stroke="currentColor" stroke-width="1" fill="none"/><g transform="translate(110 12)"><circle r="3.2" fill="none" stroke="currentColor" stroke-width=".9"/><g fill="#9fb09a"><ellipse cx="-12" cy="-1" rx="6" ry="2.4" transform="rotate(-20 -12 -1)"/><ellipse cx="12" cy="-1" rx="6" ry="2.4" transform="rotate(20 12 -1)"/></g></g></svg>
     <p class="rc-band-kicker">Guide gratuit · PDF à imprimer ou sur téléphone</p>
-    <p class="rc-band-title">{titre ?? `Recevez gratuitement « ${r.titre} »`}</p>
+    <p class="rc-band-title">{fr(titre ?? `Recevez gratuitement « ${r.titre} »`)}</p>
     <a href={`#${cible}`} class="btn btn-gold rc-band-btn">Je reçois le guide</a>
   </aside>
 ) : (
@@ -48,15 +49,15 @@ const TURNSTILE_SITEKEY = '0x4AAAAAADxOwNEZbVFGF9_e';
         </div>
         <p class="rc-mobile-text">
           <strong>Aussi sur téléphone</strong>
-          Une version pensée pour l'écran : on coche les cases et on écrit directement dans le PDF.
+          Une version pensée pour l'écran&nbsp;: on coche les cases et on écrit directement dans le PDF.
         </p>
       </div>
     </div>
     <div class="rc-body">
       <p class="eyebrow">Guide gratuit</p>
-      <h2 class="rc-title" id={`${id}-titre`}>{titre ?? r.titre}</h2>
+      <h2 class="rc-title" id={`${id}-titre`}>{fr(titre ?? r.titre)}</h2>
       <ul class="rc-points">
-        {r.points.map((p) => <li>{p}</li>)}
+        {r.points.map((p) => <li>{fr(p)}</li>)}
       </ul>
       <form class="rc-form" data-ressource-form data-ressource={ressource} novalidate>
         <div class="rc-fields">

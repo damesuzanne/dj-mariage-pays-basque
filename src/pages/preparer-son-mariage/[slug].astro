@@ -1,4 +1,5 @@
 ---
+import { fr } from '../../utils/typo';
 import { getCollection, render } from 'astro:content';
 import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
@@ -68,7 +69,7 @@ const jsonLd = {
         <a href="/">Accueil</a><span aria-hidden="true">/</span><a href="/preparer-son-mariage/">Préparer son mariage</a>
       </nav>
       <p class="eyebrow">{categorie}</p>
-      <h1 class="post-title">{h1 ?? title}</h1>
+      <h1 class="post-title">{fr(h1 ?? title)}</h1>
       <p class="post-meta">
         Par Richard, DJ mariage · <time datetime={date.toISOString()}>{fmt(date)}</time>
         {tempsLecture && <> · {tempsLecture} min de lecture</>}
@@ -89,8 +90,8 @@ const jsonLd = {
           <h2 id="faq-titre">Questions fréquentes</h2>
           {faq.map(({ q, r }) => (
             <details>
-              <summary>{q}</summary>
-              <p>{r}</p>
+              <summary>{fr(q)}</summary>
+              <p>{fr(r)}</p>
             </details>
           ))}
         </section>
@@ -101,7 +102,7 @@ const jsonLd = {
   <section class="post-end">
     <div class="container post-end-inner">
       <p class="eyebrow">Votre DJ mariage</p>
-      <h2>Et pour la musique, <em>on en parle ?</em></h2>
+      <h2>Et pour la musique, <em>on en parle&nbsp;?</em></h2>
       <p>
         Plus de 200 mariages animés au Pays Basque et dans les Landes. Dites-moi votre date et votre lieu, je vous
         réponds sous 24h.

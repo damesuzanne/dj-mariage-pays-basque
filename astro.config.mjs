@@ -1,8 +1,13 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
+import { rehypeTypoFr } from './src/utils/typo.ts';
 
 export default defineConfig({
+  markdown: {
+    // Espaces insécables avant : ; ! ? dans les articles (jamais de « : » en début de ligne).
+    rehypePlugins: [rehypeTypoFr],
+  },
   site: 'https://djmariagepaysbasque.fr',
   build: {
     // Corrige l'audit PageSpeed du 6 août 2026 : 2 feuilles CSS séparées

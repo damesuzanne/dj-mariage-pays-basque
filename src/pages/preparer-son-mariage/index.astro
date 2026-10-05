@@ -1,4 +1,5 @@
 ---
+import { fr } from '../../utils/typo';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
@@ -45,14 +46,14 @@ const visuel = (a: (typeof articles)[number]) => a.data.image ?? ressources[a.da
         </div>
         <div class="feature-body">
           <p class="kicker">À la une · {une.data.categorie}</p>
-          <h2 class="feature-title">{une.data.h1 ?? une.data.title}</h2>
-          <p class="feature-desc">{une.data.description}</p>
+          <h2 class="feature-title">{fr(une.data.h1 ?? une.data.title)}</h2>
+          <p class="feature-desc">{fr(une.data.description)}</p>
           <p class="meta">
             {fmt(une.data.date)}{une.data.tempsLecture && <> · {une.data.tempsLecture} min de lecture</>}
           </p>
           <span class="read">Lire l'article <svg class="read-arrow" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <p class="offert">
-            <span class="offert-dot" aria-hidden="true"></span>Guide offert : {ressources[une.data.ressource].titre}
+            <span class="offert-dot" aria-hidden="true"></span>Guide offert&nbsp;: {ressources[une.data.ressource].titre}
           </p>
         </div>
       </a>
@@ -65,7 +66,7 @@ const visuel = (a: (typeof articles)[number]) => a.data.image ?? ressources[a.da
             <Image src={visuel(a)} alt={a.data.imageAlt} widths={[480, 720]} sizes="(max-width: 700px) 92vw, 360px" class="card-img" />
             <div class="card-body">
               <p class="kicker">{a.data.categorie}</p>
-              <h2 class="card-title">{a.data.h1 ?? a.data.title}</h2>
+              <h2 class="card-title">{fr(a.data.h1 ?? a.data.title)}</h2>
               <p class="meta">{fmt(a.data.date)}</p>
               <span class="read">Lire l'article <svg class="read-arrow" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             </div>

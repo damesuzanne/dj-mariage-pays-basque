@@ -1,9 +1,17 @@
 ---
 import ObfuscatedLink from './ObfuscatedLink.astro';
 import ObfuscatedText from './ObfuscatedText.astro';
+import { getCollection } from 'astro:content';
 
 const year = new Date().getFullYear();
 const waMessage = 'Bonjour Richard, je souhaite des informations pour mon mariage.';
+
+// Les trois derniers articles de « Préparer son mariage » (mis à jour à chaque publication).
+const articles = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+// Libellé court pour le pied de page : la partie avant les deux-points du titre.
+const court = (t: string) => t.split(' : ')[0];
 ---
 
 <footer class="footer">
@@ -32,14 +40,17 @@ const waMessage = 'Bonjour Richard, je souhaite des informations pour mon mariag
         </ObfuscatedLink>
       </div>
     </div>
-    <nav aria-label="Navigation pied de page">
-      <p class="footer-title">Navigation</p>
-      <a href="/#accueil">Accueil</a>
-      <a href="/#prestations">Prestations</a>
-      <a href="/#avis">Témoignages</a>
-      <a href="/#contact">Contact</a>
-      <a href="/#devis">Demander un devis</a>
-      <a href="https://djmariagelandes.fr/">DJ Mariage Landes</a>
+    <nav aria-label="Prestations">
+      <p class="footer-title">Prestations</p>
+      <a href="/">DJ mariage</a>
+      <a href="/entreprises/">Événements d'entreprise</a>
+      <a href="/bars-restaurants/">Bars & restaurants</a>
+      <a href="https://djmariagelandes.fr/">DJ mariage Landes</a>
+    </nav>
+    <nav aria-label="Préparer son mariage">
+      <p class="footer-title">Préparer son mariage</p>
+      {articles.map((a) => <a href={`/preparer-son-mariage/${a.id}/`}>{court(a.data.title)}</a>)}
+      <a href="/preparer-son-mariage/" class="footer-more">Tous les conseils</a>
     </nav>
     <div>
       <p class="footer-title">Contact</p>
@@ -55,18 +66,12 @@ const waMessage = 'Bonjour Richard, je souhaite des informations pour mon mariag
         </ObfuscatedLink>
       </p>
       <p class="footer-line">7j/7 sur rendez-vous</p>
+      <a href="/#devis" class="footer-cta">Demander un devis</a>
     </div>
-  </div>
-  <div class="container footer-pages">
-    <span class="footer-pages-title">Nos prestations</span>
-    <a href="/">Mariages</a>
-    <a href="/entreprises/">Entreprises</a>
-    <a href="/bars-restaurants/">Bars & restaurants</a>
   </div>
   <div class="container footer-bottom">
     <p>© {year} Richard DJ Event. Tous droits réservés.</p>
     <div class="legal">
-      <a href="/preparer-son-mariage/">Préparer son mariage</a>
       <a href="/mentions-legales">Mentions légales</a>
       <a href="/politique-de-confidentialite">Politique de confidentialité</a>
       <a href="https://www.mariagepresta.fr" target="_blank" rel="noopener">MariagePresta</a>
@@ -95,7 +100,7 @@ const waMessage = 'Bonjour Richard, je souhaite des informations pour mon mariag
 
   .footer-grid {
     display: grid;
-    grid-template-columns: 1.4fr 1fr 1fr;
+    grid-template-columns: 1.3fr 1fr 1fr 1fr;
     gap: 2.5rem;
     padding-bottom: 3rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -155,6 +160,28 @@ const waMessage = 'Bonjour Richard, je souhaite des informations pour mon mariag
 
   nav a:hover {
     color: var(--gold-light);
+  }
+
+  .footer-more {
+    color: var(--gold-light) !important;
+    margin-top: 0.3rem;
+  }
+
+  .footer-cta {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+    color: var(--gold-light);
+    font-weight: 600;
+    font-size: 0.88rem;
+    transition: background var(--transition), color var(--transition);
+  }
+
+  .footer-cta:hover {
+    background: var(--gold);
+    color: var(--night);
   }
 
   .footer-line {
@@ -255,7 +282,13 @@ const waMessage = 'Bonjour Richard, je souhaite des informations pour mon mariag
     color: var(--gold);
   }
 
-  @media (max-width: 820px) {
+  @media (max-width: 960px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
     .footer-grid {
       grid-template-columns: 1fr;
     }

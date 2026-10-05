@@ -10,7 +10,6 @@ import { ressources } from '../../data/ressources';
 const articles = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime()
 );
-const [une, ...suite] = articles;
 const fmt = (d: Date) => d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
 const visuel = (a: (typeof articles)[number]) => a.data.image ?? ressources[a.data.ressource].couverture;
 ---
@@ -32,48 +31,33 @@ const visuel = (a: (typeof articles)[number]) => a.data.image ?? ressources[a.da
   </header>
 
   <main class="container blog-main">
-    {une && (
-      <a href={`/preparer-son-mariage/${une.id}/`} class="feature">
-        <div class="feature-media">
-          <Image
-            src={visuel(une)}
-            alt={une.data.imageAlt}
-            widths={[640, 960, 1280]}
-            sizes="(max-width: 900px) 92vw, 640px"
-            class="feature-img"
-            loading="eager"
-          />
-        </div>
-        <div class="feature-body">
-          <p class="kicker">À la une · {une.data.categorie}</p>
-          <h2 class="feature-title">{fr(une.data.h1 ?? une.data.title)}</h2>
-          <p class="feature-desc">{fr(une.data.description)}</p>
-          <p class="meta">
-            {fmt(une.data.date)}{une.data.tempsLecture && <> · {une.data.tempsLecture} min de lecture</>}
-          </p>
-          <span class="read">Lire l'article <svg class="read-arrow" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <p class="offert">
-            <span class="offert-dot" aria-hidden="true"></span>Guide offert&nbsp;: {ressources[une.data.ressource].titre}
-          </p>
-        </div>
-      </a>
-    )}
-
-    {suite.length > 0 && (
-      <section class="grid" aria-label="Autres articles">
-        {suite.map((a) => (
-          <a href={`/preparer-son-mariage/${a.id}/`} class="card">
-            <Image src={visuel(a)} alt={a.data.imageAlt} widths={[480, 720]} sizes="(max-width: 700px) 92vw, 360px" class="card-img" />
-            <div class="card-body">
-              <p class="kicker">{a.data.categorie}</p>
-              <h2 class="card-title">{fr(a.data.h1 ?? a.data.title)}</h2>
-              <p class="meta">{fmt(a.data.date)}</p>
-              <span class="read">Lire l'article <svg class="read-arrow" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            </div>
-          </a>
-        ))}
-      </section>
-    )}
+    <section class="grid" aria-label="Articles">
+      {articles.map((a, i) => (
+        <a href={`/preparer-son-mariage/${a.id}/`} class="card">
+          <div class="card-media">
+            <Image
+              src={visuel(a)}
+              alt={a.data.imageAlt}
+              widths={[480, 720, 960]}
+              sizes="(max-width: 760px) 92vw, 540px"
+              loading={i < 2 ? 'eager' : 'lazy'}
+            />
+          </div>
+          <div class="card-body">
+            <p class="kicker">{a.data.categorie}</p>
+            <h2 class="card-title">{fr(a.data.h1 ?? a.data.title)}</h2>
+            <p class="card-desc">{fr(a.data.description)}</p>
+            <p class="meta">
+              {fmt(a.data.date)}{a.data.tempsLecture && <> · {a.data.tempsLecture} min de lecture</>}
+            </p>
+            <span class="read">Lire l'article <svg class="read-arrow" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p class="offert">
+              <span class="offert-dot" aria-hidden="true"></span>{ressources[a.data.ressource].type} offert&nbsp;: {ressources[a.data.ressource].titre}
+            </p>
+          </div>
+        </a>
+      ))}
+    </section>
   </main>
   <Footer />
 </Layout>
@@ -99,31 +83,6 @@ const visuel = (a: (typeof articles)[number]) => a.data.image ?? ressources[a.da
     padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(3.5rem, 8vw, 6rem);
   }
 
-  /* Article à la une : grande photo + texte */
-  .feature {
-    display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-    gap: clamp(1.8rem, 4vw, 3.5rem);
-    align-items: center;
-    text-decoration: none;
-    color: inherit;
-  }
-  .feature-media {
-    overflow: hidden;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-  }
-  .feature-media :global(img) {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    object-position: 50% 40%;
-    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .feature:hover .feature-media :global(img) {
-    transform: scale(1.03);
-  }
   .kicker {
     margin: 0 0 0.7rem;
     font-size: 0.75rem;
@@ -131,15 +90,6 @@ const visuel = (a: (typeof articles)[number]) => a.data.image ?? ressources[a.da
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--gold);
-  }
-  .feature-title {
-    font-size: clamp(1.8rem, 3.6vw, 2.6rem);
-    margin: 0 0 1rem;
-  }
-  .feature-desc {
-    margin: 0 0 1rem;
-    color: var(--ink-soft);
-    font-size: 1.05rem;
   }
   .meta {
     margin: 0 0 1.4rem;
@@ -157,7 +107,6 @@ const visuel = (a: (typeof articles)[number]) => a.data.image ?? ressources[a.da
     color: var(--gold);
     transition: transform var(--transition);
   }
-  .feature:hover .read-arrow,
   .card:hover .read-arrow {
     transform: translateX(4px);
   }
@@ -179,38 +128,53 @@ const visuel = (a: (typeof articles)[number]) => a.data.image ?? ressources[a.da
     flex: none;
   }
 
-  /* Articles suivants : grille de cartes photo */
+  /* Grille d'articles : toutes les cartes ont la même présentation */
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2.2rem 1.8rem;
-    margin-top: clamp(3.5rem, 7vw, 5rem);
-    padding-top: clamp(2.5rem, 5vw, 3.5rem);
-    border-top: 1px solid #eadfc8;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
+    gap: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2.5rem);
   }
   .card {
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
     color: inherit;
   }
-  .card :global(img) {
+  .card-media {
+    overflow: hidden;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 1.4rem;
+  }
+  .card-media :global(img) {
     width: 100%;
     height: auto;
     aspect-ratio: 3 / 2;
     object-fit: cover;
-    border-radius: 14px;
-    margin-bottom: 1.1rem;
+    object-position: 50% 40%;
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .card:hover .card-media :global(img) {
+    transform: scale(1.03);
+  }
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
   .card-title {
-    font-size: 1.35rem;
-    margin: 0 0 0.5rem;
+    font-size: clamp(1.4rem, 2.6vw, 1.75rem);
+    margin: 0 0 0.7rem;
+  }
+  .card-desc {
+    margin: 0 0 0.9rem;
+    color: var(--ink-soft);
+  }
+  .card .offert {
+    margin-top: auto;
+  }
+  .card .read {
+    margin-bottom: 1.4rem;
   }
 
-  @media (max-width: 900px) {
-    .feature {
-      grid-template-columns: 1fr;
-    }
-    .feature-media :global(img) {
-      aspect-ratio: 16 / 10;
-    }
-  }
 </style>

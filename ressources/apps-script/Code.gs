@@ -41,8 +41,16 @@ const RESSOURCES = {
     titre: 'Checklist complète & rétroplanning du mariage',
     accroche: 'Votre guide est prêt : la checklist complète et le rétroplanning, de la date choisie jusqu’au lendemain de la fête.',
     fichiers: [
-      { libelle: 'Version téléphone', detail: 'à remplir sur l’écran', id: '1YcWSkzNeJ7olgtQL8EMU-bhDGUX1bTxg' },
-      { libelle: 'Version A4 à imprimer', detail: 'ou à remplir sur ordinateur', id: '1aGUxxUGRPGGuw_1kuZCbTMR8mQ2q-oVB' },
+      { libelle: 'Version téléphone', detail: 'à remplir sur l’écran', id: '1bF02mEdGind82uVcvl-0_NcGZgz6Zs3T' },
+      { libelle: 'Version A4 à imprimer', detail: 'ou à remplir sur ordinateur', id: '1Uy8_UoHeBf75mBlUfic7MMC2U4LdF2kF' },
+    ],
+  },
+  'livret-jeux': {
+    titre: 'Le livret de jeux de mariage',
+    accroche: 'Votre livret est prêt : 12 jeux menés par vos invités et vos témoins, à imprimer ou à remplir sur téléphone.',
+    fichiers: [
+      { libelle: 'Version téléphone', detail: 'à remplir sur l’écran', id: '1S8_8FPODX6zmxW945hlipmjO-N8r9v9t' },
+      { libelle: 'Version A4 à imprimer', detail: 'ou à remplir sur ordinateur', id: '1W0qTzt-ROu0C9khEqvfJSXpL3b6TvzRW' },
     ],
   },
 };

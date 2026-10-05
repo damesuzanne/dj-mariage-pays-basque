@@ -115,7 +115,7 @@ h3{font-size:22px;margin:0 0 10px}
 
 /* impression A4 */
 @page{size:A4;margin:16mm 15mm 18mm;background:#faf7f1;
- @bottom-left{content:"Richard DJ Event · Checklist & rétroplanning";font:8pt Outfit,sans-serif;color:#9a8f78}
+ @bottom-left{content:"Richard DJ Event · Livret de jeux";font:8pt Outfit,sans-serif;color:#9a8f78}
  @bottom-right{content:counter(page);font:9pt 'Playfair Display',serif;color:#c6a15b}}
 @page :first{margin:0;@bottom-left{content:none}@bottom-right{content:none}}
 @page back{margin:0;@bottom-left{content:none}@bottom-right{content:none}}
@@ -138,5 +138,30 @@ h3{font-size:22px;margin:0 0 10px}
  .grid thead{display:table-header-group}
 }
 
-/* pagination propre : un chapitre = une nouvelle page, une astuce reste avec ce qui la précède */
-@media print{.chapter{break-before:page;break-inside:avoid;margin-top:0}#c01{break-before:auto}.tip{break-before:avoid}}
+/* livret de jeux */
+.jeu{padding-top:18px}
+.jeu-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:6px}
+.jeu-num{font:600 11px var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.duree{font:500 12px var(--sans);color:var(--muted);padding:3px 10px;border:1px solid var(--gold-l);border-radius:999px}
+.jeu h3{margin-bottom:4px}
+.accroche{font-style:italic;color:var(--muted);margin:0 0 10px}
+.regles{margin:0 0 12px 18px;color:var(--ink);font-size:.95em}
+.regles li{margin:3px 0}
+.regles li::marker{color:var(--gold)}
+.duos li{align-items:center;justify-content:space-between;gap:14px;border-bottom:1px solid #f1e8d4}
+.duos li>span:first-child{flex:1}
+.duo{display:inline-flex;align-items:center;gap:6px;flex:none}
+.duo i{flex:none;width:19px;height:19px;border:1.5px solid var(--gold);border-radius:4px;background:var(--cream)}
+.duo em{font-style:normal;font-size:.85em;color:var(--muted);margin-right:8px}
+.mots{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px}
+.mots span{padding:5px 10px;border:1px dashed var(--gold);border-radius:8px;font-size:.84em;background:var(--cream)}
+.cartes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:10px 0 4px}
+.carte{padding:12px 14px;border:1px dashed var(--gold);border-radius:12px;background:var(--cream)}
+.carte b{font-weight:500;font-size:.92em;color:var(--navy2);display:block;margin-bottom:6px}
+.drawbox{margin-top:14px;height:210px;border:1.5px dashed var(--gold);border-radius:14px;display:flex;align-items:flex-end;padding:10px 14px;color:var(--muted);font-size:.85em;background:var(--cream)}
+@media(max-width:640px){.duos li{flex-direction:column;align-items:flex-start;gap:6px}.drawbox{height:170px}}
+@media print{.jeu{break-inside:avoid}.chapter{break-before:page;margin-top:0}.carte,.duos li{break-inside:avoid}.drawbox{height:62mm}.duos li{padding:4px 0}}
+
+@media print{.jeu .line{height:7mm}.jeu .fields{gap:2.5mm}.scores{break-before:page}.scores .grid td{height:13mm}}
+
+@media print{.chapter{break-inside:avoid}}

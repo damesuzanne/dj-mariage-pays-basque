@@ -26,6 +26,8 @@ const {
   titre,
 } = Astro.props;
 const r = ressources[ressource];
+// « guide » ou « livret », selon la ressource.
+const nom = r.type.split(' ')[0].toLowerCase();
 
 // Même widget Turnstile que le formulaire de devis (clé publique).
 const TURNSTILE_SITEKEY = '0x4AAAAAADxOwNEZbVFGF9_e';
@@ -34,14 +36,14 @@ const TURNSTILE_SITEKEY = '0x4AAAAAADxOwNEZbVFGF9_e';
 {variant === 'bandeau' ? (
   <aside class="rc-band">
     <svg class="rc-band-sprig" viewBox="0 0 220 24" aria-hidden="true"><path d="M2 12 H98 M122 12 H218" stroke="currentColor" stroke-width="1" fill="none"/><g transform="translate(110 12)"><circle r="3.2" fill="none" stroke="currentColor" stroke-width=".9"/><g fill="#9fb09a"><ellipse cx="-12" cy="-1" rx="6" ry="2.4" transform="rotate(-20 -12 -1)"/><ellipse cx="12" cy="-1" rx="6" ry="2.4" transform="rotate(20 12 -1)"/></g></g></svg>
-    <p class="rc-band-kicker">Guide gratuit · PDF à imprimer ou sur téléphone</p>
+    <p class="rc-band-kicker">{r.type} · PDF à imprimer ou sur téléphone</p>
     <p class="rc-band-title">{fr(titre ?? `Recevez gratuitement « ${r.titre} »`)}</p>
-    <a href={`#${cible}`} class="btn btn-gold rc-band-btn">Je reçois le guide</a>
+    <a href={`#${cible}`} class="btn btn-gold rc-band-btn">Je reçois le {nom}</a>
   </aside>
 ) : (
   <section class="rc" id={id} aria-labelledby={`${id}-titre`}>
     <div class="rc-visual">
-      <Image src={r.couverture} alt={`Couverture du guide ${r.titre}`} width={260} class="rc-cover" />
+      <Image src={r.couverture} alt={`Couverture : ${r.titre}`} width={260} class="rc-cover" />
       <Image src={r.apercu} alt="" width={220} class="rc-page" />
       <div class="rc-mobile">
         <div class="rc-phone" aria-hidden="true">
@@ -54,7 +56,7 @@ const TURNSTILE_SITEKEY = '0x4AAAAAADxOwNEZbVFGF9_e';
       </div>
     </div>
     <div class="rc-body">
-      <p class="eyebrow">Guide gratuit</p>
+      <p class="eyebrow">{r.type}</p>
       <h2 class="rc-title" id={`${id}-titre`}>{fr(titre ?? r.titre)}</h2>
       <ul class="rc-points">
         {r.points.map((p) => <li>{fr(p)}</li>)}
@@ -74,21 +76,21 @@ const TURNSTILE_SITEKEY = '0x4AAAAAADxOwNEZbVFGF9_e';
         <label class="rc-consent">
           <input type="checkbox" name="consentement" required />
           <span>
-            J'accepte de recevoir ce guide par e-mail et d'être recontacté(e) par Richard DJ Event au sujet de
+            J'accepte de recevoir ce {nom} par e-mail et d'être recontacté(e) par Richard DJ Event au sujet de
             mon mariage. <a href="/politique-de-confidentialite/">Confidentialité</a>
           </span>
         </label>
         {TURNSTILE_SITEKEY && (
           <div class="cf-turnstile rc-captcha" data-sitekey={TURNSTILE_SITEKEY} data-theme="light" data-language="fr" data-size="flexible"></div>
         )}
-        <button type="submit" class="btn btn-gold rc-submit">Recevoir mon guide par e-mail</button>
+        <button type="submit" class="btn btn-gold rc-submit" data-label={`Recevoir mon ${nom} par e-mail`}>Recevoir mon {nom} par e-mail</button>
         <p class="rc-error" role="alert" hidden></p>
       </form>
       <div class="rc-success" role="status" hidden>
-        <p class="rc-success-title">C'est parti, votre guide est en route&nbsp;!</p>
+        <p class="rc-success-title">C'est parti, votre {nom} est en route&nbsp;!</p>
         <p>
           Il vient d'être envoyé à <strong class="rc-success-email"></strong>. Il arrive en général en moins
-          d'une minute, avec un bouton « Télécharger mon guide ».
+          d'une minute, avec un bouton « Télécharger ».
         </p>
         <p class="rc-success-tip">
           Rien reçu&nbsp;? Regardez dans vos <strong>spams</strong> ou l'onglet <strong>Promotions</strong>, et
@@ -122,7 +124,7 @@ const TURNSTILE_SITEKEY = '0x4AAAAAADxOwNEZbVFGF9_e';
       const email = String(data.get('email') ?? '').trim();
       if (!prenom) return afficherErreur('Indiquez votre prénom.');
       if (!EMAIL_RE.test(email)) return afficherErreur('Vérifiez votre adresse e-mail.');
-      if (!data.get('consentement')) return afficherErreur('Cochez la case pour recevoir le guide.');
+      if (!data.get('consentement')) return afficherErreur('Cochez la case pour le recevoir.');
 
       bouton.disabled = true;
       bouton.textContent = 'Envoi en cours…';
@@ -155,7 +157,7 @@ const TURNSTILE_SITEKEY = '0x4AAAAAADxOwNEZbVFGF9_e';
         (window as any).turnstile?.reset?.(form.querySelector('.cf-turnstile'));
       } finally {
         bouton.disabled = false;
-        bouton.textContent = 'Recevoir mon guide par e-mail';
+        bouton.textContent = bouton.dataset.label ?? 'Recevoir par e-mail';
       }
     });
   });

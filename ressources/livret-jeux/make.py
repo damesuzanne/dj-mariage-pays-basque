@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fabrique les deux PDF du guide (A4 à imprimer + format téléphone), remplissables et navigables.
+"""Fabrique les deux PDF du livret (A4 à imprimer + format téléphone), remplissables et navigables.
 
 1. build.py génère guide.html et guide-mobile.html ;
 2. Chrome imprime les PDF, on relève la page de chaque chapitre (pages.json),
@@ -18,8 +18,8 @@ CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 GOLD = (0.78, 0.63, 0.36)
 NAVY = (16 / 255, 21 / 255, 34 / 255)
 VARIANTS = {
-    "a4": ("guide.html", "Checklist-retroplanning-mariage-Richard-DJ-Event.pdf"),
-    "mobile": ("guide-mobile.html", "Checklist-retroplanning-mariage-Richard-DJ-Event-MOBILE.pdf"),
+    "a4": ("livret.html", "Livret-de-jeux-de-mariage-Richard-DJ-Event.pdf"),
+    "mobile": ("livret-mobile.html", "Livret-de-jeux-de-mariage-Richard-DJ-Event-MOBILE.pdf"),
 }
 
 
@@ -121,9 +121,9 @@ def add_fields(pdf):
             toc.append([1, f"{num}. {title}", p])
     toc.append([1, "Contacts Richard DJ Event", len(doc)])
     doc.set_toc(toc)
-    doc.set_metadata({"title": "Checklist complète & rétroplanning du mariage", "author": "Richard DJ Event",
-                      "subject": "Guide gratuit à remplir, à imprimer ou à consulter sur téléphone",
-                      "keywords": "mariage, checklist, rétroplanning, organisation, DJ mariage Pays Basque, Landes"})
+    doc.set_metadata({"title": "Livret de jeux de mariage", "author": "Richard DJ Event",
+                      "subject": "Livret gratuit de jeux à imprimer ou à remplir sur téléphone",
+                      "keywords": "jeux de mariage, animation mariage, livret de jeux, invités, DJ mariage Pays Basque, Landes"})
     ensure_acroform(doc)
     tmp = HERE / ("_" + pdf)
     doc.save(tmp, garbage=3, deflate=True)

@@ -1,9 +1,16 @@
 #!/usr/bin/env python3
 """Génère guide.html (A4 imprimable + lecture mobile) du guide Checklist & rétroplanning."""
-import base64, html, json, pathlib
+import base64, html, json, pathlib, re
 
 HERE = pathlib.Path(__file__).resolve().parent
 LOGO = base64.b64encode((HERE.parent.parent / "public/logo-monogram.png").read_bytes()).decode()
+
+def fr_html(h):
+    """Espaces insécables avant : ; ! ? » et après « (jamais un signe seul en début de ligne)."""
+    def corr(t):
+        t = re.sub(r" ([:;!?»])", "\u00a0\\1", t)
+        return t.replace("« ", "«\u00a0")
+    return "".join(m if m.startswith("<") else corr(m) for m in re.split(r"(<[^>]*>)", h))
 
 def e(t): return html.escape(t, quote=False)
 
@@ -24,7 +31,9 @@ def block(title, body, level=3, keep=True):
     return f'<section class="block{k}"><h{level}>{e(title)}</h{level}>{body}</section>'
 
 def p(t): return f"<p>{e(t)}</p>"
-def tip(t): return f'<aside class="tip"><b>Astuce</b><span>{e(t)}</span></aside>'
+def tip(t):
+    t = t[:1].upper() + t[1:]
+    return f'<aside class="tip"><b>Astuce</b><span>{e(t)}</span></aside>'
 def note(t): return f'<aside class="note">{e(t)}</aside>'
 
 def stage(when, items, extra=""):
@@ -93,6 +102,7 @@ parts.append(block("Postes à prévoir",
             "Photographie et vidéo", "Musique, sonorisation et éclairage", "Fleurs, décoration, papeterie et signalétique",
             "Cérémonie et animations", "Transport, hébergement et garde d'enfants", "Alliances, cadeaux, frais administratifs et imprévus"]) +
     fields(["Enveloppe totale", "Réserve prévue"], inline=True)))
+parts.append(tip("prévoyez environ 10 % du budget total en marge pour les imprévus. Il y en a toujours, et mieux vaut les avoir anticipés que les subir."))
 parts.append(block("Avant de confirmer un prestataire", checks([
     "Vérifier précisément ce qui est inclus : durée, matériel, installation, déplacement, repas et options.",
     "Lire les modalités d'acompte, d'annulation, de report et de règlement.",
@@ -101,6 +111,7 @@ parts.append(block("Avant de confirmer un prestataire", checks([
     "Demander au lieu ses règles de bruit, d'accès, d'installation, d'électricité et de rangement.",
     "Vérifier les accès, l'hébergement et le plan B en cas de météo difficile."]) +
     fields(["Questions à poser / devis à relancer"])))
+parts.append(tip("demandez toujours un devis détaillé et signé. Il évite les malentendus et sert de référence si un détail change plus tard."))
 
 # 3. Rétroplanning
 parts.append(chapter("03", "Rétroplanning indicatif",
@@ -113,7 +124,8 @@ parts.append(stage("Dès que la date est envisagée (18 mois ou plus)", [
     "Réserver le lieu et noter les heures de remise des clés, de montage et de fin de soirée.",
     "Se renseigner tôt sur les formalités de la cérémonie et les délais de dossier.",
     "Prévenir les proches indispensables et choisir les témoins.",
-    "Repérer les besoins d'hébergement et de transport des invités éloignés."]))
+    "Repérer les besoins d'hébergement et de transport des invités éloignés."],
+    tip("pour un mariage en juin ou en septembre, appelez les lieux dès que la date est envisagée : les week-ends se réservent plusieurs mois à l'avance.")))
 parts.append(stage("12 à 18 mois avant", [
     "Réserver les prestataires dont l'agenda se remplit tôt : repas, photo, musique, vidéo, cérémonie.",
     "Comparer les offres sur leur contenu et leurs conditions, pas uniquement sur le prix.",
@@ -126,7 +138,8 @@ parts.append(stage("9 à 12 mois avant", [
     "Réserver les trajets ou hébergements qui conditionnent la venue des proches.",
     "Envoyer une annonce de date aux invités si la période est chargée ou s'ils viennent de loin.",
     "Identifier les personnes qui liront un texte, feront un discours ou aideront pendant la journée."],
-    fields(["Notre prochaine décision importante"])))
+    fields(["Notre prochaine décision importante"]) +
+    tip("créez dès maintenant un groupe de messagerie ou un album partagé pour les proches qui aident. Tout le monde s'y retrouve, et les informations ne se perdent plus.")))
 parts.append(stage("6 à 9 mois avant", [
     "Envoyer les invitations avec une date claire pour répondre.",
     "Choisir repas et boissons; demander allergies et régimes alimentaires.",
@@ -134,7 +147,8 @@ parts.append(stage("6 à 9 mois avant", [
     "Préparer le déroulé de la cérémonie, les textes, les musiques et les interventions.",
     "Commander les alliances et accessoires nécessitant une fabrication ou un délai.",
     "Échanger avec le DJ sur les styles appréciés, les morceaux à éviter et les temps forts.",
-    "Transmettre aux invités les informations d'accès, de stationnement et de logement."]))
+    "Transmettre aux invités les informations d'accès, de stationnement et de logement."],
+    tip("ajoutez un lien ou un QR code à l'invitation pour répondre en ligne. Les réponses arrivent plus vite et vous les retrouvez au même endroit.")))
 parts.append(stage("4 à 6 mois avant", [
     "Faire le point sur les réponses et relancer les personnes indispensables.",
     "Confirmer les horaires d'arrivée, d'installation et de rangement avec chaque prestataire.",
@@ -152,7 +166,8 @@ parts.append(stage("Un mois avant", [
     "Valider les musiques, annonces, discours et surprises avec les personnes concernées.",
     "Écrire une feuille de route d'une page pour la personne référente.",
     "Étiqueter les caisses de décoration par zone et préciser qui installe et qui récupère.",
-    "Garder de la marge dans le programme et simplifier les transitions trop serrées."]))
+    "Garder de la marge dans le programme et simplifier les transitions trop serrées."],
+    tip("imprimez la feuille de route sur une seule page. C'est le document que votre personne référente sortira en premier en cas de question.")))
 parts.append(stage("Deux semaines avant", [
     "Confirmer le nombre final d'invités et les heures de livraison.",
     "Faire le dernier essayage et réunir tenue, chaussures, accessoires et vêtements de rechange.",
@@ -164,7 +179,8 @@ parts.append(stage("La semaine du mariage", [
     "Préparer une trousse : pansements, épingles, ciseaux, mouchoirs, détachant, chargeur et eau.",
     "Confier les appels et questions pratiques à une personne qui n'est pas l'un des mariés.",
     "Regrouper les tenues complètes et noter les trajets, stationnements et heures de départ.",
-    "Prévoir de quoi manger, boire et souffler pour les mariés et les proches qui aident."]))
+    "Prévoir de quoi manger, boire et souffler pour les mariés et les proches qui aident."],
+    tip("glissez chaque règlement dans une enveloppe au nom du prestataire, avec le montant écrit dessus, et confiez-les à la personne qui les remettra. Un souci de moins le jour J.")))
 parts.append('</div>')
 
 # 4. Jour J
@@ -183,7 +199,8 @@ parts.append(stage("Le jour même", [
     "Indiquer aux prestataires un contact d'urgence autre que les mariés.",
     "Désigner une personne pour relayer toute modification aux invités.",
     "Se servir du programme comme repère, pas comme chronomètre.",
-    "S'accorder quelques minutes à deux, loin des sollicitations."]))
+    "S'accorder quelques minutes à deux, loin des sollicitations."],
+    tip("mangez vraiment quelque chose le matin et gardez une bouteille d'eau à portée de main. La journée est longue, et on oublie vite de s'arrêter.")))
 parts.append(stage("Après la fête", [
     "Organiser le rangement, le tri des objets et le retour des locations.",
     "Vérifier les affaires confiées aux témoins et les objets oubliés sur place.",
@@ -199,6 +216,7 @@ parts.append(chapter("05", "Déroulé de la journée",
     "Prévoyez du temps pour circuler, accueillir, manger et respirer. Remplissez ces repères avec le lieu et les prestataires."))
 rows = "".join(f'<tr><td class="n">{i}</td>' + "".join(f'<td data-l="{l}"><span class="cl"></span></td>' for l in ("Heure", "Moment et endroit", "Personne référente", "Matériel ou remarque")) + '</tr>' for i in range(1, 9))
 parts.append(f'<table class="grid keep"><thead><tr><th></th><th>Heure</th><th>Moment et endroit</th><th>Personne référente</th><th>Matériel ou remarque</th></tr></thead><tbody>{rows}</tbody></table></div>')
+parts.append(tip("prévoyez deux fois plus de temps que prévu pour les photos de groupe. Rassemblez les proches à l'avance et gardez la liste des groupes sous la main."))
 parts.append(block("À faire confirmer avec le lieu", checks([
     "Horaires d'accès, remise des clés, fin de musique et fermeture.",
     "Niveau sonore autorisé, notamment dehors, et éventuelles consignes du voisinage.",
@@ -233,7 +251,33 @@ parts.append(block("Petits kits à prévoir", checks([
     "Rangement : boîtes, sacs, étiquettes et responsable pour les objets à récupérer."])))
 
 # 7. Ambiance
-parts.append(chapter("07", "Ambiance, musique et prestataires"))
+# Plan de table
+parts.append(chapter("07", "Le plan de table sans prise de tête",
+    "C'est souvent la partie de l'organisation qui donne le plus de maux de tête. Avec une méthode simple, on s'en sort en une soirée."))
+parts.append(block("Avant de placer qui que ce soit", checks([
+    "Fixer le nombre de places par table : huit à dix invités permettent à tout le monde de se parler.",
+    "Décider de la table des mariés, face aux invités ou au milieu d'eux.",
+    "Noter les places à réserver : grands-parents, personnes à mobilité réduite, familles avec enfants en bas âge.",
+    "Repérer les tensions familiales et les amitiés fortes, pour ne rien laisser au hasard sur ces points.",
+    "Prévoir quelques places de secours par table, car il y a toujours un changement de dernière minute."]) +
+    fields(["Nombre de tables", "Invités par table"], inline=True)))
+parts.append(block("La méthode simple en quatre étapes", checks([
+    "Faire des groupes : famille proche, amis d'enfance, collègues, amis du couple.",
+    "Écrire chaque invité sur un petit papier de couleur, une couleur par groupe.",
+    "Poser les papiers sur une grande feuille ou une table, et déplacer les groupes jusqu'à ce que tout s'équilibre.",
+    "Mélanger un ou deux invités de chaque groupe pour favoriser les rencontres, puis relire avec une personne de confiance."])))
+parts.append(tip("placez d'abord les groupes évidents (amis d'enfance, collègues, famille proche). Il ne reste ensuite que quelques personnes à répartir, et les ajustements de dernière minute se font en deux minutes."))
+parts.append(block("L'option tirage au sort", p("Pour un mariage à taille humaine, ou si le plan de table vous donne des sueurs froides, laissez le hasard décider. C'est drôle, et ça vous épargne des heures de réflexion.") + checks([
+    "Numéroter les tables et préparer autant de jetons, de cartes ou de petits papiers numérotés qu'il y a de places.",
+    "Réserver à l'avance la table des mariés, celle des grands-parents et les places à mobilité réduite : tout le monde ne peut pas piocher.",
+    "Poser un bocal ou un panier à l'accueil, et inviter chacun à piocher son numéro en arrivant.",
+    "Afficher la liste des tables avec un nom original (villes, chansons, voyages) pour que chacun retrouve la sienne.",
+    "Annoncer le principe dans l'invitation ou pendant le cocktail, pour que ce soit un jeu et non une surprise.",
+    "Garder quelques places libres par table pour les couples et les familles qui préfèrent rester ensemble."])))
+parts.append(tip("le tirage au sort fonctionne très bien jusqu'à environ soixante invités : on fait des rencontres, on rit au moment de piocher, et personne n'est vexé de sa place. Pour un mariage plus grand, réservez les tables de famille et tirez au sort les autres."))
+parts.append(block("Votre plan de table en quelques mots", fields(["Notre méthode (classique ou tirage au sort)", "Tables à réserver", "Contraintes à ne pas oublier", "Noms de tables choisis"])))
+
+parts.append(chapter("08", "Ambiance, musique et prestataires"))
 parts.append(block("Les repères musicaux",
     p("Indiquez les choix indispensables, puis laissez de la place aux échanges et à l'énergie des invités.") +
     fields(["Arrivée des invités", "Entrée des mariés", "Moment symbolique", "Ouverture de bal", "Dernier morceau"], hint="titre / interprète / remarque") +
@@ -245,6 +289,7 @@ parts.append(block("Informations à transmettre au DJ", checks([
     "Horaires des moments clés et contact du référent présent sur place.",
     "Besoins de micros et de sonorisation pour cérémonie, discours ou animations."]) +
     fields(["Ambiance souhaitée en quelques mots"])))
+parts.append(tip("notez trois ou quatre morceaux indispensables et deux ou trois à éviter, puis laissez votre DJ lire la salle. C'est ce qui donne les soirées où la piste ne désemplit pas."))
 parts.append(block("Suivi des prestataires",
     p("Pour chacun, gardez le contact, ce qui a été convenu et la prochaine action avec son échéance.") +
     fields(["Lieu", "Repas / boissons", "Photo / vidéo", "DJ / son / lumière", "Fleurs / décoration", "Transport / hébergement"], hint="contact / prochaine action")))
@@ -255,6 +300,7 @@ parts.append(block("Documents à conserver au même endroit", checks([
     "Plan de table, besoins alimentaires, liste de contacts et déroulé final."]) +
     p("Une copie accessible hors ligne à la personne qui coordonne la journée.") +
     fields(["Notes et questions à traiter"])))
+parts.append(tip("photographiez chaque contrat et chaque reçu avec votre téléphone. Toute la paperasse tient alors dans votre poche, accessible le jour J."))
 
 parts.append('</main>')
 parts.append(f'''<footer class="end">
@@ -263,7 +309,7 @@ parts.append(f'''<footer class="end">
 {SPRIG}
 <p class="merci">Belle préparation à vous deux.</p>
 <p>Cette ressource est gratuite et offerte par Richard DJ Event. Elle rassemble des repères pratiques à adapter librement à votre célébration.</p>
-<p class="cta">Envie d'une soirée à votre image ? Parlons de votre mariage.</p>
+<p class="cta">Envie d'une soirée inoubliable ? Parlons de votre mariage.</p>
 <p class="sites">djmariagepaysbasque.fr<br>djmariagelandes.fr</p>
 </footer>''')
 
@@ -284,7 +330,7 @@ def toc(variant):
             'Touchez un chapitre du sommaire pour y aller directement.</span></aside></nav>')
 
 def page(variant, css_extra):
-    body = "".join(parts).replace("__TOC__", toc(variant))
+    body = fr_html("".join(parts).replace("__TOC__", toc(variant)))
     return f'''<!doctype html><html lang="fr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Checklist complète et rétroplanning du mariage | Richard DJ Event</title>

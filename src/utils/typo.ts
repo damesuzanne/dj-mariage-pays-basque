@@ -17,3 +17,11 @@ export function rehypeTypoFr() {
   };
   return (arbre: any) => visiter(arbre);
 }
+
+/** Applique fr() aux seuls textes visibles d'un document HTML (jamais scripts, styles ni attributs). */
+export function frHtml(html: string): string {
+  return html
+    .split(/(<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<[^>]*>)/)
+    .map((morceau) => (morceau.startsWith('<') ? morceau : fr(morceau)))
+    .join('');
+}

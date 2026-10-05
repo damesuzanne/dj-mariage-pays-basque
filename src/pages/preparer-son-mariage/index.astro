@@ -1,0 +1,215 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { ressources } from '../../data/ressources';
+
+const articles = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+const [une, ...suite] = articles;
+const fmt = (d: Date) => d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+const visuel = (a: (typeof articles)[number]) => a.data.image ?? ressources[a.data.ressource].couverture;
+---
+
+<Layout
+  title="Préparer son mariage : conseils, checklist et guides gratuits · Richard DJ Event"
+  description="Conseils pratiques pour organiser votre mariage au Pays Basque et dans les Landes : rétroplanning, budget, animations, musique. Avec des guides gratuits à télécharger."
+>
+  <Header />
+  <header class="blog-hero">
+    <div class="container blog-hero-inner">
+      <p class="eyebrow">Préparer son mariage</p>
+      <h1>Préparer son mariage, <em>sereinement</em></h1>
+      <p>
+        Des repères concrets tirés de plus de 200 mariages animés, et des guides gratuits à télécharger pour avancer à
+        votre rythme.
+      </p>
+    </div>
+  </header>
+
+  <main class="container blog-main">
+    {une && (
+      <a href={`/preparer-son-mariage/${une.id}/`} class="feature">
+        <div class="feature-media">
+          <Image
+            src={visuel(une)}
+            alt={une.data.imageAlt}
+            widths={[640, 960, 1280]}
+            sizes="(max-width: 900px) 92vw, 640px"
+            class="feature-img"
+            loading="eager"
+          />
+        </div>
+        <div class="feature-body">
+          <p class="kicker">À la une · {une.data.categorie}</p>
+          <h2 class="feature-title">{une.data.h1 ?? une.data.title}</h2>
+          <p class="feature-desc">{une.data.description}</p>
+          <p class="meta">
+            {fmt(une.data.date)}{une.data.tempsLecture && <> · {une.data.tempsLecture} min de lecture</>}
+          </p>
+          <span class="read">Lire l'article <svg class="read-arrow" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <p class="offert">
+            <span class="offert-dot" aria-hidden="true"></span>Guide offert : {ressources[une.data.ressource].titre}
+          </p>
+        </div>
+      </a>
+    )}
+
+    {suite.length > 0 && (
+      <section class="grid" aria-label="Autres articles">
+        {suite.map((a) => (
+          <a href={`/preparer-son-mariage/${a.id}/`} class="card">
+            <Image src={visuel(a)} alt={a.data.imageAlt} widths={[480, 720]} sizes="(max-width: 700px) 92vw, 360px" class="card-img" />
+            <div class="card-body">
+              <p class="kicker">{a.data.categorie}</p>
+              <h2 class="card-title">{a.data.h1 ?? a.data.title}</h2>
+              <p class="meta">{fmt(a.data.date)}</p>
+              <span class="read">Lire l'article <svg class="read-arrow" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </div>
+          </a>
+        ))}
+      </section>
+    )}
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .blog-hero {
+    background: var(--night);
+    color: var(--white);
+    padding: 8.5rem 0 3.5rem;
+  }
+  .blog-hero-inner {
+    max-width: 720px;
+  }
+  .blog-hero h1 {
+    color: var(--white);
+    font-size: clamp(2.2rem, 5vw, 3.3rem);
+  }
+  .blog-hero p:not(.eyebrow) {
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+  }
+  .blog-main {
+    padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(3.5rem, 8vw, 6rem);
+  }
+
+  /* Article à la une : grande photo + texte */
+  .feature {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: clamp(1.8rem, 4vw, 3.5rem);
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+  }
+  .feature-media {
+    overflow: hidden;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  .feature-media :global(img) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: 50% 40%;
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .feature:hover .feature-media :global(img) {
+    transform: scale(1.03);
+  }
+  .kicker {
+    margin: 0 0 0.7rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .feature-title {
+    font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+    margin: 0 0 1rem;
+  }
+  .feature-desc {
+    margin: 0 0 1rem;
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+  }
+  .meta {
+    margin: 0 0 1.4rem;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+  }
+  .read {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-weight: 600;
+    color: var(--night);
+  }
+  .read-arrow {
+    color: var(--gold);
+    transition: transform var(--transition);
+  }
+  .feature:hover .read-arrow,
+  .card:hover .read-arrow {
+    transform: translateX(4px);
+  }
+  .offert {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 1.8rem 0 0;
+    padding-top: 1.2rem;
+    border-top: 1px solid #eadfc8;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+  }
+  .offert-dot {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: var(--gold);
+    flex: none;
+  }
+
+  /* Articles suivants : grille de cartes photo */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2.2rem 1.8rem;
+    margin-top: clamp(3.5rem, 7vw, 5rem);
+    padding-top: clamp(2.5rem, 5vw, 3.5rem);
+    border-top: 1px solid #eadfc8;
+  }
+  .card {
+    text-decoration: none;
+    color: inherit;
+  }
+  .card :global(img) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: 14px;
+    margin-bottom: 1.1rem;
+  }
+  .card-title {
+    font-size: 1.35rem;
+    margin: 0 0 0.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .feature {
+      grid-template-columns: 1fr;
+    }
+    .feature-media :global(img) {
+      aspect-ratio: 16 / 10;
+    }
+  }
+</style>

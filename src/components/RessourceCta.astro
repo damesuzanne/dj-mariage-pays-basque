@@ -1,0 +1,393 @@
+---
+/**
+ * Encart « Recevoir la ressource » des articles du blog.
+ * - variant "encart" : visuel + formulaire prénom/e-mail (à placer 2 fois par article) ;
+ * - variant "bandeau" : rappel court qui renvoie vers le formulaire `cible`.
+ * Envoi : POST /api/ressource (worker.js) -> Apps Script du Drive de Richard,
+ * qui enregistre le lead dans le Sheet « Inbound leads » et envoie le guide par e-mail.
+ */
+import { Image } from 'astro:assets';
+import { ressources, type RessourceSlug } from '../data/ressources';
+
+interface Props {
+  ressource?: RessourceSlug;
+  variant?: 'encart' | 'bandeau';
+  id?: string;
+  cible?: string;
+  titre?: string;
+}
+
+const {
+  ressource = 'checklist-retroplanning',
+  variant = 'encart',
+  id = 'guide',
+  cible = 'guide',
+  titre,
+} = Astro.props;
+const r = ressources[ressource];
+
+// Même widget Turnstile que le formulaire de devis (clé publique).
+const TURNSTILE_SITEKEY = '0x4AAAAAADxOwNEZbVFGF9_e';
+---
+
+{variant === 'bandeau' ? (
+  <aside class="rc-band">
+    <svg class="rc-band-sprig" viewBox="0 0 220 24" aria-hidden="true"><path d="M2 12 H98 M122 12 H218" stroke="currentColor" stroke-width="1" fill="none"/><g transform="translate(110 12)"><circle r="3.2" fill="none" stroke="currentColor" stroke-width=".9"/><g fill="#9fb09a"><ellipse cx="-12" cy="-1" rx="6" ry="2.4" transform="rotate(-20 -12 -1)"/><ellipse cx="12" cy="-1" rx="6" ry="2.4" transform="rotate(20 12 -1)"/></g></g></svg>
+    <p class="rc-band-kicker">Guide gratuit · PDF à imprimer ou sur téléphone</p>
+    <p class="rc-band-title">{titre ?? `Recevez gratuitement « ${r.titre} »`}</p>
+    <a href={`#${cible}`} class="btn btn-gold rc-band-btn">Je reçois le guide</a>
+  </aside>
+) : (
+  <section class="rc" id={id} aria-labelledby={`${id}-titre`}>
+    <div class="rc-visual">
+      <Image src={r.couverture} alt={`Couverture du guide ${r.titre}`} width={260} class="rc-cover" />
+      <Image src={r.apercu} alt="" width={220} class="rc-page" />
+      <div class="rc-mobile">
+        <div class="rc-phone" aria-hidden="true">
+          <Image src={r.mobile} alt="" width={150} class="rc-phone-screen" />
+        </div>
+        <p class="rc-mobile-text">
+          <strong>Aussi sur téléphone</strong>
+          Une version pensée pour l'écran : on coche les cases et on écrit directement dans le PDF.
+        </p>
+      </div>
+    </div>
+    <div class="rc-body">
+      <p class="eyebrow">Guide gratuit</p>
+      <h2 class="rc-title" id={`${id}-titre`}>{titre ?? r.titre}</h2>
+      <ul class="rc-points">
+        {r.points.map((p) => <li>{p}</li>)}
+      </ul>
+      <form class="rc-form" data-ressource-form data-ressource={ressource} novalidate>
+        <div class="rc-fields">
+          <label>
+            <span>Prénom</span>
+            <input type="text" name="prenom" autocomplete="given-name" required maxlength="60" />
+          </label>
+          <label>
+            <span>E-mail</span>
+            <input type="email" name="email" autocomplete="email" required maxlength="120" inputmode="email" />
+          </label>
+        </div>
+        <input type="checkbox" name="botcheck" class="rc-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <label class="rc-consent">
+          <input type="checkbox" name="consentement" required />
+          <span>
+            J'accepte de recevoir ce guide par e-mail et d'être recontacté(e) par Richard DJ Event au sujet de
+            mon mariage. <a href="/politique-de-confidentialite/">Confidentialité</a>
+          </span>
+        </label>
+        {TURNSTILE_SITEKEY && (
+          <div class="cf-turnstile rc-captcha" data-sitekey={TURNSTILE_SITEKEY} data-theme="light" data-language="fr" data-size="flexible"></div>
+        )}
+        <button type="submit" class="btn btn-gold rc-submit">Recevoir mon guide par e-mail</button>
+        <p class="rc-error" role="alert" hidden></p>
+      </form>
+      <div class="rc-success" role="status" hidden>
+        <p class="rc-success-title">C'est parti, votre guide est en route&nbsp;!</p>
+        <p>
+          Il vient d'être envoyé à <strong class="rc-success-email"></strong>. Il arrive en général en moins
+          d'une minute, avec un bouton « Télécharger mon guide ».
+        </p>
+        <p class="rc-success-tip">
+          Rien reçu&nbsp;? Regardez dans vos <strong>spams</strong> ou l'onglet <strong>Promotions</strong>, et
+          ajoutez richarddjevent@gmail.com à vos contacts pour les prochains envois.
+        </p>
+      </div>
+    </div>
+  </section>
+)}
+
+<script>
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  document.querySelectorAll<HTMLFormElement>('form[data-ressource-form]').forEach((form) => {
+    if (form.dataset.bound) return;
+    form.dataset.bound = '1';
+    const erreur = form.querySelector<HTMLElement>('.rc-error')!;
+    const bouton = form.querySelector<HTMLButtonElement>('.rc-submit')!;
+    const succes = form.parentElement!.querySelector<HTMLElement>('.rc-success')!;
+
+    const afficherErreur = (message: string) => {
+      erreur.textContent = message;
+      erreur.hidden = false;
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      erreur.hidden = true;
+      const data = new FormData(form);
+      const prenom = String(data.get('prenom') ?? '').trim();
+      const email = String(data.get('email') ?? '').trim();
+      if (!prenom) return afficherErreur('Indiquez votre prénom.');
+      if (!EMAIL_RE.test(email)) return afficherErreur('Vérifiez votre adresse e-mail.');
+      if (!data.get('consentement')) return afficherErreur('Cochez la case pour recevoir le guide.');
+
+      bouton.disabled = true;
+      bouton.textContent = 'Envoi en cours…';
+      try {
+        const reponse = await fetch('/api/ressource', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prenom,
+            email,
+            consentement: true,
+            ressource: form.dataset.ressource,
+            page: location.pathname,
+            botcheck: data.get('botcheck') ? 'on' : '',
+            token: String(data.get('cf-turnstile-response') ?? ''),
+          }),
+        });
+        const resultat = await reponse.json().catch(() => ({}));
+        if (!reponse.ok || !resultat.success) throw new Error(resultat.message || 'Envoi impossible.');
+        succes.querySelector('.rc-success-email')!.textContent = email;
+        form.hidden = true;
+        succes.hidden = false;
+        succes.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch (e) {
+        afficherErreur(
+          (e as Error).message === 'Captcha invalide, veuillez réessayer.'
+            ? 'La vérification anti-robot a échoué, réessayez.'
+            : "L'envoi n'a pas fonctionné. Réessayez dans un instant ou écrivez à richarddjevent@gmail.com."
+        );
+        (window as any).turnstile?.reset?.(form.querySelector('.cf-turnstile'));
+      } finally {
+        bouton.disabled = false;
+        bouton.textContent = 'Recevoir mon guide par e-mail';
+      }
+    });
+  });
+</script>
+
+<style>
+  .rc {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: center;
+    margin: 3rem 0;
+    padding: clamp(1.5rem, 4vw, 2.6rem);
+    background: var(--cream-deep);
+    border: 1px solid #eadfc8;
+    border-radius: var(--radius);
+  }
+  .rc-visual {
+    position: relative;
+    display: grid;
+    align-content: start;
+  }
+  .rc-cover,
+  .rc-page {
+    border-radius: 6px;
+    box-shadow: var(--shadow);
+  }
+  .rc-cover {
+    position: relative;
+    z-index: 2;
+    width: 72%;
+    height: auto;
+    transform: rotate(-3deg);
+  }
+  .rc-page {
+    position: absolute;
+    right: 0;
+    top: 4%;
+    width: 58%;
+    height: auto;
+    transform: rotate(4deg);
+  }
+  .rc-mobile {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    margin-top: 3.2rem;
+    padding-left: 6%;
+    position: relative;
+    z-index: 3;
+  }
+  .rc-phone {
+    flex: none;
+    width: 112px;
+    padding: 3px;
+    background: var(--night);
+    border-radius: 20px;
+    box-shadow: 0 22px 40px -20px rgba(16, 21, 34, 0.5);
+  }
+  .rc-phone-screen {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 17px;
+  }
+  .rc-mobile-text {
+    margin: 0;
+    font-size: 0.86rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 17rem;
+  }
+  .rc-mobile-text strong {
+    display: block;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: var(--night);
+    margin-bottom: 0.15rem;
+  }
+  .rc-body .eyebrow {
+    margin-bottom: 0.4rem;
+  }
+  .rc-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 0.6rem;
+  }
+  .rc-points {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.2rem;
+    color: var(--ink-soft);
+  }
+  .rc-points li {
+    padding-left: 1.4rem;
+    position: relative;
+    margin: 0.25rem 0;
+  }
+  .rc-points li::before {
+    content: '';
+    position: absolute;
+    left: 0.2rem;
+    top: 0.6em;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+  .rc-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+  .rc-fields label span {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+  .rc-fields input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #dccfb2;
+    border-radius: 12px;
+    background: var(--white);
+    font: inherit;
+    color: var(--ink);
+  }
+  .rc-fields input:focus {
+    outline: 2px solid var(--gold);
+    outline-offset: 1px;
+  }
+  .rc-hp {
+    position: absolute;
+    left: -9999px;
+  }
+  .rc-consent {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    margin: 0.9rem 0;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+  .rc-consent input {
+    margin-top: 0.2rem;
+    accent-color: var(--gold);
+    flex: none;
+  }
+  .rc-captcha {
+    margin-bottom: 0.9rem;
+  }
+  .rc-submit {
+    width: 100%;
+  }
+  .rc-submit:disabled {
+    opacity: 0.7;
+    cursor: wait;
+  }
+  .rc-error {
+    margin: 0.7rem 0 0;
+    color: #a3352a;
+    font-size: 0.9rem;
+  }
+  .rc-success {
+    padding: 1.2rem 1.3rem;
+    background: var(--white);
+    border-left: 3px solid var(--gold);
+    border-radius: 6px 14px 14px 6px;
+  }
+  .rc-success-title {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    color: var(--night);
+    margin: 0 0 0.4rem;
+  }
+  .rc-success p {
+    margin: 0 0 0.5rem;
+  }
+  .rc-success-tip {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+
+  .rc-band {
+    margin: 2.8rem 0;
+    padding: 1.8rem 1.5rem 1.9rem;
+    text-align: center;
+    background: var(--cream);
+    border-top: 1px solid var(--gold-light);
+    border-bottom: 1px solid var(--gold-light);
+  }
+  .rc-band-sprig {
+    display: block;
+    width: 150px;
+    height: 18px;
+    margin: 0 auto 0.7rem;
+    color: var(--gold);
+  }
+  .rc-band .rc-band-kicker {
+    margin: 0 0 0.35rem;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .rc-band .rc-band-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 3vw, 1.65rem);
+    line-height: 1.25;
+    color: var(--night);
+    margin: 0 auto 1.1rem;
+    max-width: 30ch;
+    text-wrap: balance;
+  }
+  .rc-band-btn {
+    padding: 0.8rem 1.6rem;
+  }
+
+  @media (max-width: 720px) {
+    .rc {
+      grid-template-columns: 1fr;
+    }
+    .rc-visual {
+      max-width: 320px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .rc-fields {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

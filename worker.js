@@ -18,6 +18,11 @@ export default {
       return handleCaptchaVerification(request, env)
     }
 
+    // Ressources gratuites du blog (prénom + e-mail -> guide envoyé par e-mail)
+    if (url.pathname === '/api/ressource' && request.method === 'POST') {
+      return handleRessource(request, env)
+    }
+
     // Tout le reste → fichiers statiques du site
     const response = await env.ASSETS.fetch(request)
 
@@ -87,6 +92,69 @@ async function handleCaptchaVerification(request, env) {
     return json({ success: true })
   } catch (_) {
     return json({ success: false, message: 'Erreur serveur.' }, 500)
+  }
+}
+
+// /api/ressource : formulaire « Recevoir le guide » des articles du blog.
+// Vérifie le pot de miel et Turnstile, puis transmet au programme Apps Script
+// du Drive de Richard (ressources/apps-script/Code.gs) qui enregistre le lead
+// dans le Sheet « Inbound leads » et envoie le guide depuis son Gmail.
+// Secrets Cloudflare : LEADS_WEBHOOK_URL (URL /exec) et LEADS_WEBHOOK_SECRET.
+const RESSOURCES_AUTORISEES = ['checklist-retroplanning']
+
+async function handleRessource(request, env) {
+  let data
+  try {
+    data = await request.json()
+  } catch (_) {
+    return json({ success: false, message: 'Requête invalide.' }, 400)
+  }
+
+  if (data.botcheck) return json({ success: true })
+
+  const prenom = String(data.prenom ?? '').trim().slice(0, 60)
+  const email = String(data.email ?? '').trim().slice(0, 120)
+  if (!prenom || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return json({ success: false, message: 'Prénom ou e-mail invalide.' }, 400)
+  }
+  if (data.consentement !== true) {
+    return json({ success: false, message: 'Le consentement est requis.' }, 400)
+  }
+  if (!RESSOURCES_AUTORISEES.includes(data.ressource)) {
+    return json({ success: false, message: 'Ressource inconnue.' }, 400)
+  }
+
+  if (env.TURNSTILE_SECRET) {
+    const ip = request.headers.get('CF-Connecting-IP') ?? ''
+    if (!data.token || !(await verifyTurnstile(data.token, ip, env.TURNSTILE_SECRET))) {
+      return json({ success: false, message: 'Captcha invalide, veuillez réessayer.' }, 400)
+    }
+  }
+
+  if (!env.LEADS_WEBHOOK_URL || !env.LEADS_WEBHOOK_SECRET) {
+    return json({ success: false, message: 'Service indisponible.' }, 503)
+  }
+
+  try {
+    // Apps Script répond par une redirection 302 vers googleusercontent.com :
+    // fetch la suit en GET, ce qui renvoie bien la réponse JSON du script.
+    const res = await fetch(env.LEADS_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        secret: env.LEADS_WEBHOOK_SECRET,
+        prenom,
+        email,
+        ressource: data.ressource,
+        consentement: true,
+        site: new URL(request.url).hostname,
+        page: String(data.page ?? '').slice(0, 200),
+      }),
+    })
+    const out = await res.json().catch(() => ({}))
+    return json({ success: out.success === true }, out.success === true ? 200 : 502)
+  } catch (_) {
+    return json({ success: false, message: 'Erreur serveur.' }, 502)
   }
 }
 

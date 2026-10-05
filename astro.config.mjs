@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import mdx from '@astrojs/mdx';
 
 export default defineConfig({
   site: 'https://djmariagepaysbasque.fr',
@@ -11,6 +12,7 @@ export default defineConfig({
     inlineStylesheets: 'always',
   },
   integrations: [
+    mdx(),
     sitemap({
       // La page /link-tree/ est un hub de liens en noindex : on la garde
       // hors du sitemap pour rester cohérent avec la balise robots.

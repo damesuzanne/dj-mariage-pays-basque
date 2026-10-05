@@ -18,3 +18,9 @@ dist/
 # Éditeurs
 .vscode/
 .idea/
+
+# Secrets locaux (jamais commités)
+.dev.vars*
+ressources/.leads-secret.env
+ressources/apps-script/Secret.gs
+ressources/apps-script/.clasp.json

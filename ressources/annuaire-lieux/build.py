@@ -205,7 +205,6 @@ def cover():
     return f'''<section class="cover">
 <figure class="cover-photo"><img src="photos/ambiance.jpg" alt="Tables de réception de mariage dressées sous des guirlandes lumineuses"></figure>
 <div class="cover-text">
-<div class="fl br">{FLORAL}</div>
 <p class="kicker">Guide gratuit · Édition octobre 2026</p>
 <h1>Votre lieu de mariage<br><em>au Pays Basque</em></h1>
 {SPRIG}
@@ -213,7 +212,6 @@ def cover():
 <p class="lead">14 adresses de la côte aux collines, les questions à poser, la checklist de visite, le comparatif de vos favoris et la fiche budget.</p>
 {lockup("on-light small")}
 </div>
-<p class="cover-cap">Photographie d’ambiance, hors annuaire</p>
 </section>'''
 
 

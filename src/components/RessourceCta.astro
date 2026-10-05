@@ -28,6 +28,10 @@ const {
 const r = ressources[ressource];
 // « guide » ou « livret », selon la ressource.
 const nom = r.type.split(' ')[0].toLowerCase();
+// Élision : « le guide » / « l’annuaire », « ce guide » / « cet annuaire ».
+const voyelle = /^[aeiouhéèêàâîïôû]/.test(nom);
+const leNom = voyelle ? `l’${nom}` : `le ${nom}`;
+const ceNom = voyelle ? `cet ${nom}` : `ce ${nom}`;
 
 // Même widget Turnstile que le formulaire de devis (clé publique).
 const TURNSTILE_SITEKEY = '0x4AAAAAADxOwNEZbVFGF9_e';
@@ -38,7 +42,7 @@ const TURNSTILE_SITEKEY = '0x4AAAAAADxOwNEZbVFGF9_e';
     <svg class="rc-band-sprig" viewBox="0 0 220 24" aria-hidden="true"><path d="M2 12 H98 M122 12 H218" stroke="currentColor" stroke-width="1" fill="none"/><g transform="translate(110 12)"><circle r="3.2" fill="none" stroke="currentColor" stroke-width=".9"/><g fill="#9fb09a"><ellipse cx="-12" cy="-1" rx="6" ry="2.4" transform="rotate(-20 -12 -1)"/><ellipse cx="12" cy="-1" rx="6" ry="2.4" transform="rotate(20 12 -1)"/></g></g></svg>
     <p class="rc-band-kicker">{r.type} · PDF à imprimer ou sur téléphone</p>
     <p class="rc-band-title">{fr(titre ?? `Recevez gratuitement « ${r.titre} »`)}</p>
-    <a href={`#${cible}`} class="btn btn-gold rc-band-btn">Je reçois le {nom}</a>
+    <a href={`#${cible}`} class="btn btn-gold rc-band-btn">Je reçois {leNom}</a>
   </aside>
 ) : (
   <section class="rc" id={id} aria-labelledby={`${id}-titre`}>
@@ -76,7 +80,7 @@ const TURNSTILE_SITEKEY = '0x4AAAAAADxOwNEZbVFGF9_e';
         <label class="rc-consent">
           <input type="checkbox" name="consentement" required />
           <span>
-            J'accepte de recevoir ce {nom} par e-mail et d'être recontacté(e) par Richard DJ Event au sujet de
+            J'accepte de recevoir {ceNom} par e-mail et d'être recontacté(e) par Richard DJ Event au sujet de
             mon mariage. <a href="/politique-de-confidentialite/">Confidentialité</a>
           </span>
         </label>

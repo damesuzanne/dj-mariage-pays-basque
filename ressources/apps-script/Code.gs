@@ -40,6 +40,7 @@ const RESSOURCES = {
   'checklist-retroplanning': {
     titre: 'Checklist complète & rétroplanning du mariage',
     accroche: 'Votre guide est prêt : la checklist complète et le rétroplanning, de la date choisie jusqu’au lendemain de la fête.',
+    web: { libelle: 'Remplir en ligne', detail: 'vos réponses s’enregistrent toutes seules sur votre appareil', url: 'https://djmariagepaysbasque.fr/ressources/checklist-retroplanning-mariage/' },
     fichiers: [
       { libelle: 'Version téléphone', detail: 'à remplir sur l’écran', id: '1bF02mEdGind82uVcvl-0_NcGZgz6Zs3T' },
       { libelle: 'Version A4 à imprimer', detail: 'ou à remplir sur ordinateur', id: '1Uy8_UoHeBf75mBlUfic7MMC2U4LdF2kF' },
@@ -48,6 +49,7 @@ const RESSOURCES = {
   'livret-jeux': {
     titre: 'Le livret de jeux de mariage',
     accroche: 'Votre livret est prêt : 12 jeux menés par vos invités et vos témoins, à imprimer ou à remplir sur téléphone.',
+    web: { libelle: 'Remplir en ligne', detail: 'vos réponses s’enregistrent toutes seules sur votre appareil', url: 'https://djmariagepaysbasque.fr/ressources/livret-jeux-mariage/' },
     fichiers: [
       { libelle: 'Version téléphone', detail: 'à remplir sur l’écran', id: '1S8_8FPODX6zmxW945hlipmjO-N8r9v9t' },
       { libelle: 'Version A4 à imprimer', detail: 'ou à remplir sur ordinateur', id: '1W0qTzt-ROu0C9khEqvfJSXpL3b6TvzRW' },

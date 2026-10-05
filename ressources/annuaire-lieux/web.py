@@ -38,6 +38,16 @@ body = re.sub(r'<td data-l="([^"]*)"><span class="cl"></span></td>',
               lambda m: f'<td data-l="{m.group(1)}"><span class="cl"></span>'
                         f'<textarea id="{nid()}" class="cell" rows="1" aria-label="{m.group(1)}"></textarea></td>', body)
 
+# Sommaire web : pas de numéros de page, une flèche cliquable et la liste des 14 lieux sous le chapitre 02.
+venues = [(i, v) for i, v in enumerate([it[1] for ch in build.CONTENT if ch["kind"] == "venue" for it in ch["items"]], 1)]
+sub = '<ol class="venue-subtoc">' + "".join(
+    f'<li><a href="#cL{i:02d}"><span class="tt">{build.e(v["name"])}</span><span class="tm">{build.e(v["town"])}</span><span class="tp">›</span></a></li>'
+    for i, v in venues) + "</ol>"
+body = re.sub(r'<span class="tl"></span><span class="tp"></span></a></li>', '<span class="tl"></span><span class="tp">›</span></a></li>', body)
+body = body.replace('<span class="tp">›</span></a></li>', '<span class="tp">›</span></a></li>')
+body = re.sub(r'(<a href="#c02">.*?</a>)</li>', lambda m: m.group(1) + sub + "</li>", body, count=1, flags=re.S)
+body = body.replace("Touchez un titre du sommaire ou un lieu de l’annuaire pour y aller directement.", "Touchez un titre du sommaire ou un lieu pour y aller directement.")
+
 tools = f'''<div class="screen-tools"><p id="save-status" role="status">Vos réponses s’enregistrent automatiquement sur cet appareil, dans ce navigateur. Elles ne sont pas envoyées à Richard.</p>
 <div class="st-actions"><a href="https://drive.google.com/file/d/{DRIVE['a4']}/view" target="_blank" rel="noopener">PDF A4 à imprimer</a>
 <a href="https://drive.google.com/file/d/{DRIVE['mobile']}/view" target="_blank" rel="noopener">PDF pour téléphone</a>
@@ -45,6 +55,18 @@ tools = f'''<div class="screen-tools"><p id="save-status" role="status">Vos rép
 body = body.replace("<main>", "<main>" + tools, 1)
 
 EXTRA = '''
+html{scroll-behavior:smooth}
+.chapter,.venue{scroll-margin-top:16px}
+.toc li a:hover .tt{color:var(--gold)}
+.toc li a:hover .tp{transform:translateX(3px)}
+.toc .tp{transition:transform .15s;font-size:24px;line-height:1}
+.venue-subtoc{list-style:none;margin:0 0 6px 40px}
+.venue-subtoc a{padding:8px 0!important;border-bottom:1px dotted var(--line)!important}
+.venue-subtoc .tt{font-size:17px!important}
+.venue-subtoc .tm{flex:1;font-size:13px;color:var(--muted);text-align:right}
+.back-top{position:fixed;right:14px;bottom:14px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-size:20px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+@media print{.back-top{display:none}}
+
 .screen-tools{margin:18px 0 6px;padding:14px 18px;background:#fff;border:1px solid var(--line);border-radius:14px;font-size:14px;color:var(--muted)}
 .st-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .st-actions a,.st-actions button{font:500 13px var(--sans);color:var(--navy);background:transparent;border:1px solid var(--gold);border-radius:30px;padding:8px 14px;text-decoration:none;cursor:pointer}
@@ -72,6 +94,9 @@ try{localStorage.setItem(key,JSON.stringify(saved));st.textContent='Enregistré 
 document.getElementById('export').onclick=function(){var b=new Blob([JSON.stringify(saved,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='mes-visites-mariage.json';a.click();URL.revokeObjectURL(u)};
 })();
 '''
+
+body += '<a class="back-top" href="#top" aria-label="Retour au sommaire">↑</a>'
+body = body.replace('<nav class="toc"', '<nav class="toc" id="top"', 1)
 
 html = f'''<!doctype html><html lang="fr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">

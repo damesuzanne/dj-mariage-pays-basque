@@ -13,7 +13,7 @@ const blog = defineCollection({
     description: z.string(),
     date: z.coerce.date(),
     updated: z.coerce.date().optional(),
-    ressource: z.enum(['checklist-retroplanning', 'livret-jeux']).default('checklist-retroplanning'),
+    ressource: z.enum(['checklist-retroplanning', 'livret-jeux', 'annuaire-lieux']).default('checklist-retroplanning'),
     categorie: z.string().default('Organisation'),
     // Public visé : sert aux filtres de /conseils/ et au bloc de fin d'article.
     public: z.enum(['mariage', 'entreprises', 'bars-restaurants']).default('mariage'),

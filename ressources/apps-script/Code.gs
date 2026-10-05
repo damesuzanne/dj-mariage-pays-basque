@@ -53,6 +53,14 @@ const RESSOURCES = {
       { libelle: 'Version A4 à imprimer', detail: 'ou à remplir sur ordinateur', id: '1W0qTzt-ROu0C9khEqvfJSXpL3b6TvzRW' },
     ],
   },
+  'annuaire-lieux': {
+    titre: 'L’annuaire des lieux de mariage au Pays Basque',
+    accroche: 'Votre annuaire est prêt : 14 lieux de mariage au Pays Basque, leurs coordonnées et le carnet pour préparer vos visites.',
+    fichiers: [
+      { libelle: 'Version téléphone', detail: 'à remplir sur l’écran', id: '1yiobewQ_yD2pHtC-NkQ9W_krHEdrStge' },
+      { libelle: 'Version A4 à imprimer', detail: 'ou à remplir sur ordinateur', id: '1wqEiK7fxHnm24tNLCEjTNTTXnTBSw4m0' },
+    ],
+  },
 };
 
 // Ouvrir l'URL /exec une fois avec le compte de Richard déclenche l'écran
@@ -104,7 +112,8 @@ function doPost(e) {
       try {
         MailApp.sendEmail(REPONDRE_A, `Nouveau téléchargement : ${ressource.titre}`,
           `${data.prenom || ''} <${data.email}> a téléchargé « ${ressource.titre} »\n` +
-          `Site : ${data.site || ''}\nPage : ${data.page || ''}\n\nLe lead est dans le Sheet « Inbound leads ».`);
+          `Site : ${data.site || ''}\nPage : ${data.page || ''}\n\nLe lead est dans le Sheet « Inbound leads ».`,
+          { name: 'NOUVEAU TELECHARGEMENT SITE' });
       } catch (erreur) { /* notification facultative */ }
     }
 
@@ -130,7 +139,7 @@ function envoyerGuide(data, ressource) {
     '',
     ...liens.map((l) => `${l.libelle} (${l.detail}) : ${l.url}`),
     '',
-    'Le PDF se remplit directement à l’écran : cochez les cases et écrivez dans les lignes, puis enregistrez.',
+    'Le PDF se remplit directement à l’écran : enregistrez d’abord le fichier sur votre appareil, ouvrez-le dans Adobe Acrobat Reader, Aperçu (Mac) ou Fichiers (iPhone), cochez les cases et écrivez dans les lignes, puis enregistrez de nouveau pour tout conserver.',
     '',
     'Belle préparation à vous deux,',
     'Richard',
@@ -155,7 +164,7 @@ function envoyerGuide(data, ressource) {
 <p style="margin:0 0 14px">Bonjour ${echapper(prenom)},</p>
 <p style="margin:0 0 20px">${echapper(ressource.accroche)}</p>
 <div style="margin:0 0 20px">${boutons}</div>
-<p style="margin:0 0 14px;font-size:14px;color:#5a6072">Le PDF se remplit directement à l’écran : cochez les cases et écrivez dans les lignes, puis enregistrez. Il s’imprime aussi très bien.</p>
+<p style="margin:0 0 14px;font-size:14px;color:#5a6072">Le PDF se remplit directement à l’écran. Pour que vos réponses restent, enregistrez d’abord le fichier sur votre appareil, ouvrez-le dans Adobe Acrobat Reader, Aperçu (Mac) ou Fichiers (iPhone), cochez et écrivez, puis enregistrez de nouveau. Dans un navigateur ou l’aperçu d’une messagerie, les réponses ne sont pas gardées. Il s’imprime aussi très bien.</p>
 <p style="margin:24px 0 0">Belle préparation à vous deux,<br><strong>Richard</strong></p>
 </td></tr>
 <tr><td style="padding:20px 28px 28px;font-size:12px;color:#5a6072;border-top:1px solid #f1e8d4">

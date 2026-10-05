@@ -1,0 +1,36 @@
+
+/* Variante PDF « téléphone » : page 108 x 234 mm, une colonne */
+@page{size:108mm 234mm;margin:9mm 6mm 11mm}
+@page{@bottom-left{content:"Richard DJ Event · Lieux de mariage";font-size:6pt}}
+@media print{
+ body{font-size:11pt}
+ .cover{height:234mm}
+ .cover-photo{height:100mm}
+ .cover-cap{top:94mm;font-size:6pt}
+ .cover h1{font-size:27pt}
+ .cover .sub{font-size:13pt}
+ .lead{font-size:10pt;margin-bottom:5mm}
+ .cover-text{padding:6mm 6mm}
+ .fl{width:45mm;height:45mm}
+ .toc h2,.chapter h2,.v-head h2{font-size:22pt}
+ .toc .tt{font-size:13pt}
+ .toc li a{padding:3mm 0}
+ .fields.inline,.v-body,.v-top{grid-template-columns:1fr}
+ .block{padding:4mm 4mm 3mm}
+ .block,.zone{break-inside:auto}
+ .v-card,.v-body .tip{break-inside:avoid}
+ .v-photo img{height:52mm}
+ .v-photo.small img{height:52mm}
+ .venue blockquote p{font-size:13pt}
+ .v-card{font-size:10pt}
+ .ov thead{display:none}
+ .ov .vt{display:none}
+ .grid thead{display:none}
+ .grid,.grid tbody,.grid tr,.grid td{display:block;width:100%!important}
+ .grid tr{padding:2mm 3mm;border-bottom:1px solid var(--line)}
+ .grid td{border:0;height:auto;padding-top:1mm;border-bottom:1.5px dotted var(--gold)}
+ .grid td.crit{border:0;font-weight:500;padding:1mm 0}
+ .grid .cl{display:none}
+ .grid td[data-l]::before{content:attr(data-l);display:block;font-size:8.5pt;color:var(--muted);padding-bottom:5mm}
+ .end{height:234mm}
+}

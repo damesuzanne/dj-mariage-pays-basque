@@ -4,6 +4,9 @@ import mobileChecklist from '../assets/ressources/checklist-retroplanning-mobile
 import couvertureJeux from '../assets/ressources/livret-jeux-couverture.png';
 import pageJeux from '../assets/ressources/livret-jeux-page.png';
 import mobileJeux from '../assets/ressources/livret-jeux-mobile.png';
+import couvertureLieux from '../assets/ressources/annuaire-lieux-couverture.png';
+import pageLieux from '../assets/ressources/annuaire-lieux-page.png';
+import mobileLieux from '../assets/ressources/annuaire-lieux-mobile.png';
 
 /**
  * Ressources gratuites proposées en échange d'un prénom + e-mail.
@@ -37,6 +40,19 @@ export const ressources = {
     couverture: couvertureJeux,
     apercu: pageJeux,
     mobile: mobileJeux,
+  },
+  'annuaire-lieux': {
+    type: 'Annuaire gratuit',
+    titre: 'Votre lieu de mariage au Pays Basque : l’annuaire et le carnet de visites',
+    accroche: '14 lieux avec leurs coordonnées, et tout pour préparer vos visites',
+    points: [
+      'Version A4 à imprimer et version téléphone à remplir',
+      '14 fiches : adresse, téléphone, e-mail, site officiel et questions à poser',
+      'Checklist de visite, comparatif de vos trois favoris, budget et règlements',
+    ],
+    couverture: couvertureLieux,
+    apercu: pageLieux,
+    mobile: mobileLieux,
   },
 } as const;
 

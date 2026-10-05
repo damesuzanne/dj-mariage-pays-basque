@@ -106,7 +106,7 @@ async function handleCaptchaVerification(request, env) {
 // du Drive de Richard (ressources/apps-script/Code.gs) qui enregistre le lead
 // dans le Sheet « Inbound leads » et envoie le guide depuis son Gmail.
 // Secrets Cloudflare : LEADS_WEBHOOK_URL (URL /exec) et LEADS_WEBHOOK_SECRET.
-const RESSOURCES_AUTORISEES = ['checklist-retroplanning', 'livret-jeux']
+const RESSOURCES_AUTORISEES = ['checklist-retroplanning', 'livret-jeux', 'annuaire-lieux']
 
 async function handleRessource(request, env) {
   let data

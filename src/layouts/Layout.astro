@@ -49,19 +49,9 @@ const ogImage = await getImage({ src: ogSource ?? richardPhoto, width: 1200, for
 const imageUrl = new URL(ogImage.src, siteUrl).toString();
 const pageUrl = new URL(Astro.url.pathname, siteUrl).toString();
 
-// Témoignages réels de /src/components/Testimonials.astro (section #avis) —
-// repris sans note chiffrée : les 5 étoiles affichées y sont un élément
-// visuel fixe (pas une donnée saisie par les mariés), donc aucune
-// `reviewRating` n'est ajoutée pour ne pas fabriquer une note qui n'existe
-// pas réellement (contrairement à un vrai avis Google avec note associée).
-const temoignages = [
-  { name: 'Sophie & Mathieu', text: 'Richard a été parfait pour notre mariage ! Ambiance au top, piste de danse pleine toute la soirée. Nos invités en parlent encore.' },
-  { name: 'Julie & Clément', text: 'Très professionnel, ponctuel et sympathique. Il a su s’adapter à toutes les générations présentes.' },
-  { name: 'Camille & Lucas', text: 'Le photobooth a été un vrai succès et la machine à fumée pour l’ouverture de bal, magique. Merci pour tout !' },
-  { name: 'Marion & Antoine', text: 'Un accompagnement de A à Z, des conseils précieux et une playlist qui nous ressemblait vraiment.' },
-  { name: 'Théo & Bérénice', text: 'Sonorisation impeccable pour la cérémonie laïque, transitions parfaites toute la soirée. On recommande les yeux fermés.' },
-  { name: 'Élodie & Romain', text: 'Réactif dès le premier contact, à l’écoute de nos envies. La soirée est passée trop vite !' },
-];
+// Les témoignages restent affichés dans Testimonials.astro.
+// Pas de Review/AggregateRating pour les avis sur notre propre entreprise :
+// Google exclut ces avis des étoiles enrichies pour LocalBusiness.
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -131,11 +121,6 @@ const jsonLd = {
           itemOffered: { '@type': 'Service', name, areaServed: ['Pays Basque', 'Landes'] },
         })),
       },
-      review: temoignages.map((t) => ({
-        '@type': 'Review',
-        author: { '@type': 'Person', name: t.name },
-        reviewBody: t.text,
-      })),
     },
     {
       '@type': 'WebSite',

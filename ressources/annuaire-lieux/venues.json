@@ -8,11 +8,11 @@
     "email": "bassilour@gmail.com",
     "site": "https://www.domainedebassilour.com/",
     "summary": "À Bidart, le parc du Manoir accueille la cérémonie et le cocktail, tandis que la Ferme rénovée reçoit la réception. Des chambres et des appartements permettent de séjourner dans le domaine.",
-    "focus": "Demander quels espaces sont compris dans la formule : parc du Manoir, salle de la Ferme et chambres ne doivent pas être considérés comme automatiquement inclus.",
+    "focus": "Demandez quels espaces sont compris dans le prix : le parc du Manoir, la salle de la Ferme et les chambres ne sont pas forcément inclus.",
     "questions": [
-      "Quelle capacité assise reste disponible avec la piste de danse ?",
-      "Quel espace accueille cérémonie et cocktail en cas de pluie ?",
-      "Quels hébergements et horaires de soirée sont compris dans notre contrat ?"
+      "Combien d’invités peuvent être assis à table en gardant de la place pour danser ?",
+      "Où se déroulent la cérémonie et le cocktail s’il pleut ?",
+      "Les chambres et l’heure de fin de soirée sont-elles écrites dans le contrat ?"
     ],
     "sources": [
       [
@@ -36,11 +36,11 @@
     "email": "contact@brindos-cotebasque.fr",
     "site": "https://brindos-cotebasque.fr/",
     "summary": "À Anglet, le Château de Brindos accueille les mariages au bord du lac. Ses espaces intérieurs et extérieurs composent un cadre entre château, eau et nature.",
-    "focus": "Faire préciser la privatisation des espaces et la cohabitation éventuelle avec les autres clients de l’hôtel.",
+    "focus": "Demandez quels espaces seront réservés à vous seuls et si d’autres clients de l’hôtel seront présents en même temps.",
     "questions": [
-      "Quels salons et terrasses sont réservés exclusivement à notre mariage ?",
-      "Quel plan de repli permet de conserver le même nombre de convives ?",
-      "La restauration, les chambres et la soirée dansante font-elles l’objet de devis séparés ?"
+      "Quels salons et quelles terrasses seront à nous seuls, sans autres clients de l’hôtel ?",
+      "S’il pleut, où se retrouve-t-on, et y a-t-il autant de place pour tous les invités ?",
+      "Le repas, les chambres et la soirée dansante sont-ils sur un seul devis ou sur des devis séparés ?"
     ],
     "sources": [
       [
@@ -60,11 +60,11 @@
     "email": "info@gaztelur.com",
     "site": "https://gaztelur.com/",
     "summary": "Cette ancienne maison de maître à Arcangues réunit un restaurant, une boutique fleuriste et des antiquités. Les espaces accueillent également des mariages sur demande.",
-    "focus": "Distinguer la location des espaces, la restauration et la décoration : vérifier ce qui est réellement compris dans la proposition personnalisée.",
+    "focus": "Faites la différence entre la location des lieux, le repas et la décoration, et vérifiez ce qui est vraiment compris dans la proposition.",
     "questions": [
-      "Quelle formule de privatisation correspond à notre effectif ?",
-      "Quels prestataires peut-on choisir librement ?",
-      "Quelles sont les possibilités et les conditions de la soirée dansante ?"
+      "Quelle formule correspond à notre nombre d’invités : location seule ou avec repas ?",
+      "Quels prestataires (traiteur, fleuriste, DJ…) pouvons-nous choisir librement ?",
+      "Peut-on faire une soirée dansante, et à quelles conditions (horaires, bruit) ?"
     ],
     "sources": [
       [
@@ -91,12 +91,12 @@
     "phone": "05 59 55 32 80",
     "email": "info@larbeou.com",
     "site": "https://www.larbeou.com/",
-    "summary": "Une Maison de Maître, une Grande Salle, un parc au bord de l’Adour et des hébergements : Larbéou propose plusieurs formules de réception et de privatisation à Bayonne.",
-    "focus": "Le traiteur est imposé et l’animation musicale est libre. Demandez un devis incluant la restauration pour comparer le coût total à une location seule.",
+    "summary": "Une Maison de Maître, une Grande Salle, un parc au bord de l’Adour et des hébergements : Larbéou propose plusieurs formules de réception, jusqu’à la location exclusive du lieu à Bayonne.",
+    "focus": "Le traiteur est imposé et la musique est libre. Demandez un devis avec le repas pour comparer le coût total à une simple location.",
     "questions": [
-      "Quel espace conseillez-vous pour notre effectif avec une piste de danse ?",
-      "Quels logements seront disponibles et à quel tarif ?",
-      "Quels menus, boissons et services sont inclus dans notre devis ?"
+      "Quelle salle conseillez-vous pour nos invités, en gardant de la place pour la piste de danse ?",
+      "Quels logements sont disponibles pour nos invités, et à quel prix ?",
+      "Que comprend le devis : menus, boissons, service ?"
     ],
     "sources": [
       [
@@ -120,11 +120,11 @@
     "email": "hello@domainesantamaria.com",
     "site": "https://www.domainesantamaria.com/",
     "summary": "À Villefranque, ce domaine privatisable associe patio, salons, parc et terrasse abritée. Il dispose d’équipements de sonorisation et de lumière. Des hébergements partenaires se trouvent à proximité.",
-    "focus": "Les hébergements annoncés sont des maisons partenaires à proximité. Vérifier séparément leur réservation et le transport des invités.",
+    "focus": "Les logements annoncés sont des maisons partenaires à proximité. Vérifiez séparément leur réservation et le transport des invités.",
     "questions": [
-      "Quels espaces et équipements sont inclus pour notre mariage ?",
-      "Comment notre DJ intervient-il avec la régie et le matériel du lieu ?",
-      "Qui réserve les maisons partenaires et quelles navettes sont prévues ?"
+      "Quels espaces et quel matériel (son, lumière) sont compris pour notre mariage ?",
+      "Notre DJ peut-il utiliser le matériel de son et de lumière du lieu, ou doit-il venir avec le sien ?",
+      "Qui réserve les maisons partenaires pour dormir, et comment les invités se déplacent-ils (navettes) ?"
     ],
     "sources": [
       [
@@ -150,9 +150,9 @@
     "summary": "À Villefranque, une orangerie de 300 m² accueille la soirée ou la cérémonie. Terrasses et jardins complètent la réception, avec des hébergements au château et au manoir. La formule mariage s’étend sur trois jours ; la salle dispose d’équipements de sonorisation.",
     "focus": "Confirmez le nombre de chambres disponibles, les conditions d’utilisation du matériel et les horaires de musique.",
     "questions": [
-      "Quels espaces et hébergements sont inclus pendant les trois jours ?",
-      "Quel repli est prévu pour le cocktail en cas de pluie ?",
-      "Quelles règles et quels équipements faut-il transmettre au DJ ?"
+      "Quels espaces et quels logements sont compris pendant les trois jours ?",
+      "S’il pleut, où se déroule le cocktail ?",
+      "Quelles règles de bruit et quel matériel faut-il communiquer au DJ ?"
     ],
     "sources": [
       [
@@ -176,11 +176,11 @@
     "email": "contact@maisonbelzunce.com",
     "site": "https://maisonbelzunce.com/",
     "summary": "À Méharin, une ancienne bergerie aménagée en salle côtoie salons, jardins, piscine et guinguette. Le domaine propose également des hébergements.",
-    "focus": "Les visites se font sur rendez-vous. Confirmez la durée et le périmètre de la privatisation.",
+    "focus": "Les visites se font sur rendez-vous. Confirmez combien de temps le lieu est à vous et ce qu’il comprend.",
     "questions": [
-      "Quelle durée de privatisation et quelles nuits sont proposées à notre date ?",
-      "Quels espaces sont compris pour le mariage et le brunch ?",
-      "Quelle capacité est retenue après installation de la piste et des tables ?"
+      "Combien de temps le lieu est-il à nous, et quelles nuits sont proposées à notre date ?",
+      "Quels espaces sont compris pour le mariage et pour le brunch du lendemain ?",
+      "Combien d’invités tiennent vraiment une fois la piste de danse et les tables installées ?"
     ],
     "sources": [
       [
@@ -200,11 +200,11 @@
     "email": "mariages@iduki.net",
     "site": "https://www.mariage-pays-basque.fr/",
     "summary": "À La Bastide-Clairence, trois salles de mariage s’accompagnent d’une résidence de maisons typiques basques. L’équipe propose un accompagnement pour l’organisation de la réception.",
-    "focus": "Confirmez le point d’arrivée avec l’équipe et l’organisation des déplacements entre réception et hébergement.",
+    "focus": "Demandez où les invités arrivent et comment ils se déplacent entre la salle de réception et leur logement.",
     "questions": [
-      "Quelle salle est adaptée à notre effectif et à la piste de danse ?",
-      "Quels logements et prestations de coordination sont inclus ?",
-      "Quel déroulé complet est prévu si le repas ou le cocktail doit être déplacé à l’intérieur ?"
+      "Quelle salle convient à notre nombre d’invités, avec de la place pour danser ?",
+      "Quels logements sont compris, et que fait la wedding-planner le jour J (accueil, organisation de la journée) ?",
+      "Si le repas ou le cocktail doit se faire à l’intérieur à cause de la pluie, comment la journée se déroule-t-elle ?"
     ],
     "sources": [
       [
@@ -236,11 +236,11 @@
     "email": "contact@ostape.com",
     "site": "https://www.ostape.com/fr/",
     "summary": "Sur les coteaux de Bidarray, chambres et suites se répartissent dans plusieurs maisons basques. Le domaine accueille des réceptions privées et des mariages.",
-    "focus": "Faire visiter l’espace précis proposé pour le mariage : les différentes zones du domaine peuvent impliquer des déplacements à organiser.",
+    "focus": "Demandez à voir l’endroit exact prévu pour le mariage : le domaine est vaste et les invités devront peut-être se déplacer.",
     "questions": [
-      "Quel bâtiment accueille le dîner et la soirée dansante ?",
-      "Comment les invités circulent-ils entre chambres, cérémonie et réception ?",
-      "Quelle privatisation et quelle restauration sont proposées pour notre effectif ?"
+      "Dans quel bâtiment ont lieu le dîner et la soirée dansante ?",
+      "Comment les invités se déplacent-ils entre leurs chambres, la cérémonie et la réception ?",
+      "Le domaine est-il à nous seuls, et quel repas est proposé pour notre nombre d’invités ?"
     ],
     "sources": [
       [
@@ -264,11 +264,11 @@
     "email": "contact@hotel-bonnet.info",
     "site": "https://ferme-inharria.com/",
     "summary": "À Ibarron, cette ferme ancienne aménagée en salle de réception conserve une décoration d’arts populaires basques et ruraux. Les réservations se font auprès de l’Hôtel Bonnet.",
-    "focus": "Demandez à l’Hôtel Bonnet une offre dédiée à la Ferme Inharria, en précisant séparément vos besoins d’hébergement.",
+    "focus": "Demandez à l’Hôtel Bonnet une offre pour la Ferme Inharria, en précisant à part vos besoins de logement.",
     "questions": [
-      "Quel effectif peut dîner puis danser confortablement dans la salle ?",
-      "Quels espaces sont prévus pour le cocktail et le repli météo ?",
-      "Quels accès, horaires et prestations sont compris dans la location ?"
+      "Combien d’invités peuvent dîner puis danser à l’aise dans la salle ?",
+      "Où se fait le cocktail, et où va-t-on s’il pleut ?",
+      "Que comprend la location : accès, horaires, matériel et services ?"
     ],
     "sources": [
       [
@@ -292,11 +292,11 @@
     "email": "contact@urtubienborda.fr",
     "site": "https://www.urtubienborda.fr/",
     "summary": "À Olhette, sur la commune d’Urrugne, cette ferme basque réunit une salle de réception, un jardin, une terrasse et cinq chambres. Elle accueille notamment les mariages.",
-    "focus": "Les chambres et la salle sont présentées dans des rubriques distinctes. Faire préciser la répartition du prix entre réception et hébergement.",
+    "focus": "Les chambres et la salle sont présentées séparément. Demandez comment le prix se répartit entre la réception et le logement.",
     "questions": [
-      "Quelle surface reste disponible pour la danse après installation du dîner ?",
-      "Quelles parties du jardin et de la terrasse sont réservées au mariage ?",
-      "Quel repli météo, quelles heures de musique et quels couchages sont contractuels ?"
+      "Quelle place reste pour danser une fois le dîner installé ?",
+      "Quelles parties du jardin et de la terrasse sont réservées à notre mariage ?",
+      "S’il pleut, où va-t-on ? Les heures de musique et les couchages sont-ils écrits dans le contrat ?"
     ],
     "sources": [
       [
@@ -320,11 +320,11 @@
     "email": "reception@luzgrandhotel.fr",
     "site": "https://luzgrandhotel.fr/",
     "summary": "Face à la baie de Saint-Jean-de-Luz, cet hôtel de style Belle Époque accueille mariages et réceptions. Ses équipes commerciale et restauration accompagnent la préparation de l’événement.",
-    "focus": "La capacité d’une salle en séminaire ne correspond pas automatiquement à celle d’un dîner avec piste de danse. Demander une configuration mariage.",
+    "focus": "La capacité d’une salle pour un séminaire n’est pas celle d’un dîner avec piste de danse. Demandez une configuration mariage.",
     "questions": [
-      "Quel salon peut recevoir notre dîner et notre soirée dansante ?",
-      "Quels espaces sont exclusifs et quels espaces restent ouverts à l’hôtel ?",
-      "Quels menus, hébergements et horaires figurent dans la proposition mariage ?"
+      "Quel salon peut accueillir notre dîner puis notre soirée dansante ?",
+      "Quels espaces sont à nous seuls, et lesquels restent ouverts aux autres clients de l’hôtel ?",
+      "Que contient la proposition mariage : menus, chambres, horaires ?"
     ],
     "sources": [
       [
@@ -348,11 +348,11 @@
     "email": "service.commercial@hoteldupalaisbiarritz.com",
     "site": "https://www.hyatt.com/unbound-collection/fr-FR/biqub-hotel-du-palais-biarritz",
     "summary": "À Biarritz, le Salon Impérial et son Jardin d’Hiver font partie des espaces proposés pour les mariages. Menus sur mesure, décoration florale et accompagnement dédié complètent la réception.",
-    "focus": "Précisez dès le premier contact avec le service commercial qu’il s’agit d’un mariage et indiquez votre effectif.",
+    "focus": "Dès le premier contact avec le service commercial, dites qu’il s’agit d’un mariage et indiquez votre nombre d’invités.",
     "questions": [
-      "Quel salon et quelle implantation sont prévus pour notre réception ?",
-      "Quelle part de l’établissement peut être privatisée ?",
-      "Quelles conditions encadrent le DJ, la restauration, les chambres et la fin de soirée ?"
+      "Quel salon et quelle disposition (tables, piste) sont prévus pour notre réception ?",
+      "Quelle partie de l’hôtel peut être réservée pour nous seuls ?",
+      "Quelles conditions s’appliquent au DJ, au repas, aux chambres et à l’heure de fin de soirée ?"
     ],
     "sources": [
       [
@@ -375,12 +375,12 @@
     "phone": "05 59 41 53 20",
     "email": "event@hotelclairlune.com",
     "site": "https://www.hotelclairlune.fr/",
-    "summary": "À Biarritz, la salle et sa terrasse accueillent le mariage ; la piscine peut recevoir un brunch. La réception implique la privatisation de l’hôtel pendant au moins deux nuits, ou trois selon les week-ends prolongés et les ponts.",
-    "focus": "Faire chiffrer la privatisation obligatoire des chambres et les suppléments éventuels, notamment pour un cocktail dans les salons du château.",
+    "summary": "À Biarritz, la salle et sa terrasse accueillent le mariage ; la piscine peut recevoir un brunch. La réception implique de réserver tout l’hôtel pendant au moins deux nuits, ou trois selon les week-ends prolongés et les ponts.",
+    "focus": "Faites chiffrer la réservation obligatoire des chambres et les suppléments éventuels, notamment pour un cocktail dans les salons du château.",
     "questions": [
-      "Quel prix total comprend la salle et la privatisation des chambres ?",
-      "Quel espace reçoit tous les invités en cas de pluie ?",
-      "Quels horaires et quelles consignes de musique s’appliquent ?"
+      "Quel est le prix total, salle et chambres réservées comprises ?",
+      "Où se retrouvent tous les invités s’il pleut ?",
+      "Jusqu’à quelle heure peut-on mettre de la musique, et quelles règles de bruit s’appliquent ?"
     ],
     "sources": [
       [

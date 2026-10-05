@@ -44,10 +44,10 @@ const TURNSTILE_SITEKEY = '0x4AAAAAADxOwNEZbVFGF9_e';
   <section class="rc" id={id} aria-labelledby={`${id}-titre`}>
     <div class="rc-visual">
       <Image src={r.couverture} alt={`Couverture : ${r.titre}`} width={260} class="rc-cover" />
-      <Image src={r.apercu} alt="" width={220} class="rc-page" />
+      <Image src={r.apercu} alt={`Page intérieure : ${r.titre}`} width={220} class="rc-page" />
       <div class="rc-mobile">
-        <div class="rc-phone" aria-hidden="true">
-          <Image src={r.mobile} alt="" width={150} class="rc-phone-screen" />
+        <div class="rc-phone">
+          <Image src={r.mobile} alt={`Version téléphone à remplir : ${r.titre}`} width={150} class="rc-phone-screen" />
         </div>
         <p class="rc-mobile-text">
           <strong>Aussi sur téléphone</strong>

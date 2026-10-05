@@ -1,10 +1,12 @@
 ---
+// Sur les articles du blog, le seul H1 doit être le titre de l'article.
+const BrandTag = Astro.url.pathname.startsWith('/preparer-son-mariage') ? 'div' : 'h1';
 const links = [{ href: '/', label: 'Mariages' }, { href: '/entreprises/', label: 'Entreprises' }, { href: '/bars-restaurants/', label: 'Bars & restaurants' }];
 ---
 
 <header class="site-header" id="site-header">
   <div class="container header-inner">
-    <h1 class="brand">
+    <BrandTag class="brand">
       <a href="/#accueil">
         <span class="brand-mark" aria-hidden="true">R</span>
         <span class="brand-text">
@@ -12,7 +14,7 @@ const links = [{ href: '/', label: 'Mariages' }, { href: '/entreprises/', label:
           <span class="brand-tagline">DJ mariage Pays Basque</span>
         </span>
       </a>
-    </h1>
+    </BrandTag>
     <nav class="nav" id="main-nav" aria-label="Navigation principale">
       {links.map((link) => <a href={link.href} aria-current={Astro.url.pathname === link.href ? "page" : undefined}>{link.label}</a>)}
       <a href="/#devis" class="btn btn-gold nav-cta">Demander un devis</a>

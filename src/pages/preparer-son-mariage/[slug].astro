@@ -34,6 +34,16 @@ const jsonLd = {
       dateModified: (updated ?? date).toISOString(),
       inLanguage: 'fr-FR',
       mainEntityOfPage: url,
+      articleSection: categorie,
+      isPartOf: { '@type': 'Blog', name: 'Préparer son mariage', url: `${siteUrl}/preparer-son-mariage/` },
+      // La ressource offerte, décrite comme un document gratuit lié à l'article.
+      mentions: {
+        '@type': 'DigitalDocument',
+        name: ressource.titre,
+        encodingFormat: 'application/pdf',
+        isAccessibleForFree: true,
+        author: { '@id': `${siteUrl}/#business` },
+      },
       author: { '@type': 'Person', name: 'Richard Nivet', url: siteUrl },
       publisher: { '@id': `${siteUrl}/#business` },
     },
@@ -61,7 +71,15 @@ const jsonLd = {
 };
 ---
 
-<Layout title={title.length > 55 ? title : `${title} · Richard DJ Event`} description={description}>
+<Layout
+  title={title.length > 55 ? title : `${title} · Richard DJ Event`}
+  description={description}
+  ogImage={image ?? ressource.couverture}
+  ogImageAlt={imageAlt || ressource.titre}
+  ogType="article"
+  publishedTime={date}
+  modifiedTime={updated}
+>
   <Header />
   <header class:list={['post-hero', { 'has-image': image }]}>
     <div class="container post-hero-inner">

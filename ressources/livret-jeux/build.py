@@ -336,7 +336,7 @@ def toc(variant):
             '<aside class="mode"><b>Mode d’emploi</b><span>Ce livret se remplit directement à l’écran : cochez les cases '
             'et écrivez dans les lignes depuis votre ordinateur ou votre téléphone (Adobe Acrobat Reader, Aperçu sur Mac, '
             'Fichiers sur iPhone), puis choisissez « Enregistrer » pour que vos réponses restent dans le fichier (dans un navigateur ou l’aperçu d’une messagerie, elles ne sont pas gardées). '
-            'Plus simple : la version en ligne enregistre toute seule (lien dans l’e-mail). Vous préférez le papier ? Il s’imprime en A4. '
+            'Plus simple : la <a href="https://djmariagepaysbasque.fr/ressources/livret-jeux-mariage/">version en ligne</a> enregistre toute seule. Vous préférez le papier ? Il s’imprime en A4. '
             'Touchez un chapitre du sommaire pour y aller directement.</span></aside></nav>')
 
 def page(variant, css_extra):

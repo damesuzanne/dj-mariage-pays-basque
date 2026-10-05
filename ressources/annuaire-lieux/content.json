@@ -135,7 +135,7 @@
           "email": "contact@brindos-cotebasque.fr",
           "site": "https://brindos-cotebasque.fr/",
           "summary": "À Anglet, le Château de Brindos accueille les mariages au bord du lac. Ses espaces intérieurs et extérieurs composent un cadre entre château, eau et nature.",
-          "focus": "Demandez quels espaces seront réservés à vous seuls et si d’autres clients de l’hôtel seront présents en même temps.",
+          "focus": "Faites préciser la privatisation des espaces et la cohabitation éventuelle avec les autres clients de l’hôtel.",
           "questions": [
             "Quels salons et quelles terrasses seront à nous seuls, sans autres clients de l’hôtel ?",
             "S’il pleut, où se retrouve-t-on, et y a-t-il autant de place pour tous les invités ?",
@@ -172,7 +172,7 @@
           "summary": "Cette ancienne maison de maître à Arcangues réunit un restaurant, une boutique fleuriste et des antiquités. Les espaces accueillent également des mariages sur demande.",
           "focus": "Faites la différence entre la location des lieux, le repas et la décoration, et vérifiez ce qui est vraiment compris dans la proposition.",
           "questions": [
-            "Quelle formule correspond à notre nombre d’invités : location seule ou avec repas ?",
+            "Quelle formule de privatisation correspond à notre effectif ?",
             "Quels prestataires (traiteur, fleuriste, DJ…) pouvons-nous choisir librement ?",
             "Peut-on faire une soirée dansante, et à quelles conditions (horaires, bruit) ?"
           ],
@@ -212,7 +212,7 @@
           "phone": "05 59 55 32 80",
           "email": "info@larbeou.com",
           "site": "https://www.larbeou.com/",
-          "summary": "Une Maison de Maître, une Grande Salle, un parc au bord de l’Adour et des hébergements : Larbéou propose plusieurs formules de réception, jusqu’à la location exclusive du lieu à Bayonne.",
+          "summary": "Une Maison de Maître, une Grande Salle, un parc au bord de l’Adour et des hébergements : Larbéou propose plusieurs formules de réception et de privatisation à Bayonne.",
           "focus": "Le traiteur est imposé et la musique est libre. Demandez un devis avec le repas pour comparer le coût total à une simple location.",
           "questions": [
             "Quelle salle conseillez-vous pour nos invités, en gardant de la place pour la piste de danse ?",
@@ -330,9 +330,9 @@
           "email": "contact@maisonbelzunce.com",
           "site": "https://maisonbelzunce.com/",
           "summary": "À Méharin, une ancienne bergerie aménagée en salle côtoie salons, jardins, piscine et guinguette. Le domaine propose également des hébergements.",
-          "focus": "Les visites se font sur rendez-vous. Confirmez combien de temps le lieu est à vous et ce qu’il comprend.",
+          "focus": "Les visites se font sur rendez-vous. Confirmez la durée et le périmètre de la privatisation.",
           "questions": [
-            "Combien de temps le lieu est-il à nous, et quelles nuits sont proposées à notre date ?",
+            "Quelle durée de privatisation et quelles nuits sont proposées à notre date ?",
             "Quels espaces sont compris pour le mariage et pour le brunch du lendemain ?",
             "Combien d’invités tiennent vraiment une fois la piste de danse et les tables installées ?"
           ],
@@ -416,7 +416,7 @@
           "questions": [
             "Dans quel bâtiment ont lieu le dîner et la soirée dansante ?",
             "Comment les invités se déplacent-ils entre leurs chambres, la cérémonie et la réception ?",
-            "Le domaine est-il à nous seuls, et quel repas est proposé pour notre nombre d’invités ?"
+            "Quelle privatisation et quelle restauration sont proposées pour notre effectif ?"
           ],
           "sources": [
             [
@@ -571,7 +571,7 @@
           "focus": "Dès le premier contact avec le service commercial, dites qu’il s’agit d’un mariage et indiquez votre nombre d’invités.",
           "questions": [
             "Quel salon et quelle disposition (tables, piste) sont prévus pour notre réception ?",
-            "Quelle partie de l’hôtel peut être réservée pour nous seuls ?",
+            "Quelle part de l’établissement peut être privatisée ?",
             "Quelles conditions s’appliquent au DJ, au repas, aux chambres et à l’heure de fin de soirée ?"
           ],
           "sources": [
@@ -606,10 +606,10 @@
           "phone": "05 59 41 53 20",
           "email": "event@hotelclairlune.com",
           "site": "https://www.hotelclairlune.fr/",
-          "summary": "À Biarritz, la salle et sa terrasse accueillent le mariage ; la piscine peut recevoir un brunch. La réception implique de réserver tout l’hôtel pendant au moins deux nuits, ou trois selon les week-ends prolongés et les ponts.",
-          "focus": "Faites chiffrer la réservation obligatoire des chambres et les suppléments éventuels, notamment pour un cocktail dans les salons du château.",
+          "summary": "À Biarritz, la salle et sa terrasse accueillent le mariage ; la piscine peut recevoir un brunch. La réception implique la privatisation de l’hôtel pendant au moins deux nuits, ou trois selon les week-ends prolongés et les ponts.",
+          "focus": "Faites chiffrer la privatisation obligatoire des chambres et les suppléments éventuels, notamment pour un cocktail dans les salons du château.",
           "questions": [
-            "Quel est le prix total, salle et chambres réservées comprises ?",
+            "Quel prix total comprend la salle et la privatisation des chambres ?",
             "Où se retrouvent tous les invités s’il pleut ?",
             "Jusqu’à quelle heure peut-on mettre de la musique, et quelles règles de bruit s’appliquent ?"
           ],
@@ -641,7 +641,7 @@
           "Date, exclusivité et espaces",
           [
             "Notre date est-elle disponible ? Jusqu’à quand une option peut-elle être tenue ?",
-            "Quels espaces sont réservés à nous seuls, et à quelles heures ? Y aura-t-il un autre événement ou d’autres clients ?",
+            "Quels espaces sont privatisés et à quels horaires ? Un autre événement ou des clients seront-ils présents ?",
             "Quelle capacité reste disponible avec nos tables, le buffet, le bar et la piste de danse ?",
             "Peut-on célébrer la cérémonie sur place ? Quelles zones sont réservées aux préparatifs ?",
             "Quand les prestataires peuvent-ils livrer, installer, tester et repartir ?"
@@ -694,7 +694,7 @@
           "Musique, horaires et règlement",
           [
             "Jusqu’à quelle heure la musique est-elle autorisée à l’intérieur et à l’extérieur ?",
-            "Y a-t-il un limiteur de son (un appareil qui coupe la musique au-delà d’un certain volume) ? Quelles consignes faut-il donner au DJ ?",
+            "Existe-t-il un limiteur sonore ? Quelles consignes techniques faut-il transmettre au DJ ?",
             "Où se trouvent les prises, circuits électriques, accès de déchargement et espace du DJ ?",
             "Quel prix total TTC correspond à notre projet, avec options, nettoyage, sécurité et dépassements ?",
             "Quelles échéances, caution, conditions d’annulation ou de report s’appliquent ? Qui est notre interlocuteur le jour J ?"
@@ -769,7 +769,7 @@
           "Boissons, gâteau et droit de bouchon clarifiés.",
           "DJ et autres prestataires : conditions d’accès précisées.",
           "Fin de musique intérieure et extérieure confirmée.",
-          "Limiteur de son et règles de bruit transmis au DJ.",
+          "Limiteur sonore et règles acoustiques transmis au DJ.",
           "Matériel électrique, son et lumière inclus ou à fournir identifié.",
           "Nettoyage, déchets, sécurité et heures supplémentaires chiffrés."
         ]
@@ -930,7 +930,7 @@
           "Prix total TTC comparable",
           "Capacité avec piste de danse",
           "Plan de repli complet",
-          "Lieu à nous seuls / durée",
+          "Privatisation / durée",
           "Horaires et règles de musique",
           "Traiteur et prestations incluses",
           "Couchages / transport"
@@ -990,7 +990,7 @@
       [
         "budget",
         [
-          "Location du lieu",
+          "Location / privatisation",
           "Repas, cocktail et service",
           "Boissons / bar / droit de bouchon",
           "Mobilier, linge et vaisselle",

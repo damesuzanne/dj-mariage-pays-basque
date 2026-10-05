@@ -198,7 +198,7 @@ def toc(variant):
     return (f'<nav class="toc" aria-label="Sommaire"><p class="kicker">Votre carnet</p><h2>Sommaire</h2>{SPRIG}<ol>{lis}</ol>'
             '<aside class="mode"><b>Mode d’emploi</b><span>Ce carnet se remplit à l’écran : cochez les cases et écrivez '
             'dans les lignes depuis votre ordinateur ou votre téléphone (Adobe Acrobat Reader, Aperçu sur Mac, Fichiers sur iPhone), '
-            'puis enregistrez. Il s’imprime aussi en A4. Touchez un titre du sommaire ou un lieu de l’annuaire pour y aller directement.</span></aside></nav>')
+            'puis enregistrez avec « Enregistrer » pour que vos réponses restent dans le fichier. Plus simple : la version en ligne enregistre toute seule (lien dans l’e-mail). Il s’imprime aussi en A4. Touchez un titre du sommaire ou un lieu de l’annuaire pour y aller directement.</span></aside></nav>')
 
 
 def cover():

@@ -56,6 +56,7 @@ const RESSOURCES = {
   'annuaire-lieux': {
     titre: 'L’annuaire des lieux de mariage au Pays Basque',
     accroche: 'Votre annuaire est prêt : 14 lieux de mariage au Pays Basque, leurs coordonnées et le carnet pour préparer vos visites.',
+    web: { libelle: 'Remplir en ligne', detail: 'vos réponses s’enregistrent toutes seules sur votre appareil', url: 'https://djmariagepaysbasque.fr/ressources/lieux-mariage-pays-basque/' },
     fichiers: [
       { libelle: 'Version téléphone', detail: 'à remplir sur l’écran', id: '1yiobewQ_yD2pHtC-NkQ9W_krHEdrStge' },
       { libelle: 'Version A4 à imprimer', detail: 'ou à remplir sur ordinateur', id: '1wqEiK7fxHnm24tNLCEjTNTTXnTBSw4m0' },
@@ -130,6 +131,8 @@ function envoyerGuide(data, ressource) {
     detail: f.detail || '',
     url: 'https://drive.google.com/uc?export=download&id=' + f.id,
   }));
+  // Version web (réponses enregistrées automatiquement sur l'appareil), proposée en premier si elle existe.
+  if (ressource.web) liens.unshift({ libelle: ressource.web.libelle, detail: ressource.web.detail, url: ressource.web.url });
   const site = data.site === 'djmariagelandes.fr' ? 'djmariagelandes.fr' : 'djmariagepaysbasque.fr';
 
   const texte = [
@@ -150,7 +153,7 @@ function envoyerGuide(data, ressource) {
   // Deux boutons de même poids : l'un pour le téléphone, l'autre pour l'A4.
   const boutons = liens.map((l) =>
     `<a href="${l.url}" style="display:block;background:#c6a15b;color:#101522;text-decoration:none;font-weight:600;font-size:16px;padding:14px 20px;border-radius:999px;margin:0 auto 12px;max-width:320px;text-align:center">` +
-    `Télécharger · ${l.libelle}<br><span style="font-weight:400;font-size:13px">${l.detail}</span></a>`).join('');
+    `${l.url.indexOf('drive.google.com') >= 0 ? 'Télécharger' : 'Ouvrir'} · ${l.libelle}<br><span style="font-weight:400;font-size:13px">${l.detail}</span></a>`).join('');
 
   const html = `<!doctype html><html lang="fr"><body style="margin:0;background:#faf7f1;font-family:Helvetica,Arial,sans-serif;color:#23283a">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#faf7f1"><tr><td align="center" style="padding:32px 16px">

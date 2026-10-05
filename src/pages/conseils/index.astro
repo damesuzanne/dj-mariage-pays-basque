@@ -1,0 +1,257 @@
+---
+import { fr } from '../../utils/typo';
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { ressources } from '../../data/ressources';
+import { publics, type PublicSlug } from '../../data/publics';
+
+const articles = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+const publicsDisponibles = Object.keys(publics) as PublicSlug[];
+const categoriesDisponibles = [...new Set(articles.map((article) => article.data.categorie))].sort((a, b) => a.localeCompare(b, 'fr'));
+const fmt = (d: Date) => d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+const visuel = (a: (typeof articles)[number]) => a.data.image ?? ressources[a.data.ressource].couverture;
+---
+
+<Layout
+  title="Conseils & ressources : mariage, entreprises, bars · Richard DJ Event"
+  description="Conseils concrets et guides gratuits à télécharger pour préparer un mariage, un événement d'entreprise ou une soirée en bar ou restaurant, au Pays Basque et dans les Landes."
+>
+  <Header />
+  <header class="blog-hero">
+    <div class="container blog-hero-inner">
+      <p class="eyebrow">Conseils &amp; ressources</p>
+      <h1>Conseils &amp; ressources,<em>pour vos événements</em></h1>
+      <p>
+        Des repères concrets pour préparer un mariage, un événement d'entreprise ou une soirée en établissement, et des
+        guides gratuits à télécharger.
+      </p>
+    </div>
+  </header>
+
+  <main class="container blog-main">
+    {(
+      <div class="public-filters" role="group" aria-label="Filtrer les articles par public" data-public-filters>
+        {publicsDisponibles.map((publicSlug) => (
+          <button type="button" data-public-filter={publicSlug} aria-pressed={publicSlug === 'mariage' ? 'true' : 'false'}>{publics[publicSlug].label}</button>
+        ))}
+      </div>
+    )}
+    {categoriesDisponibles.length > 1 && (
+      <div class="public-filters category-filters" role="group" aria-label="Filtrer les articles par thème" data-category-filters>
+        <button type="button" data-category-filter="tous" aria-pressed="true">Tout</button>
+        {categoriesDisponibles.map((categorie) => (
+          <button type="button" data-category-filter={categorie} aria-pressed="false">{categorie}</button>
+        ))}
+      </div>
+    )}
+    <p class="filter-count" data-filter-count role="status" aria-live="polite" hidden></p>
+    <section class="grid" aria-label="Articles">
+      {articles.map((a, i) => (
+        <a href={`/conseils/${a.id}/`} class="card" data-article-public={a.data.public} data-article-category={a.data.categorie} hidden={a.data.public !== 'mariage'}>
+          <div class="card-media">
+            <Image
+              src={visuel(a)}
+              alt={a.data.imageAlt}
+              widths={[480, 720, 960]}
+              sizes="(max-width: 760px) 92vw, 540px"
+              loading={i < 2 ? 'eager' : 'lazy'}
+            />
+          </div>
+          <div class="card-body">
+            <p class="kicker">{publics[a.data.public].label} · {a.data.categorie}</p>
+            <h2 class="card-title">{fr(a.data.h1 ?? a.data.title)}</h2>
+            <p class="card-desc">{fr(a.data.description)}</p>
+            <p class="offert">
+              <span class="offert-dot" aria-hidden="true"></span>{ressources[a.data.ressource].type} offert&nbsp;: {ressources[a.data.ressource].titre}
+            </p>
+            <p class="meta">
+              {fmt(a.data.date)}{a.data.tempsLecture && <> · {a.data.tempsLecture} min de lecture</>}
+            </p>
+            <span class="read">Lire l'article <svg class="read-arrow" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </a>
+      ))}
+    </section>
+    <p class="empty-state" data-empty-state hidden>Les conseils et ressources de ce thème arrivent bientôt.</p>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  const cards = [...document.querySelectorAll<HTMLElement>('[data-article-public]')];
+  const publicButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-public-filter]')];
+  const categoryButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-category-filter]')];
+  let selectedPublic = 'mariage';
+  let selectedCategory = 'tous';
+
+  const updateFilters = () => {
+    const matchingPublic = cards.filter((card) => selectedPublic === 'tous' || card.dataset.articlePublic === selectedPublic);
+    const availableCategories = new Set(matchingPublic.map((card) => card.dataset.articleCategory));
+    const categoryGroup = document.querySelector<HTMLElement>('[data-category-filters]');
+    if (categoryGroup) categoryGroup.hidden = availableCategories.size < 2;
+    categoryButtons.forEach((button) => {
+      button.hidden = button.dataset.categoryFilter !== 'tous' && !availableCategories.has(button.dataset.categoryFilter);
+      button.setAttribute('aria-pressed', String(button.dataset.categoryFilter === selectedCategory));
+    });
+    publicButtons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.publicFilter === selectedPublic)));
+    let count = 0;
+    cards.forEach((card) => {
+      card.hidden = !matchingPublic.includes(card) || (selectedCategory !== 'tous' && card.dataset.articleCategory !== selectedCategory);
+      if (!card.hidden) count++;
+    });
+    const empty = document.querySelector<HTMLElement>('[data-empty-state]');
+    if (empty) empty.hidden = count > 0;
+    const status = document.querySelector<HTMLElement>('[data-filter-count]');
+    if (status) {
+      status.hidden = false;
+      status.textContent = `${count} article${count > 1 ? 's' : ''}`;
+    }
+  };
+  updateFilters();
+  const initialStatus = document.querySelector<HTMLElement>('[data-filter-count]');
+  if (initialStatus) initialStatus.hidden = true;
+  publicButtons.forEach((button) => button.addEventListener('click', () => {
+    selectedPublic = button.dataset.publicFilter ?? 'tous';
+    selectedCategory = 'tous';
+    updateFilters();
+  }));
+  categoryButtons.forEach((button) => button.addEventListener('click', () => {
+    selectedCategory = button.dataset.categoryFilter ?? 'tous';
+    updateFilters();
+  }));
+</script>
+
+<style>
+  .public-filters { display: flex; flex-wrap: wrap; gap: .65rem 1.4rem; margin-bottom: 1rem; }
+  .public-filters button { padding: .2rem 0; border: 0; background: none; color: var(--ink-soft); font: inherit; font-size: .88rem; cursor: pointer; }
+  .public-filters button[aria-pressed="true"] { color: var(--night); text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 5px; }
+  .public-filters button:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+  .category-filters { gap: .55rem 1.2rem; align-items: center; margin-bottom: 1.8rem; }
+  .category-filters .filter-label { font-size: .75rem; font-weight: 400; color: var(--ink-soft); }
+  .category-filters button { padding: .2rem 0; border: 0; border-radius: 0; font-size: .82rem; background: none; color: var(--ink-soft); }
+  .category-filters button[aria-pressed="true"] { background: none; color: var(--night); text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 5px; }
+  .category-filters button:hover { color: var(--night); }
+  .filter-count { margin: 0 0 1.5rem; color: var(--ink-soft); font-size: .78rem; }
+  .empty-state { padding: 2rem 0; color: var(--ink-soft); }
+  .card[hidden], .public-filters[hidden], .public-filters button[hidden] { display: none; }
+  .filter-label { align-self: center; margin-right: .35rem; font-weight: 600; color: var(--night); }
+  .blog-hero h1 em { display: block; }
+
+  .blog-hero {
+    background: var(--night);
+    color: var(--white);
+    padding: 8.5rem 0 3.5rem;
+  }
+  .blog-hero-inner {
+    max-width: 720px;
+  }
+  .blog-hero h1 {
+    color: var(--white);
+    font-size: clamp(2.2rem, 5vw, 3.3rem);
+  }
+  .blog-hero p:not(.eyebrow) {
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+  }
+  .blog-main {
+    padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(3.5rem, 8vw, 6rem);
+  }
+
+  .kicker {
+    margin: 0 0 0.7rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .meta {
+    margin: 0 0 1.4rem;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+  }
+  .read {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-weight: 600;
+    color: var(--night);
+  }
+  .read-arrow {
+    color: var(--gold);
+    transition: transform var(--transition);
+  }
+  .card:hover .read-arrow {
+    transform: translateX(4px);
+  }
+  .offert {
+    display: flex;
+    align-items: baseline;
+    gap: 0.55rem;
+    margin: 0 0 1rem;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+  }
+  .offert-dot {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: var(--gold);
+    flex: none;
+  }
+
+  /* Grille d'articles : toutes les cartes ont la même présentation */
+  .grid {
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
+    gap: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2.5rem);
+  }
+  .card {
+    border-bottom: 1px solid #eadfc8;
+    padding-bottom: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+  }
+  .card-media {
+    overflow: hidden;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 1.4rem;
+  }
+  .card-media :global(img) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    object-position: 50% 40%;
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .card:hover .card-media :global(img) {
+    transform: scale(1.03);
+  }
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .card-title {
+    font-size: clamp(1.4rem, 2.6vw, 1.75rem);
+    margin: 0 0 0.7rem;
+  }
+  .card-desc {
+    margin: 0 0 0.9rem;
+    color: var(--ink-soft);
+  }
+  .card .read {
+    margin-bottom: 1.4rem;
+  }
+
+</style>

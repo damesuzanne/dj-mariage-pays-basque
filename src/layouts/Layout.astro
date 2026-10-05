@@ -11,6 +11,7 @@ import '@fontsource/outfit/500.css';
 import '@fontsource/outfit/600.css';
 import '@fontsource/outfit/700.css';
 import '../styles/global.css';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import ObfuscatedLink from '../components/ObfuscatedLink.astro';
 import logoFavicon from '../assets/logo-favicon-98x98.png';
 import richardPhoto from '../assets/richard-dj.png';
@@ -201,6 +202,7 @@ const jsonLd = {
     ></script>
   </head>
   <body>
+    <Breadcrumb title={title} />
     <slot />
     <ObfuscatedLink
       id="whatsapp-float"

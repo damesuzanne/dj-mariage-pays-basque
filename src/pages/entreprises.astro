@@ -2,6 +2,7 @@
 // Page construite à partir d'un gabarit HTML autonome, mais avec le MÊME pied de page que
 // l'accueil (composant Footer) : son ancienne copie figée dans le gabarit avait divergé.
 import page from "../templates/events/entreprises.html?raw";
+import Breadcrumb from "../components/Breadcrumb.astro";
 import Footer from "../components/Footer.astro";
 
 const debutHead = page.indexOf('<head>') + '<head>'.length;
@@ -19,6 +20,7 @@ const apres = body.slice(finFooter);
 <html lang="fr">
   <head><Fragment set:html={head} /></head>
   <body>
+    <Breadcrumb />
     <Fragment set:html={avant} />
     <Footer />
     <Fragment set:html={apres} />

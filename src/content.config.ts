@@ -15,6 +15,8 @@ const blog = defineCollection({
     updated: z.coerce.date().optional(),
     ressource: z.enum(['checklist-retroplanning', 'livret-jeux']).default('checklist-retroplanning'),
     categorie: z.string().default('Organisation'),
+    // Public visé : sert aux filtres de /conseils/ et au bloc de fin d'article.
+    public: z.enum(['mariage', 'entreprises', 'bars-restaurants']).default('mariage'),
     tempsLecture: z.number().optional(),
     draft: z.boolean().default(false),
     // Photo de l'article : vignette de la liste + image du haut de l'article.

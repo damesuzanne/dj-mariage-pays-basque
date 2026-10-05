@@ -1,0 +1,29 @@
+---
+import { Image } from 'astro:assets';
+import preparationPhoto from '../assets/blog/retroplanning-mariage-couple.png';
+---
+<section id="ressources" class="wedding-resources" aria-labelledby="resources-title">
+  <div class="container resources-inner">
+    <div class="resources-photo">
+      <Image src={preparationPhoto} alt="Un couple prépare son mariage ensemble" widths={[480, 720, 960]} sizes="(max-width: 760px) 92vw, 40vw" loading="lazy" />
+    </div>
+    <div class="resources-copy">
+      <p class="eyebrow">Conseils &amp; ressources gratuites</p>
+      <h2 id="resources-title">Votre mariage se prépare <em>avec de bonnes idées.</em></h2>
+      <p>Des premières idées aux derniers préparatifs, retrouvez sur le blog des conseils, des astuces et de l’inspiration pour imaginer un mariage qui vous ressemble.</p>
+      <p>Pour vous accompagner à chaque étape, profitez aussi de ressources gratuites à télécharger : des guides et des outils pratiques pour avancer sereinement dans vos préparatifs.</p>
+      <a href="/conseils/" class="btn btn-gold">Découvrir les conseils &amp; ressources</a>
+    </div>
+  </div>
+</section>
+<style>
+  .wedding-resources { background: var(--night); color: var(--white); padding: clamp(3.5rem, 7vw, 6rem) 0; }
+  .resources-inner { display: grid; grid-template-columns: 1fr 1.15fr; align-items: center; gap: clamp(2rem, 5vw, 4.5rem); }
+  .resources-photo { border-radius: var(--radius); overflow: hidden; }
+  .resources-photo :global(img) { display: block; width: 100%; height: auto; aspect-ratio: 4/3; object-fit: cover; }
+  h2 { color: var(--white); font-size: clamp(2rem, 3.5vw, 2.8rem); margin: 0 0 1.5rem; }
+  h2 em { color: var(--gold-light); }
+  .resources-copy > p:not(.eyebrow) { color: rgba(255,255,255,.75); }
+  .btn { margin-top: .8rem; white-space: normal; text-align: center; }
+  @media (max-width: 760px) { .resources-inner { grid-template-columns: 1fr; } }
+</style>

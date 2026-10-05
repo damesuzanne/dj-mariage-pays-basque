@@ -10,6 +10,12 @@ export default {
       return Response.redirect(url.toString(), 301)
     }
 
+    // Ancienne adresse du blog (05/10/26) : /preparer-son-mariage/* -> /conseils/*
+    if (url.pathname.startsWith('/preparer-son-mariage')) {
+      url.pathname = url.pathname.replace('/preparer-son-mariage', '/conseils')
+      return Response.redirect(url.toString(), 301)
+    }
+
     // Endpoint du formulaire de contact (POST uniquement)
     if (
       (url.pathname === '/api/contact' || url.pathname === '/api/contact/verify') &&

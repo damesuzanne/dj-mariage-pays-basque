@@ -1,17 +1,10 @@
 ---
 import ObfuscatedLink from './ObfuscatedLink.astro';
 import ObfuscatedText from './ObfuscatedText.astro';
-import { getCollection } from 'astro:content';
 
 const year = new Date().getFullYear();
 const waMessage = 'Bonjour Richard, je souhaite des informations pour mon mariage.';
 
-// Les trois derniers articles de « Préparer son mariage » (mis à jour à chaque publication).
-const articles = (await getCollection('blog', ({ data }) => !data.draft))
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 3);
-// Libellé court pour le pied de page : la partie avant les deux-points du titre.
-const court = (t: string) => t.split(' : ')[0];
 ---
 
 <footer class="footer">
@@ -40,17 +33,13 @@ const court = (t: string) => t.split(' : ')[0];
         </ObfuscatedLink>
       </div>
     </div>
-    <nav aria-label="Prestations">
+    <nav aria-label="Liens">
       <p class="footer-title">Prestations</p>
-      <a href="/">DJ mariage</a>
+      <a href="/">Mariages</a>
       <a href="/entreprises/">Événements d'entreprise</a>
       <a href="/bars-restaurants/">Bars & restaurants</a>
       <a href="https://djmariagelandes.fr/">DJ mariage Landes</a>
-    </nav>
-    <nav aria-label="Préparer son mariage">
-      <p class="footer-title">Préparer son mariage</p>
-      {articles.map((a) => <a href={`/preparer-son-mariage/${a.id}/`}>{court(a.data.title)}</a>)}
-      <a href="/preparer-son-mariage/" class="footer-more">Tous les conseils</a>
+      <a href="/conseils/" class="footer-more">Conseils & ressources</a>
     </nav>
     <div>
       <p class="footer-title">Contact</p>
@@ -100,7 +89,7 @@ const court = (t: string) => t.split(' : ')[0];
 
   .footer-grid {
     display: grid;
-    grid-template-columns: 1.3fr 1fr 1fr 1fr;
+    grid-template-columns: 1.4fr 1fr 1fr;
     gap: 2.5rem;
     padding-bottom: 3rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -237,6 +226,7 @@ const court = (t: string) => t.split(' : ')[0];
 
   .legal {
     display: flex;
+    flex-wrap: wrap;
     gap: 1.4rem;
   }
 
@@ -285,6 +275,9 @@ const court = (t: string) => t.split(' : ')[0];
   @media (max-width: 960px) {
     .footer-grid {
       grid-template-columns: 1fr 1fr;
+    }
+    .footer-grid > div:first-child {
+      grid-column: 1 / -1;
     }
   }
 

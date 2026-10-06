@@ -1,0 +1,44 @@
+---
+/**
+ * Bloc « À lire aussi » : relie chaque article aux autres articles du blog (maillage interne).
+ * Les autres articles sont listés automatiquement, les plus récents d'abord.
+ */
+import { getCollection } from 'astro:content';
+import { fr } from '../utils/typo';
+
+interface Props { courant: string; }
+const { courant } = Astro.props;
+const autres = (await getCollection('blog', ({ data }) => !data.draft))
+  .filter((a) => a.id !== courant)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+{autres.length > 0 && (
+  <nav class="a-lire" aria-labelledby="a-lire-titre">
+    <h2 id="a-lire-titre">À lire aussi</h2>
+    <ul>
+      {autres.map((a) => (
+        <li>
+          <a href={`/conseils/${a.id}/`}>
+            <span class="a-lire-cat">{a.data.categorie}</span>
+            <strong>{fr(a.data.h1 ?? a.data.title)}</strong>
+            <span class="a-lire-desc">{fr(a.data.description)}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p><a class="a-lire-tous" href="/conseils/">Voir tous les conseils &amp; ressources →</a></p>
+  </nav>
+)}
+
+<style>
+  .a-lire { margin-top: 3rem; padding-top: 1.8rem; border-top: 1px solid #eadfc8; }
+  .a-lire h2 { font-size: 1.5rem; margin: 0 0 1rem; }
+  .a-lire ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.9rem; }
+  .a-lire li a { display: block; padding: 1rem 1.1rem; border: 1px solid #eadfc8; border-radius: 12px; text-decoration: none; color: inherit; background: #fff; }
+  .a-lire li a:hover { border-color: var(--gold, #c6a15b); }
+  .a-lire-cat { display: block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dark, #a8843f); margin-bottom: 0.25rem; }
+  .a-lire strong { display: block; font-family: var(--font-heading, 'Playfair Display', serif); font-weight: 500; font-size: 1.15rem; line-height: 1.3; margin-bottom: 0.25rem; }
+  .a-lire-desc { display: block; font-size: 0.9rem; color: var(--ink-soft, #5a6072); }
+  .a-lire-tous { display: inline-block; margin-top: 1rem; font-weight: 500; text-decoration-color: var(--gold, #c6a15b); }
+</style>

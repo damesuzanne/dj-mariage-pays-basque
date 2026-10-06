@@ -6,6 +6,7 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import RessourceCta from '../../components/RessourceCta.astro';
+import ArticlesLies from '../../components/ArticlesLies.astro';
 import { ressources } from '../../data/ressources';
 import { publics } from '../../data/publics';
 
@@ -15,6 +16,13 @@ export async function getStaticPaths() {
 }
 
 const { article } = Astro.props;
+// Même ordre que la liste du blog, avec un départage stable des dates identiques.
+const articles = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime() || a.id.localeCompare(b.id)
+);
+const position = articles.findIndex((item) => item.id === article.id);
+const precedent = articles[position - 1];
+const suivant = articles[position + 1];
 const { Content } = await render(article);
 const { title, h1, description, date, updated, categorie, tempsLecture, faq, image, imageAlt } = article.data;
 const ressource = ressources[article.data.ressource];
@@ -22,6 +30,13 @@ const fin = publics[article.data.public].fin;
 
 const siteUrl = 'https://djmariagepaysbasque.fr';
 const url = `${siteUrl}/conseils/${article.id}/`;
+const shareUrl = encodeURIComponent(url);
+const shareTitle = encodeURIComponent(h1 ?? title);
+const shares = [
+  { label: 'WhatsApp', icon: 'M20.52 3.48A11.86 11.86 0 0 0 12.04 0C5.44 0 .06 5.37.06 11.97c0 2.11.55 4.17 1.6 6L0 24l6.17-1.62a11.94 11.94 0 0 0 5.87 1.5h.01c6.6 0 11.97-5.37 11.97-11.97 0-3.2-1.25-6.2-3.5-8.43ZM12.04 21.86a9.9 9.9 0 0 1-5.03-1.38l-.36-.21-3.66.96.98-3.57-.24-.37a9.87 9.87 0 0 1-1.52-5.32c0-5.49 4.46-9.95 9.96-9.95a9.87 9.87 0 0 1 7.03 2.91 9.88 9.88 0 0 1 2.91 7.04c0 5.49-4.46 9.95-9.95 9.95Zm5.46-7.45c-.3-.15-1.77-.87-2.04-.97-.28-.1-.48-.15-.68.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.47-.89-.79-1.49-1.77-1.66-2.07-.18-.3-.02-.46.13-.61.13-.13.3-.35.45-.53.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.89 1.22 3.09.15.2 2.1 3.21 5.08 4.5.71.3 1.27.49 1.7.62.72.23 1.38.2 1.9.12.59-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35Z', href: `https://wa.me/?text=${encodeURIComponent(`${h1 ?? title} — ${url}`)}` },
+  { label: 'Facebook', icon: 'M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07c0 6.02 4.39 11.02 10.12 11.93v-8.44H7.08v-3.49h3.04V9.41c0-3.03 1.8-4.7 4.55-4.7 1.32 0 2.69.24 2.69.24v2.98h-1.52c-1.5 0-1.97.93-1.97 1.89v2.25h3.35l-.54 3.49h-2.81V24C19.61 23.09 24 18.09 24 12.07Z', href: `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}` },
+  { label: 'LinkedIn', icon: 'M20.45 0H3.55A3.55 3.55 0 0 0 0 3.55v16.9A3.55 3.55 0 0 0 3.55 24h16.9A3.55 3.55 0 0 0 24 20.45V3.55A3.55 3.55 0 0 0 20.45 0ZM7.13 20.45H3.56V9h3.57ZM5.35 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14ZM20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.94v5.67H9.35V9h3.42v1.57h.05c.48-.91 1.64-1.87 3.37-1.87 3.61 0 4.26 2.38 4.26 5.47Z', href: `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}` },
+];
 const fmt = (d: Date) => d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
 
 const jsonLd = {
@@ -86,10 +101,11 @@ const jsonLd = {
     </div>
     {image && (
       <div class="container post-hero-media">
-        <Image src={image} alt={imageAlt} widths={[640, 960, 1280]} sizes="(max-width: 860px) 92vw, 860px" class="post-hero-img" loading="eager" fetchpriority="high" />
+        <Image src={image} alt={imageAlt} widths={[640, 960, 1280]} sizes="(max-width: 860px) 92vw, 860px" quality={58} class="post-hero-img" loading="eager" fetchpriority="high" />
       </div>
     )}
   </header>
+
 
   <main class="container post">
     <article class="prose">
@@ -106,6 +122,22 @@ const jsonLd = {
         </section>
       )}
     </article>
+    <section class="post-share" aria-labelledby="partager-article">
+      <h2 id="partager-article" class="sr-only">Partager cet article</h2>
+      <div class="share-links">
+        {shares.map(({ label, href, icon }) => <a href={href} target="_blank" rel="noopener noreferrer" aria-label={`Partager sur ${label} (nouvelle fenêtre)`} title={`Partager sur ${label}`}><svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true"><path d={icon} fill="currentColor" /></svg></a>)}
+        <a href={`mailto:?subject=${shareTitle}&body=${encodeURIComponent(`Cet article pourrait vous intéresser :\n\n${h1 ?? title}\n${url}`)}`} aria-label="Partager par e-mail" title="Partager par e-mail"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></svg></a>
+        <button type="button" data-copy-article={url} aria-label="Copier le lien" title="Copier le lien"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-5 7-2 2a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0m2 0 2-2a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0"/></svg></button>
+        <button type="button" data-native-share data-title={h1 ?? title} data-url={url} aria-label="Partager cet article" title="Partager cet article" hidden><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 16V2m-5 5 5-5 5 5M5 12v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8"/></svg></button>
+      </div>
+      <p class="share-feedback" role="status" aria-live="polite" data-share-feedback></p>
+      <input class="share-fallback" aria-label="Lien de l’article à copier" value={url} readonly hidden data-share-fallback />
+    </section>
+    {(precedent || suivant) && <nav class="article-navigation" aria-label="Navigation entre les articles">
+      {precedent && <a class="previous" href={`/conseils/${precedent.id}/`} rel="prev"><span>← Article précédent</span><strong>{fr(precedent.data.h1 ?? precedent.data.title)}</strong></a>}
+      {suivant && <a class="next" href={`/conseils/${suivant.id}/`} rel="next"><span>Article suivant →</span><strong>{fr(suivant.data.h1 ?? suivant.data.title)}</strong></a>}
+    </nav>}
+    <ArticlesLies courant={article.id} />
   </main>
 
   <section class="post-end">
@@ -121,7 +153,49 @@ const jsonLd = {
   <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </Layout>
 
+<script>
+  const feedback = document.querySelector<HTMLElement>('[data-share-feedback]');
+  const fallback = document.querySelector<HTMLInputElement>('[data-share-fallback]');
+  document.querySelector<HTMLButtonElement>('[data-copy-article]')?.addEventListener('click', async (event) => {
+    const button = event.currentTarget as HTMLButtonElement;
+    try {
+      await navigator.clipboard.writeText(button.dataset.copyArticle!);
+      if (feedback) feedback.textContent = 'Lien copié ! Vous pouvez le coller dans votre message.';
+    } catch {
+      if (fallback) { fallback.hidden = false; fallback.focus(); fallback.select(); }
+      if (feedback) feedback.textContent = 'Sélectionnez le lien ci-dessous pour le copier.';
+    }
+  });
+  const nativeShare = document.querySelector<HTMLButtonElement>('[data-native-share]');
+  if (nativeShare && typeof navigator.share === 'function') {
+    nativeShare.hidden = false;
+    nativeShare.addEventListener('click', async () => {
+      try { await navigator.share({ title: nativeShare.dataset.title, url: nativeShare.dataset.url }); }
+      catch (error) {
+        if (!(error instanceof DOMException && error.name === 'AbortError') && feedback) feedback.textContent = 'Utilisez les boutons de partage ou copiez le lien.';
+      }
+    });
+  }
+</script>
+
 <style>
+  .post-share { margin-top: 3rem; padding-top: 1.8rem; border-top: 1px solid #eadfc8; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+  .share-links { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: .65rem; }
+  .share-links a, .share-links button { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; color: var(--night); background: transparent; border: 1px solid var(--gold); border-radius: 50%; padding: 0; cursor: pointer; }
+  .share-links a:hover, .share-links button:hover { background: var(--cream-deep); color: var(--night); }
+  .share-links :focus-visible, .article-navigation a:focus-visible { outline: 2px solid var(--gold); outline-offset: 5px; }
+  .share-links [hidden], .share-fallback[hidden] { display: none; }
+  .share-feedback { font-size: .85rem; color: var(--ink-soft); margin: .65rem 0 0; }
+  .share-fallback { width: 100%; margin-top: .7rem; padding: .7rem; font: inherit; }
+  .article-navigation { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; border-top: 1px solid #eadfc8; margin-top: 1.8rem; padding-top: 1.8rem; }
+  .article-navigation a { color: var(--night); text-decoration: none; }
+  .article-navigation span { display: block; font-size: .82rem; color: var(--ink-soft); margin-bottom: .5rem; }
+  .article-navigation strong { font-family: var(--font-heading, 'Playfair Display', serif); font-size: 1.15rem; font-weight: 500; }
+  .article-navigation a:hover strong { text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 4px; }
+  .article-navigation .next { grid-column: 2; text-align: right; }
+  @media (max-width: 540px) { .article-navigation { grid-template-columns: 1fr; gap: 1.5rem; } .article-navigation .next { grid-column: 1; text-align: left; } }
+
   .post-hero {
     background: var(--night);
     color: var(--white);

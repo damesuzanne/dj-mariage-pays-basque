@@ -203,3 +203,16 @@ h3{font-size:22px;margin:0 0 10px}
 .pleine .fields b{display:none}
 .pleine .line{height:36px}
 @media print{.pleine{break-before:page;break-inside:auto}.pleine .line{height:10.5mm}}
+
+@media print{.keepp{break-inside:avoid!important}}
+
+.grid.eq{table-layout:fixed}
+.grid.eq th:nth-child(1){width:32%}
+.grid.eq th:nth-child(2),.grid.eq th:nth-child(3){width:34%}
+.grid td.lab:empty{padding:0}
+@media(max-width:640px){.grid td.lab:empty{display:none}}
+@media print{.songfields .line{height:10.5mm}}
+.songfields label{display:flex;align-items:flex-end;gap:10px}
+.songfields label b{flex:none;white-space:nowrap}
+.songfields label small{display:none}
+.songfields label .line,.songfields label .writing{flex:1}

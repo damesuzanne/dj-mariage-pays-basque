@@ -3,7 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ContactForm from '../components/ContactForm.astro';
-import { Image } from 'astro:assets';
+import PageHero from '../components/PageHero.astro';
+import ObfuscatedLink from '../components/ObfuscatedLink.astro';
 import heroPhoto from '../assets/contact-hero.png';
 
 const heroAlt = 'Rendez-vous entre un DJ et un couple sur une terrasse face à l’océan';
@@ -16,17 +17,35 @@ const heroAlt = 'Rendez-vous entre un DJ et un couple sur une terrasse face à l
   description="Contactez Richard DJ Event : réservez un créneau de 30 minutes en ligne ou demandez un devis gratuit pour votre mariage, votre événement d'entreprise ou votre soirée au Pays Basque et dans les Landes. Rendez-vous en visio ou par téléphone."
 >
   <Header />
-  <header class="contact-hero">
-    <Image src={heroPhoto} alt={heroAlt} class="contact-hero-img" widths={[768, 1280, 1920]} sizes="100vw" loading="eager" fetchpriority="high" quality={72} />
-    <div class="container contact-hero-inner">
-      <p class="eyebrow">Contact</p>
-      <h1>Parlons de <em>votre événement</em></h1>
-      <p>
-        Réservez un créneau en visio ou par téléphone avec Richard, ou remplissez le questionnaire de devis : vous recevez une
-        réponse sous 24h.
-      </p>
-    </div>
-  </header>
+  <PageHero
+    kicker="Contact"
+    ligne1="Parlons de"
+    accent="votre événement"
+    texte="Réservez un créneau en visio ou par téléphone avec Richard, ou remplissez le questionnaire de devis : vous recevez une réponse sous 24h."
+    image={heroPhoto}
+    imageAlt={heroAlt}
+    position="70% 40%"
+  >
+    <Fragment slot="actions">
+      <button
+        type="button"
+        class="btn btn-gold"
+        data-cal-link="richard-dj/30min"
+        data-cal-namespace="30min"
+        data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+      >Réserver un créneau</button>
+      <ObfuscatedLink
+        type="wa"
+        value="33684331824"
+        message="Bonjour Richard, je souhaite des informations pour mon événement."
+        class="btn btn-outline"
+        target="_blank"
+        rel="noopener"
+      >
+        WhatsApp direct
+      </ObfuscatedLink>
+    </Fragment>
+  </PageHero>
 
   <main>
     <section class="rdv" aria-labelledby="rdv-titre">
@@ -65,41 +84,6 @@ const heroAlt = 'Rendez-vous entre un DJ et un couple sur une terrasse face à l
 </Layout>
 
 <style>
-  .contact-hero {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    background: var(--night);
-    color: var(--white);
-    padding: 8.5rem 0 4.5rem;
-  }
-  .contact-hero-img {
-    position: absolute;
-    inset: 0;
-    z-index: -2;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 70% 40%;
-  }
-  .contact-hero::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: linear-gradient(90deg, rgba(14, 18, 30, 0.92) 0%, rgba(14, 18, 30, 0.72) 45%, rgba(14, 18, 30, 0.25) 100%);
-  }
-  @media (max-width: 700px) {
-    .contact-hero::after { background: linear-gradient(180deg, rgba(14, 18, 30, 0.88) 0%, rgba(14, 18, 30, 0.7) 100%); }
-  }
-  .contact-hero-inner { max-width: 720px; position: relative; }
-  .contact-hero h1 {
-    color: var(--white);
-    font-size: clamp(2.2rem, 5vw, 3.3rem);
-  }
-  .contact-hero h1 em { display: block; }
-  .contact-hero p:not(.eyebrow) { color: rgba(255, 255, 255, 0.7); margin: 0; }
-
   .rdv {
     background: var(--cream, #faf7f1);
     padding: clamp(2.5rem, 6vw, 4rem) 0;

@@ -4,6 +4,8 @@ import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
+import PageHero from '../../components/PageHero.astro';
+import ObfuscatedLink from '../../components/ObfuscatedLink.astro';
 import Footer from '../../components/Footer.astro';
 import { ressources } from '../../data/ressources';
 import { publics, type PublicSlug } from '../../data/publics';
@@ -22,16 +24,26 @@ const visuel = (a: (typeof articles)[number]) => a.data.image ?? ressources[a.da
   description="Conseils concrets et guides gratuits à télécharger pour préparer un mariage, un événement d'entreprise ou une soirée en bar ou restaurant, au Pays Basque et dans les Landes."
 >
   <Header />
-  <header class="blog-hero">
-    <div class="container blog-hero-inner">
-      <p class="eyebrow">Conseils &amp; ressources</p>
-      <h1>Conseils &amp; ressources,<em>pour vos événements</em></h1>
-      <p>
-        Des repères concrets pour préparer un mariage, un événement d'entreprise ou une soirée en établissement, et des
-        guides gratuits à télécharger.
-      </p>
-    </div>
-  </header>
+  <PageHero
+    kicker="Conseils & ressources"
+    ligne1="Conseils & ressources,"
+    accent="pour vos événements"
+    texte="Des repères concrets pour préparer un mariage, un événement d'entreprise ou une soirée en établissement, et des guides gratuits à télécharger."
+  >
+    <Fragment slot="actions">
+      <a href="/contact/" class="btn btn-gold">Demander un devis</a>
+      <ObfuscatedLink
+        type="wa"
+        value="33684331824"
+        message="Bonjour Richard, je souhaite des informations pour mon événement."
+        class="btn btn-outline"
+        target="_blank"
+        rel="noopener"
+      >
+        WhatsApp direct
+      </ObfuscatedLink>
+    </Fragment>
+  </PageHero>
 
   <main class="container blog-main">
     {(

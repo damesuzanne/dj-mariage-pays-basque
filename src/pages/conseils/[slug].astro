@@ -28,6 +28,11 @@ const { title, h1, description, date, updated, categorie, tempsLecture, faq, ima
 const ressource = ressources[article.data.ressource];
 const fin = publics[article.data.public].fin;
 
+// Titre sur deux lignes comme les autres en-têtes : la partie après « : » passe en italique doré.
+const titreComplet = h1 ?? title;
+const coupure = titreComplet.indexOf(' : ');
+const titreAccent = coupure > 0 ? [titreComplet.slice(0, coupure + 2), titreComplet.slice(coupure + 3)] : null;
+
 const siteUrl = 'https://djmariagepaysbasque.fr';
 const url = `${siteUrl}/conseils/${article.id}/`;
 const shareUrl = encodeURIComponent(url);
@@ -93,7 +98,9 @@ const jsonLd = {
   <header class:list={['post-hero', { 'has-image': image }]}>
     <div class="container post-hero-inner">
       <p class="eyebrow">{publics[article.data.public].label} · {categorie}</p>
-      <h1 class="post-title">{fr(h1 ?? title)}</h1>
+      <h1 class="post-title">
+        {titreAccent ? (<><span>{fr(titreAccent[0])}</span><span class="accent">{fr(titreAccent[1])}</span></>) : fr(h1 ?? title)}
+      </h1>
       <p class="post-meta">
         Par Richard, DJ mariage · <time datetime={date.toISOString()}>{fmt(date)}</time>
         {tempsLecture && <> · {tempsLecture} min de lecture</>}
@@ -202,8 +209,16 @@ const jsonLd = {
     padding: 8.5rem 0 3.2rem;
   }
   .post-hero-inner {
-    max-width: 760px;
+    max-width: 820px;
+    margin-inline: auto;
+    text-align: center;
   }
+  .post-hero .eyebrow {
+    letter-spacing: 0.3em;
+    color: var(--gold-light);
+    margin-bottom: 1.2rem;
+  }
+  .post-hero .eyebrow::before { display: none; }
   .post-hero.has-image {
     padding-bottom: 0;
     background: linear-gradient(var(--night) 70%, var(--cream) 70%);
@@ -237,8 +252,17 @@ const jsonLd = {
   }
   .post-title {
     color: var(--white);
-    font-size: clamp(2rem, 5vw, 3.1rem);
-    margin-bottom: 0.8rem;
+    font-size: clamp(1.9rem, 5vw, 3.1rem);
+    margin-bottom: 0.9rem;
+  }
+  .post-title span { display: block; }
+  .post-title .accent {
+    background: linear-gradient(120deg, var(--gold-light), var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-style: italic;
+    font-weight: 400;
   }
   .post-meta {
     margin: 0;

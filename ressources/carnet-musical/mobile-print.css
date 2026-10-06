@@ -28,4 +28,10 @@
 @media print{.drawbox{height:48mm}.duos li{flex-direction:column;align-items:flex-start;gap:4px}
  .songs .checks{columns:1}
  .grid td.lab,.grid td.n.lab{width:100%!important;text-align:left;font:500 11pt/1.3 var(--sans);color:var(--navy);padding:2mm 0 1mm;border:0}
+ .songfields .line{height:13mm}
+
+ /* Sommaire : mode d'emploi et boutons tiennent sur la page 2 */
+ .toc li a{padding:2.2mm 0}
+ .toc .mode,.mode{font-size:8pt!important;line-height:1.32!important;padding:3mm 4mm!important;margin-top:3mm}
+ .toc .mode b,.mode b{font-size:6.5pt}
 }

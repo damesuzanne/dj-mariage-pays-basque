@@ -211,3 +211,7 @@ h3{font-size:21px;margin:0 0 10px}
  .ov .vt{font-size:10pt}
  .end{page:back;break-before:page;height:297mm;margin:0;display:flex;flex-direction:column;justify-content:center}
 }
+
+.pdf-tools{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.pdf-tools a{font:500 13px var(--sans);color:var(--navy);background:#fff;border:1px solid var(--gold);border-radius:999px;padding:8px 14px;text-decoration:none}
+@media print{.pdf-tools{gap:2mm;margin-top:4mm}.pdf-tools a{font-size:8.5pt;padding:2mm 3.5mm}}

@@ -13,6 +13,7 @@ FONTS = re.sub(r"(font-family:'Playfair Display'[^}]*?)font-weight:(400|500)", r
 
 EXTRA = '''
 html{scroll-behavior:smooth}
+.pdf-tools{display:none}
 .chapter,.venue,section[id]{scroll-margin-top:16px}
 .toc li a:hover .tt{color:var(--gold)}
 .toc .tp{transition:transform .15s;font-size:24px;line-height:1}
@@ -45,7 +46,18 @@ document.getElementById('export').onclick=function(){var b=new Blob([JSON.string
 })();'''
 
 
-def convert(src_html, slug, key, titre, drive_a4, drive_mobile, export_name):
+MAILJS = '''
+(function(){var b=document.getElementById('sendmail');if(!b)return;
+b.onclick=function(){var out=[];
+document.querySelectorAll('textarea').forEach(function(t){if(!t.value.trim())return;var l=t.getAttribute('aria-label')||'';var tr=t.closest('tr');if(tr){var r=tr.querySelector('.lab');if(r)l=r.textContent.trim()+' ('+l+')'}out.push(l+' : '+t.value.trim())});
+document.querySelectorAll('input[type=checkbox]:checked').forEach(function(c){var s=c.parentNode.querySelector('span');out.push('[x] '+(s?s.textContent.trim():''))});
+var corps='Bonjour Richard,\\n\\nVoici notre carnet musical pour notre mariage. Je joins aussi le PDF rempli si besoin.\\n\\n'+out.join('\\n');
+if(corps.length>1800)corps=corps.slice(0,1800)+'\\n[…] (liste complète dans le PDF joint)';
+location.href='mailto:%TO%?subject='+encodeURIComponent('%SUBJECT%')+'&body='+encodeURIComponent(corps)}})();
+'''
+
+
+def convert(src_html, slug, key, titre, drive_a4, drive_mobile, export_name, mail=None):
     h = pathlib.Path(src_html).read_text(encoding="utf-8")
     n = {"i": 0}
 
@@ -86,10 +98,13 @@ def convert(src_html, slug, key, titre, drive_a4, drive_mobile, export_name):
              f'Elles ne sont pas envoyées à Richard.</p><div class="st-actions">'
              f'<a href="https://drive.google.com/file/d/{drive_a4}/view" target="_blank" rel="noopener">PDF A4 à imprimer</a>'
              f'<a href="https://drive.google.com/file/d/{drive_mobile}/view" target="_blank" rel="noopener">PDF pour téléphone</a>'
-             f'<button id="export" type="button">Exporter mes réponses</button></div></div>')
+             f'<button id="export" type="button">Exporter mes réponses</button>'
+             + ('<button id="sendmail" type="button">Envoyer à Richard par e-mail</button>' if mail else '') + '</div></div>')
     h = h.replace("<main>", "<main>" + tools, 1)
     h = h.replace("</body>", '<a class="back-top" href="#top" aria-label="Retour au sommaire">↑</a><script>'
                   + JS.replace("%KEY%", key).replace("%EXPORT%", export_name) + "</script></body>", 1)
+    if mail:
+        h = h.replace("</script></body>", MAILJS.replace("%TO%", mail["to"]).replace("%SUBJECT%", mail["subject"]) + "</script></body>", 1)
     out = SITE / "public/ressources" / slug
     out.mkdir(parents=True, exist_ok=True)
     (out / "index.html").write_text(h, encoding="utf-8")

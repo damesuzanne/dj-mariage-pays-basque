@@ -326,6 +326,15 @@ CSS = (HERE / "style.css").read_text()
 MOBILE_PRINT = (HERE / "mobile-print.css").read_text()
 PAGES = json.loads((HERE / "pages.json").read_text()) if (HERE / "pages.json").exists() else {}
 
+
+def pdf_tools():
+    """Boutons cliquables du sommaire : l'autre version du PDF et la version en ligne."""
+    b = [('PDF A4 à imprimer', 'https://drive.google.com/file/d/1W0qTzt-ROu0C9khEqvfJSXpL3b6TvzRW/view'),
+         ('PDF pour téléphone', 'https://drive.google.com/file/d/1S8_8FPODX6zmxW945hlipmjO-N8r9v9t/view'),
+         ('Remplir en ligne', 'https://djmariagepaysbasque.fr/ressources/livret-jeux-mariage/')]
+    
+    return '<div class="pdf-tools">' + ''.join(f'<a href="{u}">{t}</a>' for t, u in b) + '</div>'
+
 def toc(variant):
     nums = PAGES.get(variant, {})
     items = "".join(
@@ -337,7 +346,7 @@ def toc(variant):
             'et écrivez dans les lignes depuis votre ordinateur ou votre téléphone (Adobe Acrobat Reader, Aperçu sur Mac, '
             'Fichiers sur iPhone), puis choisissez « Enregistrer » pour que vos réponses restent dans le fichier (dans un navigateur ou l’aperçu d’une messagerie, elles ne sont pas gardées). '
             'Plus simple : la <a href="https://djmariagepaysbasque.fr/ressources/livret-jeux-mariage/">version en ligne</a> enregistre toute seule. Vous préférez le papier ? Il s’imprime en A4. '
-            'Touchez un chapitre du sommaire pour y aller directement.</span></aside></nav>')
+            'Touchez un chapitre du sommaire pour y aller directement.</span></aside>' + pdf_tools() + '</nav>')
 
 def page(variant, css_extra):
     body = fr_html("".join(parts).replace("__TOC__", toc(variant)))

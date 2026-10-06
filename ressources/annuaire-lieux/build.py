@@ -191,6 +191,15 @@ TOC = [("01", "c01", "Choisir ce qui vous ressemble"), ("02", "c02", "Votre annu
        ("09", "c09", "Et pour la musique ?")]
 
 
+
+def pdf_tools():
+    """Boutons cliquables du sommaire : l'autre version du PDF et la version en ligne."""
+    b = [('PDF A4 à imprimer', 'https://drive.google.com/file/d/1wqEiK7fxHnm24tNLCEjTNTTXnTBSw4m0/view'),
+         ('PDF pour téléphone', 'https://drive.google.com/file/d/1yiobewQ_yD2pHtC-NkQ9W_krHEdrStge/view'),
+         ('Remplir en ligne', 'https://djmariagepaysbasque.fr/ressources/lieux-mariage-pays-basque/')]
+    
+    return '<div class="pdf-tools">' + ''.join(f'<a href="{u}">{t}</a>' for t, u in b) + '</div>'
+
 def toc(variant):
     lis = "".join(
         f'<li><a href="#{cid}"><span class="tn">{n}</span><span class="tt">{e(t)}</span><span class="tl"></span>'
@@ -198,7 +207,7 @@ def toc(variant):
     return (f'<nav class="toc" aria-label="Sommaire"><p class="kicker">Votre carnet</p><h2>Sommaire</h2>{SPRIG}<ol>{lis}</ol>'
             '<aside class="mode"><b>Mode d’emploi</b><span>Ce carnet se remplit à l’écran : cochez les cases et écrivez '
             'dans les lignes depuis votre ordinateur ou votre téléphone (Adobe Acrobat Reader, Aperçu sur Mac, Fichiers sur iPhone), '
-            'puis enregistrez avec « Enregistrer » pour que vos réponses restent dans le fichier. Plus simple : la <a href="https://djmariagepaysbasque.fr/ressources/lieux-mariage-pays-basque/">version en ligne</a> enregistre toute seule. Il s’imprime aussi en A4. Touchez un titre du sommaire ou un lieu de l’annuaire pour y aller directement.</span></aside></nav>')
+            'puis enregistrez avec « Enregistrer » pour que vos réponses restent dans le fichier. Plus simple : la <a href="https://djmariagepaysbasque.fr/ressources/lieux-mariage-pays-basque/">version en ligne</a> enregistre toute seule. Il s’imprime aussi en A4. Touchez un titre du sommaire ou un lieu de l’annuaire pour y aller directement.</span></aside>' + pdf_tools() + '</nav>')
 
 
 def cover():

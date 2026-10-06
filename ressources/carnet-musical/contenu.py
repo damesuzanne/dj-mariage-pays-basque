@@ -6,10 +6,17 @@ def duo2(items, a="On adore", b="À éviter"):
     return '<ul class="checks duos">' + "".join(
         f'<li><span>{e(q)}</span><span class="duo"><i></i><em>{e(a)}</em><i></i><em>{e(b)}</em></span></li>' for q in items) + "</ul>"
 
+def lignes_morceaux(labels, hint="titre, artiste"):
+    """Lignes d'écriture hautes, pour noter à la main titres et artistes."""
+    return '<div class="songfields">' + fields(labels, hint=hint) + '</div>'
+
+def puces(items):
+    return '<ul class="regles">' + "".join(f"<li>{e(x)}</li>" for x in items) + "</ul>"
+
 def morceaux(titre, intro, titres, lignes_libres):
     """Un moment de la journée : morceaux classiques à cocher + lignes pour les vôtres."""
     return block(titre, p(intro) + '<div class="songs">' + checks(titres) + '</div>' +
-                 fields(lignes_libres, hint="titre, artiste"))
+                 '<p class="vos">Vos morceaux à ajouter</p>' + lignes_morceaux(lignes_libres))
 
 def grid(entetes, n, premier="N°", lignes=None):
     th = "".join(f"<th>{e(h)}</th>" for h in entetes)
@@ -19,6 +26,14 @@ def grid(entetes, n, premier="N°", lignes=None):
         rows += f'<tr><td class="n{" lab" if lignes else ""}">{e(lab)}</td>' + "".join(
             f'<td data-l="{e(h)}"><span class="cl"></span></td>' for h in entetes) + "</tr>"
     return f'<table class="grid keep"><thead><tr><th>{e(premier)}</th>{th}</tr></thead><tbody>{rows}</tbody></table>'
+
+import urllib.parse as _up
+MAIL = ("mailto:richarddjevent@gmail.com?subject=" + _up.quote("Notre carnet musical de mariage") + "&body=" +
+        _up.quote("Bonjour Richard,\n\nVoici notre carnet musical pour notre mariage du [date] à [lieu]. Je joins le PDF rempli.\n\nMerci !\n"))
+
+def bouton_mail():
+    return ('<div class="envoi"><a class="btn-mail" href="' + MAIL + '">Envoyer mon carnet à Richard par e-mail</a>'
+            '<p>Le message s\'ouvre dans votre messagerie, adresse et objet déjà remplis. Enregistrez d\'abord votre PDF rempli, puis joignez-le au message.</p></div>')
 
 parts = []
 
@@ -39,7 +54,7 @@ parts.append(chapter("01", "Avant de commencer",
     "La musique d'un mariage se prépare à deux, en quelques soirées. Ce carnet vous guide, du premier questionnaire jusqu'à la liste à remettre à votre DJ."))
 parts.append(block("Votre mariage en deux lignes", fields([
     "Nos prénoms", "Date du mariage", "Lieu de la réception", "Nombre d'invités à la soirée"], ) ))
-parts.append(block("Comment remplir ce carnet", checks([
+parts.append(block("Comment remplir ce carnet", puces([
     "Remplissez le questionnaire chacun de votre côté, puis comparez vos réponses.",
     "Cochez les morceaux qui vous plaisent dans chaque moment de la journée, et ajoutez les vôtres.",
     "Choisissez votre ouverture de bal en dernier, quand vous aurez une idée de l'ambiance voulue.",
@@ -51,7 +66,8 @@ parts.append(tip("Les listes de ce carnet sont des suggestions classiques de mar
 parts.append(chapter("02", "Le questionnaire musical",
     "Quelques questions à remplir chacun de votre côté. Vos réponses donneront le ton de toute la journée."))
 parts.append(block("Vos goûts, côte à côte",
-    grid(["Prénom 1", "Prénom 2"], 7, premier="Question", lignes=[
+    grid(["Prénom 1", "Prénom 2"], 8, premier="Question", lignes=[
+        "Nos prénoms (à écrire ici)",
         "Le style qu'on écoute le plus",
         "Un artiste qu'on adore",
         "La chanson de nos débuts",
@@ -95,9 +111,8 @@ parts.append(block("Quelques idées pour vous inspirer",
         "« A Thousand Years », Christina Perri", "« Marry Me », Train",
         "« (I've Had) The Time of My Life », Bill Medley et Jennifer Warnes",
         "« I Wanna Dance with Somebody », Whitney Houston", "« La Valse d'Amélie », Yann Tiersen"]) + '</div>'))
-parts.append(block("Votre choix", fields([
-    "Idée 1 (titre, artiste)", "Idée 2 (titre, artiste)", "Idée 3 (titre, artiste)",
-    "Notre choix final", "Ce qu'on veut : une chanson entière, ou seulement le début ?"]) +
+parts.append(block("Votre choix", lignes_morceaux([
+    "Idée 1", "Idée 2", "Idée 3", "Notre choix final"]) + fields(["Une chanson entière, ou seulement le début ?"]) +
     checks(["On ouvre le bal avant le gâteau.", "On ouvre le bal après le gâteau.", "On décide avec notre DJ.",
             "Nos proches nous rejoignent pendant la chanson."])))
 
@@ -111,20 +126,20 @@ parts.append(morceaux("La cérémonie",
         "« Perfect », Ed Sheeran", "« Can't Help Falling in Love », Elvis Presley", "« Marry You », Bruno Mars",
         "« Je te promets », Johnny Hallyday", "« Signed, Sealed, Delivered I'm Yours », Stevie Wonder",
         "« Happy », Pharrell Williams", "« Walking on Sunshine », Katrina and the Waves"],
-    ["Entrée des mariés", "Pendant la signature", "Sortie de cérémonie"]))
+    ["Entrée des mariés", "Pendant la signature", "Sortie de cérémonie", "Un autre morceau", "Un autre morceau"]))
 parts.append(morceaux("Le cocktail",
     "De la musique de fond, conviviale, qui laisse les invités discuter.", [
         "« Fly Me to the Moon », Frank Sinatra", "« What a Wonderful World », Louis Armstrong",
         "« Aux Champs-Élysées », Joe Dassin", "« Don't Know Why », Norah Jones", "« Banana Pancakes », Jack Johnson",
         "« Isn't She Lovely », Stevie Wonder", "« Lovely Day », Bill Withers", "« Here Comes the Sun », The Beatles",
         "« I'm Yours », Jason Mraz", "« Je veux », Zaz", "« La Bohème », Charles Aznavour", "« Je m'en vais », Vianney"],
-    ["Nos morceaux pour le cocktail", "Un artiste qu'on veut entendre"]))
+    ["Un morceau pour le cocktail", "Un morceau pour le cocktail", "Un morceau pour le cocktail", "Un morceau pour le cocktail", "Un artiste qu'on veut entendre"]))
 parts.append(morceaux("Le repas",
     "Une ambiance douce et chaleureuse, avec quelques classiques pour toutes les générations.", [
         "« La Mer », Charles Trenet", "« Les Copains d'abord », Georges Brassens", "« Quand on n'a que l'amour », Jacques Brel",
         "« Come Away with Me », Norah Jones", "« La Vie en rose », Édith Piaf", "« Les Lacs du Connemara », Michel Sardou",
         "« Sweet Caroline », Neil Diamond", "« Dancing Queen », ABBA"],
-    ["Nos morceaux pour le repas", "Un moment spécial à marquer (discours, gâteau)"]))
+    ["Un morceau pour le repas", "Un morceau pour le repas", "Un morceau pour le repas", "Un moment spécial à marquer (discours, gâteau)", "Un moment spécial à marquer (discours, gâteau)"]))
 parts.append(morceaux("La soirée dansante",
     "Des morceaux qui font danser plusieurs générations. Cochez ceux que vous voulez, laissez votre DJ lire la salle pour le reste.", [
         "« Dancing Queen », ABBA", "« Stayin' Alive », Bee Gees", "« September », Earth, Wind and Fire",
@@ -137,23 +152,23 @@ parts.append(morceaux("La soirée dansante",
         "« Sweet Child o' Mine », Guns N' Roses", "« Johnny B. Goode », Chuck Berry", "« Twist and Shout », The Beatles",
         "« Uptown Funk », Mark Ronson et Bruno Mars", "« Shut Up and Dance », Walk the Moon", "« Levitating », Dua Lipa",
         "« Blinding Lights », The Weeknd", "« Can't Stop the Feeling! », Justin Timberlake"],
-    ["Nos morceaux pour danser", "Pour les années 80 et 90", "Pour les plus jeunes", "Pour les plus âgés"]))
+    ["Un morceau pour danser", "Un morceau pour danser", "Un morceau pour danser", "Un morceau pour danser", "Pour les années 80 et 90", "Pour les années 80 et 90", "Pour les plus jeunes", "Pour les plus âgés"]))
 parts.append(morceaux("La fin de soirée",
     "Les derniers morceaux, ceux que tout le monde chante ensemble.", [
         "« Bohemian Rhapsody », Queen", "« Tous les cris les SOS », Daniel Balavoine",
         "« Quand la musique est bonne », Jean-Jacques Goldman", "« Je te donne », Jean-Jacques Goldman et Michael Jones",
         "« Les Lacs du Connemara », Michel Sardou", "« Sweet Caroline », Neil Diamond"],
-    ["Notre dernier morceau", "Un morceau qui nous ressemble"]))
+    ["Notre dernier morceau", "Un morceau pour finir", "Un morceau pour finir", "Un morceau qui nous ressemble"]))
 
 # 05 ---------------------------------------------------------------------------
 parts.append(chapter("05", "À passer, à ne jamais passer",
     "Deux listes courtes, mais précieuses pour votre DJ : ce qui doit absolument passer, et ce qui doit rester dehors."))
 parts.append(block("Les morceaux à passer absolument",
-    p("Des morceaux qui comptent pour vous, quelle que soit l'ambiance du moment.") + fields([
-        "Morceau 1", "Morceau 2", "Morceau 3", "Morceau 4", "Morceau 5"], hint="titre, artiste")))
+    p("Des morceaux qui comptent pour vous, quelle que soit l'ambiance du moment.") + lignes_morceaux([
+        "Morceau 1", "Morceau 2", "Morceau 3", "Morceau 4", "Morceau 5", "Morceau 6", "Morceau 7", "Morceau 8"])))
 parts.append(block("Les morceaux à ne jamais passer",
-    p("Pour des raisons de goût, de souvenir ou de famille, chacun a ses morceaux à éviter.") + fields([
-        "Morceau 1", "Morceau 2", "Morceau 3", "Morceau 4", "Morceau 5"], hint="titre, artiste")))
+    p("Pour des raisons de goût, de souvenir ou de famille, chacun a ses morceaux à éviter.") + lignes_morceaux([
+        "Morceau 1", "Morceau 2", "Morceau 3", "Morceau 4", "Morceau 5", "Morceau 6", "Morceau 7", "Morceau 8"])))
 parts.append(block("Les points de vigilance", checks([
     "Des morceaux liés à d'anciennes relations ou à des souvenirs difficiles.",
     "Des paroles que vous préférez éviter devant les enfants ou les grands-parents.",
@@ -176,6 +191,7 @@ parts.append(block("Votre message au DJ",
     p("Un petit mot pour accompagner ce carnet, que vous pouvez recopier.") +
     '<blockquote class="mot">Bonjour, voici notre carnet musical pour le mariage du [date] à [lieu]. Vous y trouverez nos goûts, notre ouverture de bal, les morceaux à passer absolument et ceux à éviter. N\'hésitez pas à nous poser vos questions. Merci !</blockquote>' +
     fields(["Dernier point à préciser", "Date d'envoi prévue"])))
+parts.append(block("Envoyer votre carnet à Richard", bouton_mail()))
 
 parts.append('</main>')
 parts.append(f'''<footer class="end">

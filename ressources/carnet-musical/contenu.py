@@ -10,6 +10,11 @@ def lignes_morceaux(labels, hint="titre, artiste"):
     """Lignes d'écriture hautes, pour noter à la main titres et artistes."""
     return '<div class="songfields">' + fields(labels, hint=hint) + '</div>'
 
+def page_lignes(titre, n):
+    """Une page entière de lignes d'écriture pour une réponse libre."""
+    lignes = "".join(f'<label><b>Ligne {i}</b><span class="line"></span></label>' for i in range(1, n + 1))
+    return f'<section class="block pleine"><h3>{e(titre)}</h3><div class="fields">{lignes}</div></section>'
+
 def puces(items):
     return '<ul class="regles">' + "".join(f"<li>{e(x)}</li>" for x in items) + "</ul>"
 
@@ -42,7 +47,7 @@ parts.append(f'''<section class="cover dark">
 <p class="kicker">Carnet gratuit</p>
 <h1>Le carnet musical<br><em>du mariage</em></h1>
 {SPRIG}
-<p class="sub">Le questionnaire, les morceaux par moment et vos listes</p>
+<p class="sub">Le questionnaire, l'ouverture de bal et vos listes</p>
 <p class="lead">Un carnet à remplir à deux pour préparer la musique de votre journée : ce que vous aimez, ce que vous voulez entendre, et ce qui ne doit jamais passer.</p>
 </section>''')
 
@@ -56,11 +61,9 @@ parts.append(block("Votre mariage en deux lignes", fields([
     "Nos prénoms", "Date du mariage", "Lieu de la réception", "Nombre d'invités à la soirée"], ) ))
 parts.append(block("Comment remplir ce carnet", puces([
     "Remplissez le questionnaire chacun de votre côté, puis comparez vos réponses.",
-    "Cochez les morceaux qui vous plaisent dans chaque moment de la journée, et ajoutez les vôtres.",
     "Choisissez votre ouverture de bal en dernier, quand vous aurez une idée de l'ambiance voulue.",
     "Notez les morceaux à passer absolument et ceux à ne jamais passer.",
     "Envoyez le tout à votre DJ plusieurs semaines avant la date, pour qu'il puisse poser des questions."])))
-parts.append(tip("Les listes de ce carnet sont des suggestions classiques de mariage. Elles ne sont pas une liste imposée : gardez ce qui vous ressemble et ajoutez le reste."))
 
 # 02 ---------------------------------------------------------------------------
 parts.append(chapter("02", "Le questionnaire musical",
@@ -85,83 +88,24 @@ parts.append(block("Vos invités", checks([
     "Beaucoup d'invités de 25 à 40 ans",
     "Beaucoup d'invités de 40 à 60 ans",
     "Beaucoup d'invités de plus de 60 ans",
-    "Des invités étrangers, avec des musiques de leur pays à prévoir"]) +
-    fields(["Les invités qui adorent danser", "Les invités qui préfèrent discuter"])))
+    "Des invités étrangers, avec des musiques de leur pays à prévoir"])))
 parts.append(block("Votre façon de faire",
     p("Choisissez ce qui vous correspond le mieux.") + checks([
         "On préfère laisser le DJ lire la salle et adapter les morceaux.",
         "On veut une liste de morceaux précis à respecter.",
-        "On veut un mélange : quelques morceaux imposés, le reste au feeling du DJ."]) +
-    fields(["Ce qui compte le plus pour nous dans la musique ce jour-là"])))
+        "On veut un mélange : quelques morceaux imposés, le reste au feeling du DJ."])))
+parts.append(page_lignes("Ce qui compte le plus pour nous dans la musique, ce jour-là", 21))
 
 # 03 ---------------------------------------------------------------------------
 parts.append(chapter("03", "L'ouverture de bal",
     "C'est le premier moment dansé de la soirée. Elle se prépare un peu à l'avance, mais elle n'a pas besoin d'être parfaite."))
-parts.append(block("Pour choisir votre chanson", checks([
-    "Elle vous plaît à tous les deux, et vous avez envie de l'entendre en public.",
-    "Son rythme vous permet de danser à votre aise, même sans avoir pris de cours.",
-    "Vous connaissez les paroles ou vous savez ce qu'elles racontent.",
-    "Sa durée vous convient, ou vous avez prévu avec votre DJ de la raccourcir.",
-    "Vous avez décidé si vos proches viennent vous rejoindre en cours de chanson."])))
-parts.append(block("Quelques idées pour vous inspirer",
-    p("Romantiques, joyeuses ou plus originales : cochez celles qui vous tentent.") + '<div class="songs">' + checks([
-        "« Perfect », Ed Sheeran", "« All of Me », John Legend", "« At Last », Etta James",
-        "« Can't Help Falling in Love », Elvis Presley", "« La Vie en rose », Édith Piaf",
-        "« Je l'aime à mourir », Francis Cabrel", "« Pour que tu m'aimes encore », Céline Dion",
-        "« A Thousand Years », Christina Perri", "« Marry Me », Train",
-        "« (I've Had) The Time of My Life », Bill Medley et Jennifer Warnes",
-        "« I Wanna Dance with Somebody », Whitney Houston", "« La Valse d'Amélie », Yann Tiersen"]) + '</div>'))
 parts.append(block("Votre choix", lignes_morceaux([
     "Idée 1", "Idée 2", "Idée 3", "Notre choix final"]) + fields(["Une chanson entière, ou seulement le début ?"]) +
-    checks(["On ouvre le bal avant le gâteau.", "On ouvre le bal après le gâteau.", "On décide avec notre DJ.",
+    checks(["On ouvre le bal après le gâteau.", "On décide avec notre DJ.",
             "Nos proches nous rejoignent pendant la chanson."])))
 
-# 04 ---------------------------------------------------------------------------
-parts.append(chapter("04", "Vos morceaux par moment",
-    "Cochez les morceaux qui vous plaisent et complétez avec les vôtres. Pas besoin de tout remplir."))
-parts.append(morceaux("La cérémonie",
-    "Entrée, passage à la signature, sortie : des morceaux calmes ou plus joyeux selon l'ambiance voulue.", [
-        "« Canon en ré majeur », Johann Pachelbel", "« Marche nuptiale », Felix Mendelssohn",
-        "« Ave Maria », Franz Schubert", "« Hallelujah », Leonard Cohen", "« A Thousand Years », Christina Perri",
-        "« Perfect », Ed Sheeran", "« Can't Help Falling in Love », Elvis Presley", "« Marry You », Bruno Mars",
-        "« Je te promets », Johnny Hallyday", "« Signed, Sealed, Delivered I'm Yours », Stevie Wonder",
-        "« Happy », Pharrell Williams", "« Walking on Sunshine », Katrina and the Waves"],
-    ["Entrée des mariés", "Pendant la signature", "Sortie de cérémonie", "Un autre morceau", "Un autre morceau"]))
-parts.append(morceaux("Le cocktail",
-    "De la musique de fond, conviviale, qui laisse les invités discuter.", [
-        "« Fly Me to the Moon », Frank Sinatra", "« What a Wonderful World », Louis Armstrong",
-        "« Aux Champs-Élysées », Joe Dassin", "« Don't Know Why », Norah Jones", "« Banana Pancakes », Jack Johnson",
-        "« Isn't She Lovely », Stevie Wonder", "« Lovely Day », Bill Withers", "« Here Comes the Sun », The Beatles",
-        "« I'm Yours », Jason Mraz", "« Je veux », Zaz", "« La Bohème », Charles Aznavour", "« Je m'en vais », Vianney"],
-    ["Un morceau pour le cocktail", "Un morceau pour le cocktail", "Un morceau pour le cocktail", "Un morceau pour le cocktail", "Un artiste qu'on veut entendre"]))
-parts.append(morceaux("Le repas",
-    "Une ambiance douce et chaleureuse, avec quelques classiques pour toutes les générations.", [
-        "« La Mer », Charles Trenet", "« Les Copains d'abord », Georges Brassens", "« Quand on n'a que l'amour », Jacques Brel",
-        "« Come Away with Me », Norah Jones", "« La Vie en rose », Édith Piaf", "« Les Lacs du Connemara », Michel Sardou",
-        "« Sweet Caroline », Neil Diamond", "« Dancing Queen », ABBA"],
-    ["Un morceau pour le repas", "Un morceau pour le repas", "Un morceau pour le repas", "Un moment spécial à marquer (discours, gâteau)", "Un moment spécial à marquer (discours, gâteau)"]))
-parts.append(morceaux("La soirée dansante",
-    "Des morceaux qui font danser plusieurs générations. Cochez ceux que vous voulez, laissez votre DJ lire la salle pour le reste.", [
-        "« Dancing Queen », ABBA", "« Stayin' Alive », Bee Gees", "« September », Earth, Wind and Fire",
-        "« I Will Survive », Gloria Gaynor", "« Billie Jean », Michael Jackson", "« Girls Just Want to Have Fun », Cyndi Lauper",
-        "« Don't Stop Me Now », Queen", "« Y.M.C.A. », Village People", "« L'Aventurier », Indochine",
-        "« Alexandrie Alexandra », Claude François", "« Voyage voyage », Desireless", "« Les Démons de minuit », Images",
-        "« Alors on danse », Stromae", "« Papaoutai », Stromae", "« Femme Like U », K-Maro",
-        "« Dragostea Din Tei », O-Zone", "« Lady (Hear Me Tonight) », Modjo", "« Macarena », Los del Río",
-        "« Mr. Brightside », The Killers", "« Wonderwall », Oasis", "« Livin' on a Prayer », Bon Jovi",
-        "« Sweet Child o' Mine », Guns N' Roses", "« Johnny B. Goode », Chuck Berry", "« Twist and Shout », The Beatles",
-        "« Uptown Funk », Mark Ronson et Bruno Mars", "« Shut Up and Dance », Walk the Moon", "« Levitating », Dua Lipa",
-        "« Blinding Lights », The Weeknd", "« Can't Stop the Feeling! », Justin Timberlake"],
-    ["Un morceau pour danser", "Un morceau pour danser", "Un morceau pour danser", "Un morceau pour danser", "Pour les années 80 et 90", "Pour les années 80 et 90", "Pour les plus jeunes", "Pour les plus âgés"]))
-parts.append(morceaux("La fin de soirée",
-    "Les derniers morceaux, ceux que tout le monde chante ensemble.", [
-        "« Bohemian Rhapsody », Queen", "« Tous les cris les SOS », Daniel Balavoine",
-        "« Quand la musique est bonne », Jean-Jacques Goldman", "« Je te donne », Jean-Jacques Goldman et Michael Jones",
-        "« Les Lacs du Connemara », Michel Sardou", "« Sweet Caroline », Neil Diamond"],
-    ["Notre dernier morceau", "Un morceau pour finir", "Un morceau pour finir", "Un morceau qui nous ressemble"]))
-
 # 05 ---------------------------------------------------------------------------
-parts.append(chapter("05", "À passer, à ne jamais passer",
+parts.append(chapter("04", "À passer, à ne jamais passer",
     "Deux listes courtes, mais précieuses pour votre DJ : ce qui doit absolument passer, et ce qui doit rester dehors."))
 parts.append(block("Les morceaux à passer absolument",
     p("Des morceaux qui comptent pour vous, quelle que soit l'ambiance du moment.") + lignes_morceaux([
@@ -169,28 +113,10 @@ parts.append(block("Les morceaux à passer absolument",
 parts.append(block("Les morceaux à ne jamais passer",
     p("Pour des raisons de goût, de souvenir ou de famille, chacun a ses morceaux à éviter.") + lignes_morceaux([
         "Morceau 1", "Morceau 2", "Morceau 3", "Morceau 4", "Morceau 5", "Morceau 6", "Morceau 7", "Morceau 8"])))
-parts.append(block("Les points de vigilance", checks([
-    "Des morceaux liés à d'anciennes relations ou à des souvenirs difficiles.",
-    "Des paroles que vous préférez éviter devant les enfants ou les grands-parents.",
-    "Des styles que certains invités supportent mal, ou à volume plus bas.",
-    "Des chansons déjà trop entendues dans la saison."]) +
-    fields(["Autre chose à savoir sur la musique ou les invités"])))
-
-# 06 ---------------------------------------------------------------------------
-parts.append(chapter("06", "Avant de remettre votre liste",
-    "Quelques vérifications pour que votre DJ ait tout ce qu'il lui faut, bien avant la date."))
-parts.append(block("Votre liste de contrôle", checks([
-    "Le questionnaire est rempli par les deux mariés.",
-    "L'ouverture de bal est choisie, avec la durée souhaitée.",
-    "Les morceaux à passer absolument sont notés.",
-    "Les morceaux à ne jamais passer sont notés.",
-    "Les moments particuliers sont prévenus : entrée, discours, gâteau, surprise des proches.",
-    "Les horaires de fin de musique du lieu sont demandés au lieu et transmis au DJ.",
-    "La liste est envoyée au DJ plusieurs semaines avant la date."])))
-parts.append(block("Votre message au DJ",
-    p("Un petit mot pour accompagner ce carnet, que vous pouvez recopier.") +
-    '<blockquote class="mot">Bonjour, voici notre carnet musical pour le mariage du [date] à [lieu]. Vous y trouverez nos goûts, notre ouverture de bal, les morceaux à passer absolument et ceux à éviter. N\'hésitez pas à nous poser vos questions. Merci !</blockquote>' +
-    fields(["Dernier point à préciser", "Date d'envoi prévue"])))
+# 05 ---------------------------------------------------------------------------
+parts.append(chapter("05", "Envoyer votre carnet à Richard",
+    "Quand votre carnet est rempli, envoyez-le à Richard, bien avant la date, pour qu'il puisse vous poser ses questions."))
+parts.append(block("Un dernier mot", fields(["Dernier point à préciser"])))
 parts.append(block("Envoyer votre carnet à Richard", bouton_mail()))
 
 parts.append(fin_tools())
@@ -199,7 +125,7 @@ parts.append(f'''<footer class="end">
 {lockup("on-dark")}
 {SPRIG}
 <p class="merci">Que la musique soit belle.</p>
-<p>Ce carnet est gratuit et offert par Richard DJ Event. Les morceaux proposés sont des suggestions classiques de mariage : choisissez ceux qui vous ressemblent.</p>
+<p>Ce carnet est gratuit et offert par Richard DJ Event.</p>
 <p class="cta">Parlons de la musique de votre mariage</p>
 <p><a href="tel:+33684331824">06 84 33 18 24</a> · <a href="mailto:richarddjevent@gmail.com">richarddjevent@gmail.com</a></p>
 <p class="sites">djmariagepaysbasque.fr<br>djmariagelandes.fr</p>

@@ -59,12 +59,12 @@ export const ressources = {
   },
   'carnet-musical': {
     type: 'Carnet gratuit',
-    titre: 'Le carnet musical du mariage : questionnaire, morceaux et listes',
-    accroche: 'Le questionnaire musical, les morceaux par moment et vos listes à passer ou à éviter',
+    titre: 'Le carnet musical du mariage : questionnaire, ouverture de bal et listes',
+    accroche: 'Le questionnaire musical, votre ouverture de bal et vos listes à passer ou à éviter',
     points: [
       'Version A4 à imprimer et version téléphone à remplir',
-      'Un questionnaire à remplir à deux et une liste de morceaux à cocher par moment',
-      'Votre ouverture de bal, les morceaux à passer absolument et ceux à ne jamais passer',
+      'Un questionnaire musical à remplir à deux et le choix de votre ouverture de bal',
+      'Les morceaux à passer absolument et ceux à ne jamais passer, à envoyer à Richard',
     ],
     couverture: couvertureMusique,
     apercu: pageMusique,

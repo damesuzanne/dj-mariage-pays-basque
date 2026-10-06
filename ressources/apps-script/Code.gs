@@ -66,7 +66,7 @@ const RESSOURCES = {
   },
   'carnet-musical': {
     titre: 'Le carnet musical du mariage',
-    accroche: 'Votre carnet est prêt : le questionnaire musical, les morceaux par moment et vos listes à passer ou à éviter.',
+    accroche: 'Votre carnet est prêt : le questionnaire musical, l’ouverture de bal et vos listes à passer ou à éviter.',
     web: { libelle: 'Remplir en ligne', detail: 'vos réponses s’enregistrent toutes seules sur votre appareil', url: 'https://djmariagepaysbasque.fr/ressources/carnet-musical-mariage/' },
     fichiers: [
       { libelle: 'Version téléphone', detail: 'à remplir sur l’écran', id: '1RQsN9-3FGWd9LHkSmsq58FwlECIuGA4_' },

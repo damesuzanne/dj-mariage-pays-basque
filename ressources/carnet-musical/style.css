@@ -198,3 +198,8 @@ h3{font-size:22px;margin:0 0 10px}
 .fin-tools{margin:22px 0 10px;padding:16px 18px;background:#fff;border:1px solid #eadfc8;border-radius:14px;font-size:14px;color:var(--muted);break-inside:avoid}
 .fin-tools p{margin:0}
 @media print{.fin-tools{font-size:9pt;margin-top:6mm}}
+
+.pleine .fields{gap:0}
+.pleine .fields b{display:none}
+.pleine .line{height:36px}
+@media print{.pleine{break-before:page;break-inside:auto}.pleine .line{height:10.5mm}}

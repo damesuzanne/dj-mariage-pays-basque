@@ -34,4 +34,6 @@
  .toc li a{padding:2.2mm 0}
  .toc .mode,.mode{font-size:8pt!important;line-height:1.32!important;padding:3mm 4mm!important;margin-top:3mm}
  .toc .mode b,.mode b{font-size:6.5pt}
+ .pleine .line{height:11.5mm}
+ .pleine label:nth-child(n+15){display:none}
 }

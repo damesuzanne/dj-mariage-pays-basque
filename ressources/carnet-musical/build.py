@@ -90,7 +90,7 @@ parts = []
 parts.append(f'''<section class="cover dark">
 {lockup("on-dark")}
 <p class="kicker">Carnet gratuit</p>
-<h1>Le carnet musical<br><em>du</em> mariage</h1>
+<h1>Le carnet musical<br><em>du mariage</em></h1>
 {SPRIG}
 <p class="sub">Le questionnaire, les morceaux par moment et vos listes</p>
 <p class="lead">Un carnet à remplir à deux pour préparer la musique de votre journée : ce que vous aimez, ce que vous voulez entendre, et ce qui ne doit jamais passer.</p>

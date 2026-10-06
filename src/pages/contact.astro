@@ -7,7 +7,7 @@ import PageHero from '../components/PageHero.astro';
 import ObfuscatedLink from '../components/ObfuscatedLink.astro';
 import heroPhoto from '../assets/contact-hero.png';
 
-const heroAlt = 'Rendez-vous entre un DJ et un couple sur une terrasse face à l’océan';
+const heroAlt = 'Rendez-vous entre un DJ et un couple autour d’une table sur une terrasse face à l’océan';
 ---
 
 <Layout
@@ -24,10 +24,16 @@ const heroAlt = 'Rendez-vous entre un DJ et un couple sur une terrasse face à l
     texte="Réservez un créneau en visio ou par téléphone avec Richard, ou remplissez le questionnaire de devis : vous recevez une réponse sous 24h."
     image={heroPhoto}
     imageAlt={heroAlt}
-    position="70% 40%"
+    position="center 45%"
   >
     <Fragment slot="actions">
-      <ObfuscatedLink type="tel" value="+33684331824" class="btn btn-gold">Appeler Richard</ObfuscatedLink>
+      <button
+        type="button"
+        class="btn btn-gold"
+        data-cal-link="richard-dj/30min"
+        data-cal-namespace="30min"
+        data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+      >Choisir son créneau</button>
       <ObfuscatedLink
         type="wa"
         value="33684331824"

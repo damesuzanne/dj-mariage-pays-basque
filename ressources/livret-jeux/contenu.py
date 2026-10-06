@@ -246,6 +246,7 @@ parts.append(jeu(12, "Le bocal des souvenirs",
      "Choisissez la personne qui le gardera jusqu'au bon moment."],
     cartes(["Un souvenir avec les mariés", "Un conseil pour la vie à deux", "Un vœu pour l'année qui vient"]), duree="Toute la soirée"))
 
+parts.append(fin_tools())
 parts.append('</main>')
 parts.append(f'''<footer class="end">
 <div class="fl tl">{FLORAL}</div>

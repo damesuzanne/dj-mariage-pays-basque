@@ -13,7 +13,7 @@ FONTS = re.sub(r"(font-family:'Playfair Display'[^}]*?)font-weight:(400|500)", r
 
 EXTRA = '''
 html{scroll-behavior:smooth}
-.pdf-tools{display:none}
+.pdf-tools,.fin-tools{display:none}
 .chapter,.venue,section[id]{scroll-margin-top:16px}
 .toc li a:hover .tt{color:var(--gold)}
 .toc .tp{transition:transform .15s;font-size:24px;line-height:1}

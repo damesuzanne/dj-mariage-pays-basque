@@ -193,6 +193,7 @@ parts.append(block("Votre message au DJ",
     fields(["Dernier point à préciser", "Date d'envoi prévue"])))
 parts.append(block("Envoyer votre carnet à Richard", bouton_mail()))
 
+parts.append(fin_tools())
 parts.append('</main>')
 parts.append(f'''<footer class="end">
 {lockup("on-dark")}

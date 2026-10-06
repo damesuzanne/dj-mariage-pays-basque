@@ -63,6 +63,21 @@ def lockup(cls):
             '<span class="lname">Richard <em>DJ Event</em></span>'
             '<span class="ltag">DJ mariage Pays Basque &amp; Landes</span></span></div>')
 
+
+def fin_tools():
+    """Bloc de boutons en fin de PDF : autres versions, version en ligne, envoi à Richard."""
+    import urllib.parse as _u
+    mail = ("mailto:richarddjevent@gmail.com?subject=" + _u.quote("Mon livret de jeux de mariage") + "&body=" +
+            _u.quote("Bonjour Richard,\n\nVoici mon livret de jeux de mariage, rempli. Je joins le PDF enregistré.\n\nMerci !\n"))
+    b = [('PDF A4 à imprimer', 'https://drive.google.com/file/d/1W0qTzt-ROu0C9khEqvfJSXpL3b6TvzRW/view'),
+         ('PDF pour téléphone', 'https://drive.google.com/file/d/1S8_8FPODX6zmxW945hlipmjO-N8r9v9t/view'),
+         ('Remplir en ligne', 'https://djmariagepaysbasque.fr/ressources/livret-jeux-mariage/'),
+         ('Envoyer à Richard par e-mail', mail)]
+    return ('<section class="fin-tools"><p>Pour que vos réponses restent dans ce PDF, enregistrez le fichier avec « Enregistrer » dans Adobe Acrobat Reader, Aperçu ou Fichiers. '
+            'La version en ligne les enregistre toute seule sur votre appareil. Rien n’est envoyé à Richard tant que vous n’utilisez pas le bouton d’envoi, '
+            'qui ouvre votre messagerie : joignez-y votre PDF enregistré.</p><div class="pdf-tools">'
+            + ''.join(f'<a href="{u}">{t}</a>' for t, u in b) + '</div></section>')
+
 # --- contenu ----------------------------------------------------------------
 # Livret de jeux de mariage : 12 jeux menés par les invités et les témoins.
 
@@ -311,6 +326,7 @@ parts.append(jeu(12, "Le bocal des souvenirs",
      "Choisissez la personne qui le gardera jusqu'au bon moment."],
     cartes(["Un souvenir avec les mariés", "Un conseil pour la vie à deux", "Un vœu pour l'année qui vient"]), duree="Toute la soirée"))
 
+parts.append(fin_tools())
 parts.append('</main>')
 parts.append(f'''<footer class="end">
 <div class="fl tl">{FLORAL}</div>

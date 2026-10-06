@@ -144,3 +144,7 @@ h3{font-size:22px;margin:0 0 10px}
 .pdf-tools{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
 .pdf-tools a{font:500 13px var(--sans);color:var(--navy);background:#fff;border:1px solid var(--gold);border-radius:999px;padding:8px 14px;text-decoration:none}
 @media print{.pdf-tools{gap:2mm;margin-top:4mm}.pdf-tools a{font-size:8.5pt;padding:2mm 3.5mm}}
+
+.fin-tools{margin:22px 0 10px;padding:16px 18px;background:#fff;border:1px solid #eadfc8;border-radius:14px;font-size:14px;color:var(--muted);break-inside:avoid}
+.fin-tools p{margin:0}
+@media print{.fin-tools{font-size:9pt;margin-top:6mm}}

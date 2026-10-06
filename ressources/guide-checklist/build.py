@@ -65,6 +65,21 @@ def lockup(cls):
             '<span class="lname">Richard <em>DJ Event</em></span>'
             '<span class="ltag">DJ mariage Pays Basque &amp; Landes</span></span></div>')
 
+
+def fin_tools():
+    """Bloc de boutons en fin de PDF : autres versions, version en ligne, envoi à Richard."""
+    import urllib.parse as _u
+    mail = ("mailto:richarddjevent@gmail.com?subject=" + _u.quote("Ma checklist et mon rétroplanning de mariage") + "&body=" +
+            _u.quote("Bonjour Richard,\n\nVoici ma checklist et mon rétroplanning de mariage, rempli. Je joins le PDF enregistré.\n\nMerci !\n"))
+    b = [('PDF A4 à imprimer', 'https://drive.google.com/file/d/1Uy8_UoHeBf75mBlUfic7MMC2U4LdF2kF/view'),
+         ('PDF pour téléphone', 'https://drive.google.com/file/d/1bF02mEdGind82uVcvl-0_NcGZgz6Zs3T/view'),
+         ('Remplir en ligne', 'https://djmariagepaysbasque.fr/ressources/checklist-retroplanning-mariage/'),
+         ('Envoyer à Richard par e-mail', mail)]
+    return ('<section class="fin-tools"><p>Pour que vos réponses restent dans ce PDF, enregistrez le fichier avec « Enregistrer » dans Adobe Acrobat Reader, Aperçu ou Fichiers. '
+            'La version en ligne les enregistre toute seule sur votre appareil. Rien n’est envoyé à Richard tant que vous n’utilisez pas le bouton d’envoi, '
+            'qui ouvre votre messagerie : joignez-y votre PDF enregistré.</p><div class="pdf-tools">'
+            + ''.join(f'<a href="{u}">{t}</a>' for t, u in b) + '</div></section>')
+
 # --- contenu ----------------------------------------------------------------
 parts = []
 
@@ -302,6 +317,7 @@ parts.append(block("Documents à conserver au même endroit", checks([
     fields(["Notes et questions à traiter"])))
 parts.append(tip("photographiez chaque contrat et chaque reçu avec votre téléphone. Toute la paperasse tient alors dans votre poche, accessible le jour J."))
 
+parts.append(fin_tools())
 parts.append('</main>')
 parts.append(f'''<footer class="end">
 <div class="fl tl">{FLORAL}</div>

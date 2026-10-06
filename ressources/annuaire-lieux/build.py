@@ -210,6 +210,21 @@ def toc(variant):
             'puis enregistrez avec « Enregistrer » pour que vos réponses restent dans le fichier. Plus simple : la <a href="https://djmariagepaysbasque.fr/ressources/lieux-mariage-pays-basque/">version en ligne</a> enregistre toute seule. Il s’imprime aussi en A4. Touchez un titre du sommaire ou un lieu de l’annuaire pour y aller directement.</span></aside>' + pdf_tools() + '</nav>')
 
 
+
+def fin_tools():
+    """Bloc de boutons en fin de PDF : autres versions, version en ligne, envoi à Richard."""
+    import urllib.parse as _u
+    mail = ("mailto:richarddjevent@gmail.com?subject=" + _u.quote("Mes visites de lieux de mariage") + "&body=" +
+            _u.quote("Bonjour Richard,\n\nVoici mon annuaire des lieux de mariage, rempli. Je joins le PDF enregistré.\n\nMerci !\n"))
+    b = [('PDF A4 à imprimer', 'https://drive.google.com/file/d/1wqEiK7fxHnm24tNLCEjTNTTXnTBSw4m0/view'),
+         ('PDF pour téléphone', 'https://drive.google.com/file/d/1yiobewQ_yD2pHtC-NkQ9W_krHEdrStge/view'),
+         ('Remplir en ligne', 'https://djmariagepaysbasque.fr/ressources/lieux-mariage-pays-basque/'),
+         ('Envoyer à Richard par e-mail', mail)]
+    return ('<section class="fin-tools"><p>Pour que vos réponses restent dans ce PDF, enregistrez le fichier avec « Enregistrer » dans Adobe Acrobat Reader, Aperçu ou Fichiers. '
+            'La version en ligne les enregistre toute seule sur votre appareil. Rien n’est envoyé à Richard tant que vous n’utilisez pas le bouton d’envoi, '
+            'qui ouvre votre messagerie : joignez-y votre PDF enregistré.</p><div class="pdf-tools">'
+            + ''.join(f'<a href="{u}">{t}</a>' for t, u in b) + '</div></section>')
+
 def cover():
     return f'''<section class="cover">
 <figure class="cover-photo"><img src="photos/ambiance.jpg" alt="Tables de réception de mariage dressées sous des guirlandes lumineuses"></figure>
@@ -250,7 +265,7 @@ def document(variant):
         if body is None:
             body = items(ch, variant)
         parts.append(f'<section class="{cls}">{chapter_head(ch["num"], ch["title"], ch.get("intro", ""))}{body}</section>')
-    parts += ["</main>", end()]
+    parts += [fin_tools(), "</main>", end()]
     return fr_html("".join(parts))
 
 

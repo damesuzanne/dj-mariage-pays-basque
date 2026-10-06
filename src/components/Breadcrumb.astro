@@ -5,7 +5,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const labels: Record<string, string> = {
   '/': 'Accueil', '/conseils': 'Conseils & ressources', '/entreprises': 'Entreprises',
   '/bars-restaurants': 'Bars & restaurants', '/mentions-legales': 'Mentions légales',
-  '/politique-de-confidentialite': 'Politique de confidentialité', '/link-tree': 'Liens utiles', '/404': 'Page introuvable',
+  '/politique-de-confidentialite': 'Politique de confidentialité', '/link-tree': 'Liens utiles', '/contact': 'Contact', '/404': 'Page introuvable',
 };
 const items = [{ name: 'Accueil', href: '/' }];
 if (path.startsWith('/conseils/')) items.push({ name: 'Conseils & ressources', href: '/conseils/' });

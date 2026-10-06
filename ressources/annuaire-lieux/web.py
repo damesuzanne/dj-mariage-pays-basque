@@ -56,7 +56,7 @@ body = body.replace("<main>", "<main>" + tools, 1)
 
 EXTRA = '''
 html{scroll-behavior:smooth}
-.pdf-tools{display:none}
+.pdf-tools,.fin-tools{display:none}
 .chapter,.venue{scroll-margin-top:16px}
 .toc li a:hover .tt{color:var(--gold)}
 .toc li a:hover .tp{transform:translateX(3px)}

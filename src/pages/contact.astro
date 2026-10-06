@@ -1,0 +1,93 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ContactForm from '../components/ContactForm.astro';
+---
+
+<Layout
+  title="Contact et rendez-vous : DJ mariage Pays Basque · Richard DJ Event"
+  description="Contactez Richard DJ Event : réservez un créneau de 30 minutes en ligne ou demandez un devis gratuit pour votre mariage, votre événement d'entreprise ou votre soirée au Pays Basque et dans les Landes. Rendez-vous en visio ou par téléphone."
+>
+  <Header />
+  <header class="contact-hero">
+    <div class="container contact-hero-inner">
+      <p class="eyebrow">Contact</p>
+      <h1>Parlons de <em>votre événement</em></h1>
+      <p>
+        Réservez un créneau en visio ou par téléphone avec Richard, ou remplissez le questionnaire de devis : vous recevez une
+        réponse sous 24h.
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <section class="rdv" aria-labelledby="rdv-titre">
+      <div class="container rdv-inner">
+        <div>
+          <p class="eyebrow">Rendez-vous</p>
+          <h2 id="rdv-titre">Réserver un créneau de 30 minutes</h2>
+          <p>
+            Choisissez le jour et l'heure qui vous conviennent dans l'agenda de Richard, puis votre façon d'échanger :
+            en visio avec Cal Vidéo, ou par un appel téléphonique. Vous parlez de votre date, de votre lieu et de
+            l'ambiance que vous souhaitez.
+          </p>
+        </div>
+        <button
+          type="button"
+          class="btn btn-gold rdv-btn"
+          data-cal-link="richard-dj/30min"
+          data-cal-namespace="30min"
+          data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+        >Choisir un créneau</button>
+      </div>
+    </section>
+
+    <ContactForm />
+  </main>
+  <Footer />
+
+  <!-- Cal.com : agenda de prise de rendez-vous (chargé uniquement sur cette page) -->
+  <script is:inline>
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    Cal("init", "30min", {origin:"https://app.cal.com"});
+    Cal.config = Cal.config || {};
+    Cal.config.forwardQueryParams = true;
+    Cal.ns["30min"]("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#121723"},"dark":{"cal-brand":"#f9f7f1"}},"hideEventTypeDetails":false,"layout":"month_view"});
+  </script>
+</Layout>
+
+<style>
+  .contact-hero {
+    background: var(--night);
+    color: var(--white);
+    padding: 8.5rem 0 3.5rem;
+  }
+  .contact-hero-inner { max-width: 720px; }
+  .contact-hero h1 {
+    color: var(--white);
+    font-size: clamp(2.2rem, 5vw, 3.3rem);
+  }
+  .contact-hero h1 em { display: block; }
+  .contact-hero p:not(.eyebrow) { color: rgba(255, 255, 255, 0.7); margin: 0; }
+
+  .rdv {
+    background: var(--cream, #faf7f1);
+    padding: clamp(2.5rem, 6vw, 4rem) 0;
+    border-bottom: 1px solid #eadfc8;
+  }
+  .rdv-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .rdv-inner > div { max-width: 640px; }
+  .rdv h2 { margin: 0.2rem 0 0.6rem; font-size: clamp(1.6rem, 3.5vw, 2.1rem); }
+  .rdv p:not(.eyebrow) { margin: 0; color: var(--ink-soft, #5a6072); }
+  .rdv-btn { flex: none; }
+  @media (max-width: 640px) {
+    .rdv-btn { width: 100%; text-align: center; }
+  }
+</style>

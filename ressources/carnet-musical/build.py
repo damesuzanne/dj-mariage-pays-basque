@@ -63,6 +63,21 @@ def lockup(cls):
             '<span class="lname">Richard <em>DJ Event</em></span>'
             '<span class="ltag">DJ mariage Pays Basque &amp; Landes</span></span></div>')
 
+
+def fin_tools():
+    """Bloc de boutons en fin de PDF : autres versions, version en ligne, envoi à Richard."""
+    import urllib.parse as _u
+    mail = ("mailto:richarddjevent@gmail.com?subject=" + _u.quote("Notre carnet musical de mariage") + "&body=" +
+            _u.quote("Bonjour Richard,\n\nVoici notre carnet musical de mariage, rempli. Je joins le PDF enregistré.\n\nMerci !\n"))
+    b = [('PDF A4 à imprimer', 'https://drive.google.com/file/d/1-ajvM4mjD7aQBfl61LHGzb8mbR0yoOyN/view'),
+         ('PDF pour téléphone', 'https://drive.google.com/file/d/1RQsN9-3FGWd9LHkSmsq58FwlECIuGA4_/view'),
+         ('Remplir en ligne', 'https://djmariagepaysbasque.fr/ressources/carnet-musical-mariage/'),
+         ('Envoyer à Richard par e-mail', mail)]
+    return ('<section class="fin-tools"><p>Pour que vos réponses restent dans ce PDF, enregistrez le fichier avec « Enregistrer » dans Adobe Acrobat Reader, Aperçu ou Fichiers. '
+            'La version en ligne les enregistre toute seule sur votre appareil. Rien n’est envoyé à Richard tant que vous n’utilisez pas le bouton d’envoi, '
+            'qui ouvre votre messagerie : joignez-y votre PDF enregistré.</p><div class="pdf-tools">'
+            + ''.join(f'<a href="{u}">{t}</a>' for t, u in b) + '</div></section>')
+
 # --- contenu ----------------------------------------------------------------
 # Le carnet musical du mariage : questionnaire, morceaux par moment, ouverture de bal, listes à passer / à ne pas passer.
 
@@ -258,6 +273,7 @@ parts.append(block("Votre message au DJ",
     fields(["Dernier point à préciser", "Date d'envoi prévue"])))
 parts.append(block("Envoyer votre carnet à Richard", bouton_mail()))
 
+parts.append(fin_tools())
 parts.append('</main>')
 parts.append(f'''<footer class="end">
 {lockup("on-dark")}

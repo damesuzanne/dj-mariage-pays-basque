@@ -1,7 +1,7 @@
 ---
 // Sur les articles du blog, le seul H1 doit être le titre de l'article.
-const BrandTag = Astro.url.pathname.startsWith('/conseils') ? 'div' : 'h1';
-const links = [{ href: '/', label: 'Mariages' }, { href: '/entreprises/', label: 'Entreprises' }, { href: '/bars-restaurants/', label: 'Bars & Restaurants' }, { href: '/conseils/', label: 'Conseils & Ressources' }];
+const BrandTag = Astro.url.pathname.startsWith('/conseils') || Astro.url.pathname.startsWith('/contact') ? 'div' : 'h1';
+const links = [{ href: '/', label: 'Mariages' }, { href: '/entreprises/', label: 'Entreprises' }, { href: '/bars-restaurants/', label: 'Bars & Restaurants' }, { href: '/conseils/', label: 'Conseils & Ressources' }, { href: '/contact/', label: 'Contact' }];
 ---
 
 <header class="site-header" id="site-header">

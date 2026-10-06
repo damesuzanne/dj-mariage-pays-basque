@@ -7,8 +7,13 @@
  .hero{min-height:100dvh;padding:7rem 0 7.5rem}
  .hero .container{max-width:780px;text-align:center;margin-inline:auto}
  .hero h1{font-size:clamp(1.5rem,6.4vw,3.4rem);margin-bottom:1.2rem}
- .hero .intro{font-size:1.12rem;max-width:540px;margin:0 auto 2.4rem}
+ .hero .intro{font-size:1.12rem;max-width:740px;margin:0 auto 2.4rem;text-wrap:balance}
  .hero-actions{justify-content:center;gap:1rem;margin-bottom:3.2rem;padding-bottom:0}
  .hero:after{background:linear-gradient(180deg,rgba(16,21,34,.88),rgba(16,21,34,.72) 45%,rgba(16,21,34,.92))}
 }
 @media(max-width:480px){.hero{padding-bottom:5rem}}
+
+/* Contrastes (PageSpeed 06/10/26) : l'or clair et le vert WhatsApp passaient sous 4,5:1
+   sur fond crème. Le hero et les sections sombres gardent l'or d'origine. */
+.about .eyebrow,.about-content .eyebrow,.testimonials .eyebrow,.faq .eyebrow{color:#7f6125}
+.btn-whatsapp{background:#15803d}

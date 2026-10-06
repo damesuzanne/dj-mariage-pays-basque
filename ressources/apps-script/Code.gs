@@ -64,6 +64,15 @@ const RESSOURCES = {
       { libelle: 'Version A4 à imprimer', detail: 'ou à remplir sur ordinateur', id: '1wqEiK7fxHnm24tNLCEjTNTTXnTBSw4m0' },
     ],
   },
+  'carnet-musical': {
+    titre: 'Le carnet musical du mariage',
+    accroche: 'Votre carnet est prêt : le questionnaire musical, les morceaux par moment et vos listes à passer ou à éviter.',
+    web: { libelle: 'Remplir en ligne', detail: 'vos réponses s’enregistrent toutes seules sur votre appareil', url: 'https://djmariagepaysbasque.fr/ressources/carnet-musical-mariage/' },
+    fichiers: [
+      { libelle: 'Version téléphone', detail: 'à remplir sur l’écran', id: '1RQsN9-3FGWd9LHkSmsq58FwlECIuGA4_' },
+      { libelle: 'Version A4 à imprimer', detail: 'ou à remplir sur ordinateur', id: '1-ajvM4mjD7aQBfl61LHGzb8mbR0yoOyN' },
+    ],
+  },
 };
 
 // Ouvrir l'URL /exec une fois avec le compte de Richard déclenche l'écran

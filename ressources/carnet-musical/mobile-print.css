@@ -1,0 +1,31 @@
+
+/* Variante PDF « téléphone » : page 108 x 234 mm, une colonne, chaque chapitre sur une nouvelle page */
+@page{size:108mm 234mm;margin:9mm 6mm 11mm}
+@page{@bottom-left{font-size:6pt}}
+@media print{
+ body{font-size:11pt}
+ .cover,.end{min-height:234mm;height:234mm}
+ .fl{width:52mm;height:52mm}
+ .block,.stage,.keep{break-inside:auto}
+ .checks li,.fields label,.tip,.note,.when,.grid tr,.toc li{break-inside:avoid}
+ h3{break-after:avoid}
+ .chapter{break-before:page;margin-top:0}
+ .chapter h2,.toc h2{font-size:24pt}
+ .toc .tt{font-size:14pt}
+ .toc li a{padding:3mm 0}
+ .grid thead{display:none}
+ .grid,.grid tbody,.grid tr,.grid td{display:block;width:100%}
+ .grid tr{padding:6px 12px;border-bottom:1px solid #eadfc8}
+ .grid td{border:0;height:auto;padding-top:4px;border-bottom:1.5px dotted var(--gold)}
+ .grid .cl{display:none}
+ .grid td[data-l]::before{content:attr(data-l);display:block;font-size:9pt;color:var(--muted);padding-bottom:16px}
+ .grid td.n{border:0;font-size:14pt}
+ .fields.inline{grid-template-columns:1fr}
+ .timeline{padding-left:18px}
+ .dot{left:-28px}
+}
+
+@media print{.drawbox{height:48mm}.duos li{flex-direction:column;align-items:flex-start;gap:4px}
+ .songs .checks{columns:1}
+ .grid td.lab,.grid td.n.lab{width:100%!important;text-align:left;font:500 11pt/1.3 var(--sans);color:var(--navy);padding:2mm 0 1mm;border:0}
+}

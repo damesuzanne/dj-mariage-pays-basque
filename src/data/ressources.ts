@@ -7,6 +7,9 @@ import mobileJeux from '../assets/ressources/livret-jeux-mobile.png';
 import couvertureLieux from '../assets/ressources/annuaire-lieux-couverture.png';
 import pageLieux from '../assets/ressources/annuaire-lieux-page.png';
 import mobileLieux from '../assets/ressources/annuaire-lieux-mobile.png';
+import couvertureMusique from '../assets/ressources/carnet-musical-couverture.png';
+import pageMusique from '../assets/ressources/carnet-musical-page.png';
+import mobileMusique from '../assets/ressources/carnet-musical-mobile.png';
 
 /**
  * Ressources gratuites proposées en échange d'un prénom + e-mail.
@@ -53,6 +56,19 @@ export const ressources = {
     couverture: couvertureLieux,
     apercu: pageLieux,
     mobile: mobileLieux,
+  },
+  'carnet-musical': {
+    type: 'Carnet gratuit',
+    titre: 'Le carnet musical du mariage : questionnaire, morceaux et listes',
+    accroche: 'Le questionnaire musical, les morceaux par moment et vos listes à passer ou à éviter',
+    points: [
+      'Version A4 à imprimer et version téléphone à remplir',
+      'Un questionnaire à remplir à deux et une liste de morceaux à cocher par moment',
+      'Votre ouverture de bal, les morceaux à passer absolument et ceux à ne jamais passer',
+    ],
+    couverture: couvertureMusique,
+    apercu: pageMusique,
+    mobile: mobileMusique,
   },
 } as const;
 

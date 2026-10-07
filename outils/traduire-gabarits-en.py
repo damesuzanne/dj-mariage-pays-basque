@@ -112,7 +112,7 @@ COMMUN = {
     'Richard': 'Richard', 'DJ Event': 'DJ Event',
 }
 # Menu anglais injecté par le script (déjà en anglais).
-for deja in ['Main navigation', 'Weddings', 'Corporate Events', 'Bars & Restaurants', 'Tips &amp; Resources', 'Get a quote']:
+for deja in ['Main navigation', 'Weddings', 'Corporate Events', 'Bars & Restaurants', 'Wedding Tips', 'Get a quote']:
     COMMUN[deja] = deja
 for ville in ['Bayonne', 'Biarritz', 'Anglet', 'Saint-Jean-de-Luz', 'Hendaye', 'Hossegor', 'Capbreton', 'Dax']:
     COMMUN[ville] = ville
@@ -328,7 +328,7 @@ def traduire_page(conf):
     tete = tete.replace('<html lang="fr">', '<html lang="en">')
 
     # 3. Menu du gabarit : liens vers les pages anglaises.
-    liens = [('/en/', 'Weddings'), ('/en/corporate-events/', 'Corporate Events'), ('/en/bars-restaurants/', 'Bars & Restaurants'), ('/en/tips/', 'Tips &amp; Resources')]
+    liens = [('/en/', 'Weddings'), ('/en/corporate-events/', 'Corporate Events'), ('/en/bars-restaurants/', 'Bars & Restaurants'), ('/en/tips/', 'Wedding Tips')]
     courant = ' aria-current="page"'
     nav = '<nav class="nav" id="main-nav" aria-label="Main navigation">' + ''.join(
         f'<a href="{href}"{courant if href == conf["en"] else ""}>{label}</a>' for href, label in liens

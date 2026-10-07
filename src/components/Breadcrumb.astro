@@ -6,7 +6,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const en = langFromPath(Astro.url.pathname) === 'en';
 const labels: Record<string, string> = en
   ? {
-      '/en': 'Home', '/en/tips': 'Tips & resources', '/en/corporate-events': 'Corporate events',
+      '/en': 'Home', '/en/tips': 'Wedding tips', '/en/corporate-events': 'Corporate events',
       '/en/bars-restaurants': 'Bars & restaurants', '/en/legal-notice': 'Legal notice',
       '/en/privacy-policy': 'Privacy policy', '/en/contact': 'Contact', '/en/404': 'Page not found',
     }

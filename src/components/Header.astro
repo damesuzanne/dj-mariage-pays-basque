@@ -7,7 +7,7 @@ const blog = en ? '/en/tips' : '/conseils';
 // Sur les articles du blog, le seul H1 doit être le titre de l'article.
 const BrandTag = path.startsWith(blog) || path.startsWith(en ? '/en/contact' : '/contact') ? 'div' : 'h1';
 const links = en
-  ? [{ href: '/en/', label: 'Weddings' }, { href: '/en/corporate-events/', label: 'Corporate Events' }, { href: '/en/bars-restaurants/', label: 'Bars & Restaurants' }, { href: '/en/tips/', label: 'Tips & Resources' }, { href: '/en/contact/', label: 'Contact' }]
+  ? [{ href: '/en/', label: 'Weddings' }, { href: '/en/corporate-events/', label: 'Corporate Events' }, { href: '/en/bars-restaurants/', label: 'Bars & Restaurants' }, { href: '/en/tips/', label: 'Wedding Tips' }, { href: '/en/contact/', label: 'Contact' }]
   : [{ href: '/', label: 'Mariages' }, { href: '/entreprises/', label: 'Entreprises' }, { href: '/bars-restaurants/', label: 'Bars & Restaurants' }, { href: '/conseils/', label: 'Conseils & Ressources' }, { href: '/contact/', label: 'Contact' }];
 const home = en ? '/en/' : '/';
 ---

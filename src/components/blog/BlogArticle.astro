@@ -34,8 +34,10 @@ const libellePublic = (en ? publicsEn : publics)[article.data.public as keyof ty
 
 // Titre sur deux lignes comme les autres en-têtes : la partie après « : » passe en italique doré.
 const titreComplet = h1 ?? title;
-const coupure = titreComplet.indexOf(' : ');
-const titreAccent = coupure > 0 ? [titreComplet.slice(0, coupure + 2), titreComplet.slice(coupure + 3)] : null;
+// En anglais, pas d'espace avant « : » : même découpage sur « : ».
+const separateur = en ? ': ' : ' : ';
+const coupure = titreComplet.indexOf(separateur);
+const titreAccent = coupure > 0 ? [titreComplet.slice(0, coupure + separateur.length - 1), titreComplet.slice(coupure + separateur.length)] : null;
 
 const siteUrl = 'https://djmariagepaysbasque.fr';
 const url = `${siteUrl}${base}/${article.id}/`;

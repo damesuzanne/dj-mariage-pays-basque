@@ -23,6 +23,7 @@ export const ROUTES: [string, string][] = [
   ['/conseils/ouverture-de-bal-mariage/', '/en/tips/first-dance/'],
   ['/mentions-legales/', '/en/legal-notice/'],
   ['/politique-de-confidentialite/', '/en/privacy-policy/'],
+  ['/link-tree/', '/en/link-tree/'],
 ];
 
 const avecBarre = (chemin: string) => (chemin.endsWith('/') ? chemin : `${chemin}/`);

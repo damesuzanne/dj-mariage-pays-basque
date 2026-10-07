@@ -1,5 +1,6 @@
 ---
 import { langFromPath, switchHref } from '../i18n/routes';
+import { DRAPEAU_FR, DRAPEAU_EN } from '../i18n/drapeaux';
 const path = Astro.url.pathname;
 const en = langFromPath(path) === 'en';
 const blog = en ? '/en/tips' : '/conseils';
@@ -27,9 +28,9 @@ const home = en ? '/en/' : '/';
       <a href={`${home}#devis`} class="btn btn-gold nav-cta">{en ? 'Get a quote' : 'Demander un devis'}</a>
     </nav>
     <div class="lang-switch" role="group" aria-label={en ? 'Language' : 'Langue'}>
-      <a href={switchHref(path, 'fr')} hreflang="fr" lang="fr" aria-current={en ? undefined : 'true'} title="Version française">FR</a>
+      <a href={switchHref(path, 'fr')} hreflang="fr" lang="fr" aria-current={en ? undefined : 'true'} title="Version française"><Fragment set:html={DRAPEAU_FR} />FR</a>
       <span aria-hidden="true">/</span>
-      <a href={switchHref(path, 'en')} hreflang="en" lang="en" aria-current={en ? 'true' : undefined} title="English version">EN</a>
+      <a href={switchHref(path, 'en')} hreflang="en" lang="en" aria-current={en ? 'true' : undefined} title="English version"><Fragment set:html={DRAPEAU_EN} />EN</a>
     </div>
     <button class="nav-toggle" id="nav-toggle" aria-label={en ? 'Open menu' : 'Ouvrir le menu'} aria-expanded="false" aria-controls="main-nav">
       <span></span><span></span><span></span>
@@ -54,6 +55,9 @@ const home = en ? '/en/' : '/';
   }
 
   .lang-switch a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
     color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
     padding: 0.35rem 0.15rem;
@@ -66,6 +70,19 @@ const home = en ? '/en/' : '/';
 
   .lang-switch a[aria-current='true'] {
     color: var(--gold-light);
+  }
+
+  .lang-switch :global(.flag) {
+    flex-shrink: 0;
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
+    opacity: 0.7;
+    transition: opacity var(--transition);
+  }
+
+  .lang-switch a[aria-current='true'] :global(.flag),
+  .lang-switch a:hover :global(.flag) {
+    opacity: 1;
   }
 
   .site-header {
@@ -156,11 +173,11 @@ const home = en ? '/en/' : '/';
      (sinon le slogan sous « Richard DJ Event » passe sur deux lignes). */
   @media (min-width: 1101px) {
     .header-inner {
-      gap: 1.6rem;
+      gap: 1.3rem;
     }
 
     .nav {
-      gap: clamp(1.2rem, 1.55vw, 1.8rem);
+      gap: 1.2rem;
     }
   }
 

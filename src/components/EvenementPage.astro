@@ -9,6 +9,7 @@ import Breadcrumb from './Breadcrumb.astro';
 import Footer from './Footer.astro';
 import { optimiserHeadEvenements } from '../utils/optimiserHeadEvenements';
 import { hreflangHtml, langFromPath, switchHref } from '../i18n/routes';
+import { DRAPEAU_FR, DRAPEAU_EN } from '../i18n/drapeaux';
 
 interface Props {
   page: string;
@@ -17,10 +18,12 @@ interface Props {
 const { page } = Astro.props;
 // Mêmes règles que le sélecteur de Header.astro (les gabarits n'utilisent pas ses styles).
 const CSS_SELECTEUR =
-  '.nav{margin-left:auto}@media (min-width:1101px){.header-inner{gap:1.6rem}.nav{gap:clamp(1.2rem,1.55vw,1.8rem)}}' +
+  '.nav{margin-left:auto}@media (min-width:1101px){.header-inner{gap:1.6rem}.nav{gap:1.2rem}}' +
   '.lang-switch{display:flex;align-items:center;gap:.35rem;margin-left:-.5rem;font-family:var(--font-body);font-size:.78rem;font-weight:600;letter-spacing:.08em;color:rgba(255,255,255,.35)}' +
-  '.lang-switch a{color:rgba(255,255,255,.6);text-decoration:none;padding:.35rem .15rem;transition:color var(--transition)}' +
+  '.lang-switch a{display:inline-flex;align-items:center;gap:.35rem;color:rgba(255,255,255,.6);text-decoration:none;padding:.35rem .15rem;transition:color var(--transition)}' +
   '.lang-switch a:hover,.lang-switch a[aria-current="true"]{color:var(--gold-light)}' +
+  '.lang-switch .flag{flex-shrink:0;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.25);opacity:.7;transition:opacity var(--transition)}' +
+  '.lang-switch a[aria-current="true"] .flag,.lang-switch a:hover .flag{opacity:1}' +
   '@media (max-width:1100px){.lang-switch{margin-left:auto;z-index:60}}';
 
 const path = Astro.url.pathname;
@@ -33,9 +36,9 @@ const debutBody = page.indexOf('<body>') + '<body>'.length;
 const finBody = page.lastIndexOf('</body>');
 const selecteur =
   `<div class="lang-switch" role="group" aria-label="${en ? 'Language' : 'Langue'}">` +
-  `<a href="${switchHref(path, 'fr')}" hreflang="fr" lang="fr"${en ? '' : ' aria-current="true"'} title="Version française">FR</a>` +
+  `<a href="${switchHref(path, 'fr')}" hreflang="fr" lang="fr"${en ? '' : ' aria-current="true"'} title="Version française">${DRAPEAU_FR}FR</a>` +
   `<span aria-hidden="true">/</span>` +
-  `<a href="${switchHref(path, 'en')}" hreflang="en" lang="en"${en ? ' aria-current="true"' : ''} title="English version">EN</a>` +
+  `<a href="${switchHref(path, 'en')}" hreflang="en" lang="en"${en ? ' aria-current="true"' : ''} title="English version">${DRAPEAU_EN}EN</a>` +
   `</div>`;
 // Le sélecteur se place juste avant le bouton du menu mobile, comme dans Header.astro.
 const body = page.slice(debutBody, finBody).replace('<button class="nav-toggle"', `${selecteur}<button class="nav-toggle"`);

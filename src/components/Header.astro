@@ -1,25 +1,37 @@
 ---
+import { langFromPath, switchHref } from '../i18n/routes';
+const path = Astro.url.pathname;
+const en = langFromPath(path) === 'en';
+const blog = en ? '/en/tips' : '/conseils';
 // Sur les articles du blog, le seul H1 doit être le titre de l'article.
-const BrandTag = Astro.url.pathname.startsWith('/conseils') || Astro.url.pathname.startsWith('/contact') ? 'div' : 'h1';
-const links = [{ href: '/', label: 'Mariages' }, { href: '/entreprises/', label: 'Entreprises' }, { href: '/bars-restaurants/', label: 'Bars & Restaurants' }, { href: '/conseils/', label: 'Conseils & Ressources' }, { href: '/contact/', label: 'Contact' }];
+const BrandTag = path.startsWith(blog) || path.startsWith(en ? '/en/contact' : '/contact') ? 'div' : 'h1';
+const links = en
+  ? [{ href: '/en/', label: 'Weddings' }, { href: '/en/corporate-events/', label: 'Corporate Events' }, { href: '/en/bars-restaurants/', label: 'Bars & Restaurants' }, { href: '/en/tips/', label: 'Tips & Resources' }, { href: '/en/contact/', label: 'Contact' }]
+  : [{ href: '/', label: 'Mariages' }, { href: '/entreprises/', label: 'Entreprises' }, { href: '/bars-restaurants/', label: 'Bars & Restaurants' }, { href: '/conseils/', label: 'Conseils & Ressources' }, { href: '/contact/', label: 'Contact' }];
+const home = en ? '/en/' : '/';
 ---
 
 <header class="site-header" id="site-header">
   <div class="container header-inner">
     <BrandTag class="brand">
-      <a href="/#accueil">
+      <a href={`${home}#accueil`}>
         <span class="brand-mark" aria-hidden="true">R</span>
         <span class="brand-text">
           <span class="brand-name">Richard <em>DJ Event</em></span>
-          <span class="brand-tagline">DJ mariage Pays Basque</span>
+          <span class="brand-tagline">{en ? 'Wedding DJ Biarritz' : 'DJ mariage Pays Basque'}</span>
         </span>
       </a>
     </BrandTag>
-    <nav class="nav" id="main-nav" aria-label="Navigation principale">
-      {links.map((link) => <a href={link.href} aria-current={Astro.url.pathname === link.href || (link.href === '/conseils/' && Astro.url.pathname.startsWith('/conseils')) ? "page" : undefined}>{link.label}</a>)}
-      <a href="/#devis" class="btn btn-gold nav-cta">Demander un devis</a>
+    <nav class="nav" id="main-nav" aria-label={en ? 'Main navigation' : 'Navigation principale'}>
+      {links.map((link) => <a href={link.href} aria-current={path === link.href || (link.href === `${blog}/` && path.startsWith(blog)) ? "page" : undefined}>{link.label}</a>)}
+      <a href={`${home}#devis`} class="btn btn-gold nav-cta">{en ? 'Get a quote' : 'Demander un devis'}</a>
     </nav>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+    <div class="lang-switch" role="group" aria-label={en ? 'Language' : 'Langue'}>
+      <a href={switchHref(path, 'fr')} hreflang="fr" lang="fr" aria-current={en ? undefined : 'true'} title="Version française">FR</a>
+      <span aria-hidden="true">/</span>
+      <a href={switchHref(path, 'en')} hreflang="en" lang="en" aria-current={en ? 'true' : undefined} title="English version">EN</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label={en ? 'Open menu' : 'Ouvrir le menu'} aria-expanded="false" aria-controls="main-nav">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -27,6 +39,34 @@ const links = [{ href: '/', label: 'Mariages' }, { href: '/entreprises/', label:
 
 <style>
 .nav a[aria-current="page"]{color:var(--gold-light);text-decoration:underline;text-underline-offset:7px}
+
+  /* Sélecteur de langue FR / EN : discret, à droite du bouton devis (à côté du menu sur mobile). */
+  .lang-switch {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-left: -0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .lang-switch a {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    padding: 0.35rem 0.15rem;
+    transition: color var(--transition);
+  }
+
+  .lang-switch a:hover {
+    color: var(--gold-light);
+  }
+
+  .lang-switch a[aria-current='true'] {
+    color: var(--gold-light);
+  }
 
   .site-header {
     position: fixed;
@@ -105,10 +145,23 @@ const links = [{ href: '/', label: 'Mariages' }, { href: '/entreprises/', label:
 
   .nav {
     flex-shrink: 0;
+    margin-left: auto;
     white-space: nowrap;
     display: flex;
     align-items: center;
     gap: 1.8rem;
+  }
+
+  /* Ordinateur : menu un peu resserré depuis l'ajout du sélecteur FR / EN
+     (sinon le slogan sous « Richard DJ Event » passe sur deux lignes). */
+  @media (min-width: 1101px) {
+    .header-inner {
+      gap: 1.6rem;
+    }
+
+    .nav {
+      gap: clamp(1.2rem, 1.55vw, 1.8rem);
+    }
   }
 
   .nav a:not(.nav-cta) {
@@ -166,6 +219,12 @@ const links = [{ href: '/', label: 'Mariages' }, { href: '/entreprises/', label:
 
     .nav-toggle {
       display: flex;
+      z-index: 60;
+    }
+
+    .lang-switch {
+      margin-left: auto;
+      margin-right: -1rem;
       z-index: 60;
     }
 

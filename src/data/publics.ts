@@ -33,3 +33,37 @@ export const publics = {
 } as const;
 
 export type PublicSlug = keyof typeof publics;
+
+/** Version anglaise (/en/tips/) : mêmes publics, appel à l'action vers les pages anglaises. */
+export const publicsEn: Record<PublicSlug, { label: string; fin: { surtitre: string; titre: string; texte: string; bouton: string; lien: string } }> = {
+  mariage: {
+    label: 'Wedding',
+    fin: {
+      surtitre: 'Your wedding DJ',
+      titre: 'And the music, <em>shall we talk?</em>',
+      texte: 'More than 200 weddings in the French Basque Country and the Landes, and destination weddings welcome. Tell me your date and venue, I reply within 24 hours.',
+      bouton: 'Check my date',
+      lien: '/en/#devis',
+    },
+  },
+  entreprises: {
+    label: 'Corporate',
+    fin: {
+      surtitre: 'Your corporate event DJ',
+      titre: 'Planning a <em>corporate event?</em>',
+      texte: 'Team party, seminar, product launch: tell me about your plans, I reply within 24 hours.',
+      bouton: 'See the service',
+      lien: '/en/corporate-events/',
+    },
+  },
+  'bars-restaurants': {
+    label: 'Bar & restaurant',
+    fin: {
+      surtitre: 'Your DJ for venues',
+      titre: 'A night to host <em>at your venue?</em>',
+      texte: 'Bars, restaurants, beach clubs: let’s talk about your nights, I reply within 24 hours.',
+      bouton: 'See the service',
+      lien: '/en/bars-restaurants/',
+    },
+  },
+};

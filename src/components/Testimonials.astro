@@ -1,4 +1,5 @@
 ---
+import { langFromPath } from '../i18n/routes';
 const testimonials = [
   {
     initials: 'SM',
@@ -37,20 +38,32 @@ const testimonials = [
     text: 'Réactif dès le premier contact, à l’écoute de nos envies. La soirée est passée trop vite !',
   },
 ];
+
+// Version anglaise : les mêmes avis, traduits (mention « translated from French » affichée).
+const en = langFromPath(Astro.url.pathname) === 'en';
+const textsEn: Record<string, { period: string; text: string }> = {
+  SM: { period: 'Summer 2025', text: 'Richard was perfect for our wedding! Great atmosphere and a packed dance floor all night. Our guests are still talking about it.' },
+  JC: { period: 'Spring 2025', text: 'Very professional, punctual and friendly. He adapted perfectly to every generation in the room.' },
+  CL: { period: 'Summer 2025', text: 'The photo booth was a real hit, and the low fog for our first dance was magical. Thank you for everything!' },
+  MA: { period: 'Autumn 2024', text: 'Support from start to finish, valuable advice and a playlist that truly reflected who we are.' },
+  TB: { period: 'Summer 2024', text: 'Flawless sound for our celebrant-led ceremony and seamless transitions all night. We recommend him without hesitation.' },
+  ER: { period: 'Spring 2024', text: 'Quick to respond from the very first message and really attentive to what we wanted. The night went by far too fast!' },
+};
+const list = en ? testimonials.map((t) => ({ ...t, ...textsEn[t.initials] })) : testimonials;
 ---
 
 <section class="testimonials" id="avis">
   <div class="container">
-    <p class="eyebrow reveal">Témoignages</p>
-    <h2 class="section-title reveal">Ils m'ont confié <em>leur plus beau jour</em></h2>
+    <p class="eyebrow reveal">{en ? 'Kind words' : 'Témoignages'}</p>
+    {en ? <h2 class="section-title reveal">They trusted me with <em>their big day</em></h2> : <h2 class="section-title reveal">Ils m'ont confié <em>leur plus beau jour</em></h2>}
     <p class="section-intro reveal">
-      Plus de 200 mariages animés au Pays Basque et dans les Landes,<br class="break-desktop" />
-      et autant de couples heureux.
+      {en ? <>More than 200 weddings in the French Basque Country and the Landes,<br class="break-desktop" />and just as many happy couples. Reviews translated from French.</> : <>Plus de 200 mariages animés au Pays Basque et dans les Landes,<br class="break-desktop" />
+      et autant de couples heureux.</>}
     </p>
     <div class="testimonials-grid">
-      {testimonials.map((t) => (
+      {list.map((t) => (
         <figure class="quote reveal">
-          <div class="stars" aria-label="5 étoiles sur 5">★★★★★</div>
+          <div class="stars" aria-label={en ? '5 out of 5 stars' : '5 étoiles sur 5'}>★★★★★</div>
           <blockquote>{t.text}</blockquote>
           <figcaption>
             <span class="avatar">{t.initials}</span>

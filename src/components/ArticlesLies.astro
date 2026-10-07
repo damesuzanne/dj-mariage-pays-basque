@@ -5,29 +5,33 @@
  */
 import { getCollection } from 'astro:content';
 import { fr } from '../utils/typo';
+import { langFromPath } from '../i18n/routes';
 
 interface Props { courant: string; }
 const { courant } = Astro.props;
-const autres = (await getCollection('blog', ({ data }) => !data.draft))
+const en = langFromPath(Astro.url.pathname) === 'en';
+const t = en ? (texte: string) => texte : fr;
+const base = en ? '/en/tips' : '/conseils';
+const autres = (await getCollection(en ? 'blogEn' : 'blog', ({ data }) => !data.draft))
   .filter((a) => a.id !== courant)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
 {autres.length > 0 && (
   <nav class="a-lire" aria-labelledby="a-lire-titre">
-    <h2 id="a-lire-titre">À lire aussi</h2>
+    <h2 id="a-lire-titre">{en ? 'You might also like' : 'À lire aussi'}</h2>
     <ul>
       {autres.map((a) => (
         <li>
-          <a href={`/conseils/${a.id}/`}>
+          <a href={`${base}/${a.id}/`}>
             <span class="a-lire-cat">{a.data.categorie}</span>
-            <strong>{fr(a.data.h1 ?? a.data.title)}</strong>
-            <span class="a-lire-desc">{fr(a.data.description)}</span>
+            <strong>{t(a.data.h1 ?? a.data.title)}</strong>
+            <span class="a-lire-desc">{t(a.data.description)}</span>
           </a>
         </li>
       ))}
     </ul>
-    <p><a class="a-lire-tous" href="/conseils/">Voir tous les conseils &amp; ressources →</a></p>
+    <p><a class="a-lire-tous" href={`${base}/`}>{en ? 'See all tips & resources →' : 'Voir tous les conseils & ressources →'}</a></p>
   </nav>
 )}
 

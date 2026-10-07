@@ -15,7 +15,11 @@ export function rehypeTypoFr() {
     if (noeud.type === 'element' && ['code', 'pre', 'script', 'style'].includes(noeud.tagName)) return;
     noeud.children?.forEach(visiter);
   };
-  return (arbre: any) => visiter(arbre);
+  // Les articles anglais (src/content/blog-en/) gardent la typographie anglaise.
+  return (arbre: any, fichier: any) => {
+    if (String(fichier?.path ?? '').includes('/content/blog-en/')) return;
+    visiter(arbre);
+  };
 }
 
 /** Applique fr() aux seuls textes visibles d'un document HTML (jamais scripts, styles ni attributs). */

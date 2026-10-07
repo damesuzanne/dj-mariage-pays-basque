@@ -1,10 +1,13 @@
 ---
+import { langFromPath } from '../i18n/routes';
 import ObfuscatedLink from './ObfuscatedLink.astro';
 import ObfuscatedText from './ObfuscatedText.astro';
 
 const year = new Date().getFullYear();
 const waMessage = 'Bonjour Richard, je souhaite des informations pour mon mariage.';
+const waMessageEn = 'Hello Richard, I would like some information about my wedding.';
 
+const en = langFromPath(Astro.url.pathname) === 'en';
 ---
 
 <footer class="footer">
@@ -12,8 +15,8 @@ const waMessage = 'Bonjour Richard, je souhaite des informations pour mon mariag
     <div>
       <p class="footer-brand">Richard <em>DJ Event</em></p>
       <p class="footer-desc">
-        DJ professionnel au Pays Basque et dans les Landes&nbsp;: mariages, événements d'entreprise,
-        bars et restaurants.
+        {en ? 'Wedding and event DJ based in the French Basque Country, near Biarritz. Weddings, corporate events, bars and restaurants. Available worldwide.' : <>DJ professionnel au Pays Basque et dans les Landes&nbsp;: mariages, événements d'entreprise,
+        bars et restaurants.</>}
       </p>
       <div class="socials">
         <a href="https://www.facebook.com/RichardDJevent/" target="_blank" rel="noopener" aria-label="Facebook">
@@ -22,10 +25,10 @@ const waMessage = 'Bonjour Richard, je souhaite des informations pour mon mariag
         <a href="https://www.instagram.com/richard.dj.event/" target="_blank" rel="noopener" aria-label="Instagram">
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/></svg>
         </a>
-        <ObfuscatedLink type="tel" value="+33684331824" ariaLabel="Téléphone">
+        <ObfuscatedLink type="tel" value="+33684331824" ariaLabel={en ? 'Phone' : 'Téléphone'}>
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 4h4l2 5-3 2a13 13 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 6a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
         </ObfuscatedLink>
-        <ObfuscatedLink type="wa" value="33684331824" message={waMessage} target="_blank" rel="noopener" ariaLabel="WhatsApp">
+        <ObfuscatedLink type="wa" value="33684331824" message={en ? waMessageEn : waMessage} target="_blank" rel="noopener" ariaLabel="WhatsApp">
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.9 13.9c-.2.6-1.2 1.1-1.7 1.2-.4 0-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.9 1.7.3.2.5.1.7-.1l1-1.1c.2-.3.4-.2.7-.1l2.1 1c.3.2.5.3.6.4.1.2.1.7-.1 1.3z" fill="currentColor"/></svg>
         </ObfuscatedLink>
         <ObfuscatedLink type="email" value="richarddjevent@gmail.com" ariaLabel="Email">
@@ -33,7 +36,15 @@ const waMessage = 'Bonjour Richard, je souhaite des informations pour mon mariag
         </ObfuscatedLink>
       </div>
     </div>
-    <nav aria-label="Liens">
+    <nav aria-label={en ? 'Links' : 'Liens'}>
+      {en ? <>
+        <p class="footer-title">Services</p>
+        <a href="/en/">Weddings</a>
+        <a href="/en/corporate-events/">Corporate Events</a>
+        <a href="/en/bars-restaurants/">Bars & Restaurants</a>
+        <a href="/en/tips/" class="footer-more">Tips & Resources</a>
+        <a href="/en/contact/">Contact</a>
+      </> : <>
       <p class="footer-title">Prestations</p>
       <a href="/">Mariages</a>
       <a href="/entreprises/">Événements d'Entreprise</a>
@@ -41,13 +52,14 @@ const waMessage = 'Bonjour Richard, je souhaite des informations pour mon mariag
       <a href="https://djmariagelandes.fr/">DJ Mariage Landes</a>
       <a href="/conseils/" class="footer-more">Conseils & Ressources</a>
       <a href="/contact/">Contact</a>
+      </>}
     </nav>
     <div>
       <p class="footer-title">Contact</p>
-      <p class="footer-line">Bayonne, Pays Basque & Landes</p>
+      <p class="footer-line">{en ? 'French Basque Country, France' : 'Bayonne, Pays Basque & Landes'}</p>
       <p class="footer-line">
         <ObfuscatedLink type="tel" value="+33684331824">
-          <ObfuscatedText value="06 84 33 18 24" tag="span" />
+          <ObfuscatedText value={en ? '+33 6 84 33 18 24' : '06 84 33 18 24'} tag="span" />
         </ObfuscatedLink>
       </p>
       <p class="footer-line">
@@ -55,21 +67,27 @@ const waMessage = 'Bonjour Richard, je souhaite des informations pour mon mariag
           <ObfuscatedText value="richarddjevent@gmail.com" tag="span" />
         </ObfuscatedLink>
       </p>
-      <p class="footer-line">7j/7 sur rendez-vous</p>
-      <a href="/contact/" class="footer-cta">Recevoir un devis gratuit</a>
+      <p class="footer-line">{en ? '7 days a week, by appointment' : '7j/7 sur rendez-vous'}</p>
+      {en && <p class="footer-line">English-speaking support available</p>}
+      <a href={en ? '/en/contact/' : '/contact/'} class="footer-cta">{en ? 'Get a free quote' : 'Recevoir un devis gratuit'}</a>
     </div>
   </div>
   <div class="container footer-bottom">
-    <p>© {year} Richard DJ Event. Tous droits réservés.</p>
+    <p>© {year} Richard DJ Event. {en ? 'All rights reserved.' : 'Tous droits réservés.'}</p>
     <div class="legal">
+      {en ? <>
+        <a href="/en/legal-notice/">Legal notice</a>
+        <a href="/en/privacy-policy/">Privacy policy</a>
+      </> : <>
       <a href="/mentions-legales">Mentions légales</a>
       <a href="/politique-de-confidentialite">Politique de confidentialité</a>
       <a href="https://www.mariagepresta.fr" target="_blank" rel="noopener">MariagePresta</a>
+      </>}
     </div>
   </div>
   <div class="container sub-footer">
     <p>
-      Réalisé avec <span class="heart" aria-hidden="true">❤</span> par
+      {en ? 'Made with' : 'Réalisé avec'} <span class="heart" aria-hidden="true">❤</span> {en ? 'by' : 'par'}
       <a href="https://www.htags.fr" target="_blank" rel="noopener">HTAGS</a>
     </p>
   </div>

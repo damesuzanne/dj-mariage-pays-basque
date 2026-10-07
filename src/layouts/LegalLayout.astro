@@ -2,25 +2,32 @@
 import Layout from './Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { langFromPath } from '../i18n/routes';
 
 interface Props {
   title: string;
+  /** Date de dernière mise à jour affichée sous le titre. */
+  updated?: string;
 }
 
-const { title } = Astro.props;
+const { title, updated } = Astro.props;
+const en = langFromPath(Astro.url.pathname) === 'en';
 ---
 
-<Layout title={`${title} · Richard DJ Event`} description={`${title} du site djmariagepaysbasque.fr`}>
+<Layout
+  title={`${title} · Richard DJ Event`}
+  description={en ? `${title} of the djmariagepaysbasque.fr website` : `${title} du site djmariagepaysbasque.fr`}
+>
   <Header />
   <div class="legal-hero">
     <div class="container">
       <h2 class="legal-title">{title}</h2>
-      <p class="legal-date">Dernière mise à jour : 4 juillet 2026</p>
+      <p class="legal-date">{en ? `Last updated: ${updated ?? '7 October 2026'}` : `Dernière mise à jour : ${updated ?? '4 juillet 2026'}`}</p>
     </div>
   </div>
   <main class="container legal-body">
     <slot />
-    <a href="/" class="btn btn-dark back-bottom">← Retour au site</a>
+    <a href={en ? '/en/' : '/'} class="btn btn-dark back-bottom">{en ? '← Back to the website' : '← Retour au site'}</a>
   </main>
   <Footer />
 </Layout>

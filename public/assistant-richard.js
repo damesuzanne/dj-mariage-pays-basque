@@ -491,7 +491,8 @@
                 scoreReason ? "Analyse : " + scoreReason.textContent.replace("Qualification automatique", "").trim() : "",
               ].filter(Boolean);
               var payload = new FormData();
-              payload.append("subject", config.mailSubject || "Nouvelle demande via l’assistant Richard DJ");
+              payload.append("Site d’origine", "Pays Basque — https://djmariagepaysbasque.fr");
+              payload.append("subject", "🚨 ALERTE CONTACT: NOUVEAU MESSAGE SITE !");
               payload.append("botcheck", "");
               payload.append("prenom", firstName);
               payload.append("nom", lastName);
@@ -513,7 +514,7 @@
               payload.delete("cf-turnstile-response");
               payload.delete("botcheck");
               payload.append("access_key", "3f6d1840-64d1-4521-bb72-95d8b95071e5");
-              payload.append("from_name", "Assistant Richard DJ");
+              payload.append("from_name", "NOUVEAU CONTACT DJ MARIAGE");
               payload.append("name", firstName + " " + lastName);
               var response = await fetch("https://api.web3forms.com/submit", {
                 method: "POST",

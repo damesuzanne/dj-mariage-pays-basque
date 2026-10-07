@@ -59,8 +59,10 @@ export default {
     // Redirige les adresses inexistantes vers la page 404 personnalisée.
     // La page d'arrivée porte une directive noindex afin de rester exclue
     // des résultats de recherche tout en étant visible dans tous les navigateurs.
+    // Version anglaise : une adresse inconnue sous /en/ mène à la 404 en anglais.
     if (response.status === 404 && request.method === 'GET') {
-      const notFoundUrl = new URL('/404', url)
+      const enAnglais = url.pathname === '/en' || url.pathname.startsWith('/en/')
+      const notFoundUrl = new URL(enAnglais ? '/en/404' : '/404', url)
       return Response.redirect(notFoundUrl.toString(), 302)
     }
 

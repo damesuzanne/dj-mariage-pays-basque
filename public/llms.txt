@@ -1,16 +1,32 @@
-# Richard DJ Event — DJ Mariage Pays Basque
+# Richard DJ Event : DJ Mariage Pays Basque
 
 > DJ professionnel pour les mariages, les événements d'entreprise, les bars et restaurants
 > au Pays Basque et dans les Landes (Bayonne, Biarritz, et environs). Plus de 200 mariages animés,
 > matériel professionnel haut de gamme, playlist personnalisée, devis gratuit sous 24h.
+> Site disponible en français et en anglais (version anglaise sous /en/).
 
 ## Pages
 
 - [Accueil](https://djmariagepaysbasque.fr/) : présentation, prestations, témoignages, FAQ et formulaire de devis.
+- [Entreprises](https://djmariagepaysbasque.fr/entreprises/) : DJ pour soirées d'entreprise, séminaires et réceptions.
+- [Bars & restaurants](https://djmariagepaysbasque.fr/bars-restaurants/) : DJ pour bars, restaurants et soirées en établissement.
+- [Conseils & ressources](https://djmariagepaysbasque.fr/conseils/) : articles pour préparer son mariage.
+- [Contact](https://djmariagepaysbasque.fr/contact/)
 - [Mentions légales](https://djmariagepaysbasque.fr/mentions-legales/)
 - [Politique de confidentialité](https://djmariagepaysbasque.fr/politique-de-confidentialite/)
 
+## English version
+
+Wedding DJ based in the French Basque Country, near Biarritz, available for destination weddings,
+private events and corporate events worldwide. English-speaking support available.
+
+- [Wedding DJ Biarritz & French Basque Country](https://djmariagepaysbasque.fr/en/)
+- [Corporate event DJ](https://djmariagepaysbasque.fr/en/corporate-events/)
+- [Bar & restaurant DJ](https://djmariagepaysbasque.fr/en/bars-restaurants/)
+- [Wedding planning tips](https://djmariagepaysbasque.fr/en/tips/)
+- [Contact](https://djmariagepaysbasque.fr/en/contact/)
+
 ## Contact
 
-- Téléphone : 06 84 33 18 24
-- Zone d'intervention : Bayonne, Pays Basque et Landes
+- Téléphone : 06 84 33 18 24 (+33 6 84 33 18 24)
+- Zone d'intervention : Bayonne, Pays Basque et Landes ; mariages et événements à l'international sur demande

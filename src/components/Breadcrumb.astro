@@ -1,21 +1,31 @@
 ---
+import { langFromPath } from '../i18n/routes';
 interface Props { title?: string; }
 const { title } = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
-const labels: Record<string, string> = {
-  '/': 'Accueil', '/conseils': 'Conseils & ressources', '/entreprises': 'Entreprises',
-  '/bars-restaurants': 'Bars & restaurants', '/mentions-legales': 'Mentions légales',
-  '/politique-de-confidentialite': 'Politique de confidentialité', '/link-tree': 'Liens utiles', '/contact': 'Contact', '/404': 'Page introuvable',
-};
-const items = [{ name: 'Accueil', href: '/' }];
-if (path.startsWith('/conseils/')) items.push({ name: 'Conseils & ressources', href: '/conseils/' });
-if (path !== '/') items.push({ name: labels[path] ?? title?.split(' · ')[0] ?? 'Page', href: Astro.url.pathname });
+const en = langFromPath(Astro.url.pathname) === 'en';
+const labels: Record<string, string> = en
+  ? {
+      '/en': 'Home', '/en/tips': 'Tips & resources', '/en/corporate-events': 'Corporate events',
+      '/en/bars-restaurants': 'Bars & restaurants', '/en/legal-notice': 'Legal notice',
+      '/en/privacy-policy': 'Privacy policy', '/en/contact': 'Contact', '/en/404': 'Page not found',
+    }
+  : {
+      '/': 'Accueil', '/conseils': 'Conseils & ressources', '/entreprises': 'Entreprises',
+      '/bars-restaurants': 'Bars & restaurants', '/mentions-legales': 'Mentions légales',
+      '/politique-de-confidentialite': 'Politique de confidentialité', '/link-tree': 'Liens utiles', '/contact': 'Contact', '/404': 'Page introuvable',
+    };
+const home = en ? '/en/' : '/';
+const blog = en ? '/en/tips' : '/conseils';
+const items = [{ name: en ? 'Home' : 'Accueil', href: home }];
+if (path.startsWith(`${blog}/`)) items.push({ name: labels[blog], href: `${blog}/` });
+if (path !== '/' && path !== '/en') items.push({ name: labels[path] ?? title?.split(' · ')[0] ?? 'Page', href: Astro.url.pathname });
 const schema = {
   '@context': 'https://schema.org', '@type': 'BreadcrumbList',
   itemListElement: items.map((item, i) => ({ '@type': 'ListItem', position: i + 1, name: item.name, item: new URL(item.href, 'https://djmariagepaysbasque.fr').href })),
 };
 ---
-<nav class:list={['breadcrumb', { 'breadcrumb-inline': path === '/link-tree' }]} aria-label="Fil d’Ariane">
+<nav class:list={['breadcrumb', { 'breadcrumb-inline': path === '/link-tree' }]} aria-label={en ? 'Breadcrumb' : 'Fil d’Ariane'}>
   <ol>
     {items.map((item, i) => <li>
       {i > 0 && <span class="separator" aria-hidden="true">/</span>}

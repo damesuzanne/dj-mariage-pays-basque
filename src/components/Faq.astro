@@ -1,4 +1,5 @@
 ---
+import { langFromPath } from '../i18n/routes';
 const faqs = [
   {
     q: 'Dans quelle zone intervenez-vous ?',
@@ -30,10 +31,47 @@ const faqs = [
   },
 ];
 
+// Version anglaise : questions adaptées à une clientèle internationale (pages /en/).
+const en = langFromPath(Astro.url.pathname) === 'en';
+const faqsEn = [
+  {
+    q: 'Where do you work?',
+    a: 'I am based in the French Basque Country and cover the whole Basque coast and the Landes: Biarritz, Bayonne, Anglet, Saint-Jean-de-Luz, Hendaye, Hossegor, Capbreton, Dax and the surrounding area. Destination weddings and events elsewhere in France or abroad are welcome too: tell me where you are getting married and travel will be included in your quote.',
+  },
+  {
+    q: 'How far in advance should we book?',
+    a: 'I recommend booking 6 to 12 months ahead, especially for the high season in the Basque Country (May to September). For a destination wedding, the earlier the better, but it is always worth checking my availability, even at short notice.',
+  },
+  {
+    q: 'Can we choose our own music?',
+    a: 'Of course, it is essential. We build the playlist together: your must-plays, your do-not-plays and the mood you want for each part of the day. On the night, I read the dance floor and adapt live.',
+  },
+  {
+    q: 'What equipment do you use?',
+    a: 'High-end professional equipment: sound scaled to the size of your venue, lighting, wireless microphones for speeches, and backup equipment just in case.',
+  },
+  {
+    q: 'How does the photo booth work?',
+    a: 'The booth is set up and dressed on site. Your guests leave with instant prints, and you receive all the photos in an online gallery after the wedding.',
+  },
+  {
+    q: 'Do you also cover the ceremony and the drinks reception?',
+    a: 'Yes. I provide discreet sound for the ceremony (celebrant-led or religious, depending on the venue) and elegant background music for the drinks reception, with a microphone for speeches.',
+  },
+  {
+    q: 'We live abroad. Can we organise everything remotely?',
+    a: 'Yes, international bookings are welcome. English-speaking support is available, and everything can be arranged remotely by email, video call or WhatsApp, right up to the big day.',
+  },
+  {
+    q: 'How does booking work?',
+    a: 'We start with a call or a WhatsApp message to check my availability, then a meeting in person, by video or by phone to talk through your plans. You receive a free, detailed quote within 24 hours, and a deposit secures your date.',
+  },
+];
+const list = en ? faqsEn : faqs;
 const faqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: faqs.map((f) => ({
+  mainEntity: list.map((f) => ({
     '@type': 'Question',
     name: f.q,
     acceptedAnswer: { '@type': 'Answer', text: f.a },
@@ -44,15 +82,15 @@ const faqJsonLd = {
 <section class="faq" id="faq">
   <div class="container faq-inner">
     <div class="faq-head reveal">
-      <p class="eyebrow">Questions fréquentes</p>
-      <h2 class="section-title">Les questions <em>les plus fréquentes</em></h2>
+      <p class="eyebrow">{en ? 'FAQ' : 'Questions fréquentes'}</p>
+      {en ? <h2 class="section-title">Your questions, <em>answered</em></h2> : <h2 class="section-title">Les questions <em>les plus fréquentes</em></h2>}
       <p class="section-intro">
-        Une autre question ? Écrivez-moi directement, je réponds sous 24h.
+        {en ? 'Another question? Message me directly, I reply within 24 hours.' : <>Une autre question ? Écrivez-moi directement, je réponds sous 24h.</>}
       </p>
-      <a href="#devis" class="btn btn-dark">Poser ma question</a>
+      <a href="#devis" class="btn btn-dark">{en ? 'Ask a question' : 'Poser ma question'}</a>
     </div>
     <div class="faq-list">
-      {faqs.map((f) => (
+      {list.map((f) => (
         <details class="reveal">
           <summary>
             {f.q}

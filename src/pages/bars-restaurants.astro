@@ -1,28 +1,5 @@
 ---
-// Page construite à partir d'un gabarit HTML autonome, mais avec le MÊME pied de page que
-// l'accueil (composant Footer) : son ancienne copie figée dans le gabarit avait divergé.
-import page from "../templates/events/bars-restaurants.html?raw";
-import Breadcrumb from "../components/Breadcrumb.astro";
-import Footer from "../components/Footer.astro";
-
-const debutHead = page.indexOf('<head>') + '<head>'.length;
-const finHead = page.indexOf('</head>');
-const head = page.slice(debutHead, finHead);
-const debutBody = page.indexOf('<body>') + '<body>'.length;
-const finBody = page.lastIndexOf('</body>');
-const body = page.slice(debutBody, finBody);
-const debutFooter = body.indexOf('<footer');
-const finFooter = body.indexOf('</footer>') + '</footer>'.length;
-const avant = body.slice(0, debutFooter);
-const apres = body.slice(finFooter);
+import page from '../templates/events/bars-restaurants.html?raw';
+import EvenementPage from '../components/EvenementPage.astro';
 ---
-<!doctype html>
-<html lang="fr">
-  <head><Fragment set:html={head} /></head>
-  <body>
-    <Breadcrumb />
-    <Fragment set:html={avant} />
-    <Footer />
-    <Fragment set:html={apres} />
-  </body>
-</html>
+<EvenementPage page={page} />

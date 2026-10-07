@@ -27,4 +27,26 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { blog };
+// Version anglaise du blog (/en/tips/) : un article adapté par article français (`fr` = son slug).
+// Pas de guide à télécharger : les guides PDF n'existent qu'en français.
+const blogEn = defineCollection({
+  loader: glob({ pattern: '**/*.mdx', base: './src/content/blog-en' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      h1: z.string().optional(),
+      description: z.string(),
+      date: z.coerce.date(),
+      updated: z.coerce.date().optional(),
+      fr: z.string(),
+      categorie: z.string().default('Planning'),
+      public: z.enum(['mariage', 'entreprises', 'bars-restaurants']).default('mariage'),
+      tempsLecture: z.number().optional(),
+      draft: z.boolean().default(false),
+      image: image().optional(),
+      imageAlt: z.string().default(''),
+      faq: z.array(z.object({ q: z.string(), r: z.string() })).default([]),
+    }),
+});
+
+export const collections = { blog, blogEn };

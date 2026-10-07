@@ -2,6 +2,33 @@
 import { Image } from 'astro:assets';
 import heroPhoto from '../assets/hero-mariage-biarritz.png';
 import ObfuscatedLink from './ObfuscatedLink.astro';
+import { langFromPath } from '../i18n/routes';
+const en = langFromPath(Astro.url.pathname) === 'en';
+const t = en
+  ? {
+      kicker: 'Biarritz · French Basque Country · Worldwide',
+      l1: 'Your wedding deserves',
+      l2: 'an unforgettable dance floor',
+      sub1: 'Wedding DJ in the French Basque Country, available worldwide.',
+      sub2: 'Over 10 years of weddings, a reply within 24 hours, a free quote.',
+      cta: 'Check my date',
+      wa: 'Hello Richard, I would like some information about my wedding.',
+      waLabel: 'WhatsApp',
+      badges: [['200+', 'weddings'], ['10 years', 'of experience'], ['100%', 'happy couples']],
+      down: 'Scroll down',
+    }
+  : {
+      kicker: 'Bayonne · Pays Basque · Landes',
+      l1: 'Votre mariage mérite',
+      l2: 'une piste de danse inoubliable',
+      sub1: "DJ professionnel, plus de 10 ans d'expérience dans les mariages.",
+      sub2: 'Réponse sous 24h, appel direct, devis gratuit.',
+      cta: 'Vérifier mes disponibilités',
+      wa: 'Bonjour Richard, je souhaite des informations pour mon mariage.',
+      waLabel: 'WhatsApp direct',
+      badges: [['200+', 'mariages animés'], ['10 ans', "d'expérience"], ['100%', 'clients satisfaits']],
+      down: 'Descendre',
+    };
 ---
 
 <section class="hero" id="accueil">
@@ -21,35 +48,33 @@ import ObfuscatedLink from './ObfuscatedLink.astro';
     <div class="grain"></div>
   </div>
   <div class="container hero-inner">
-    <p class="hero-kicker">Bayonne · Pays Basque · Landes</p>
+    <p class="hero-kicker">{t.kicker}</p>
     <h2 class="hero-title">
-      <span>Votre mariage mérite</span>
-      <span class="accent">une piste de danse inoubliable</span>
+      <span>{t.l1}</span>
+      <span class="accent">{t.l2}</span>
     </h2>
     <p class="hero-sub">
-      DJ professionnel, plus de 10 ans d'expérience dans les mariages.<br />
-      Réponse sous 24h, appel direct, devis gratuit.
+      {t.sub1}<br />
+      {t.sub2}
     </p>
     <div class="hero-actions">
-      <a href="#devis" class="btn btn-gold">Vérifier mes disponibilités</a>
+      <a href="#devis" class="btn btn-gold">{t.cta}</a>
       <ObfuscatedLink
         type="wa"
         value="33684331824"
-        message="Bonjour Richard, je souhaite des informations pour mon mariage."
+        message={t.wa}
         class="btn btn-outline"
         target="_blank"
         rel="noopener"
       >
-        WhatsApp direct
+        {t.waLabel}
       </ObfuscatedLink>
     </div>
     <ul class="hero-badges">
-      <li><strong>200+</strong> mariages animés</li>
-      <li><strong>10 ans</strong> d'expérience</li>
-      <li><strong>100%</strong> clients satisfaits</li>
+      {t.badges.map(([fort, texte]) => <li><strong>{fort}</strong> {texte}</li>)}
     </ul>
   </div>
-  <a href="#atouts" class="scroll-hint" aria-label="Descendre">
+  <a href="#atouts" class="scroll-hint" aria-label={t.down}>
     <span></span>
   </a>
 </section>

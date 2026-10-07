@@ -1,4 +1,5 @@
 ---
+import { langFromPath } from '../i18n/routes';
 const services = [
   {
     id: 'eclairage',
@@ -102,18 +103,119 @@ const services = [
     icon: `<rect x="12" y="3.5" width="8" height="13" rx="4"/><path d="M12 8h8M12 12h8" stroke-width="0.9" opacity="0.6"/><path d="M8 13a8 8 0 0 0 16 0M16 21v4.5M11 28.5h10c0-1.7-2.2-3-5-3s-5 1.3-5 3z" stroke-linejoin="round"/><path d="M26.5 4.5l.6 1.7 1.7.6-1.7.6-.6 1.7-.6-1.7-1.7-.6 1.7-.6z" fill="currentColor" stroke="none"/><path d="M5.5 6.5l.4 1.2 1.2.4-1.2.4-.4 1.2-.4-1.2-1.2-.4 1.2-.4z" fill="currentColor" stroke="none" opacity="0.7"/>`,
   },
 ];
+
+// Version anglaise : mêmes cartes et icônes, textes adaptés (pages /en/).
+const en = langFromPath(Astro.url.pathname) === 'en';
+const servicesEn: Record<string, { title: string; title2?: string; desc: string; modalDesc: string; includes: string[]; ideal: string }> = {
+  eclairage: {
+    title: 'Ambient lighting',
+    title2: '& dance floor',
+    desc: 'Uplighting for your venue and decorative fixtures for an elegant, festive atmosphere.',
+    modalDesc: 'Turn your reception venue into something magical with professional lighting.',
+    includes: [
+      'High-power multi-colour LED fixtures',
+      'Architectural uplighting of the room',
+      'Interactive light-up dance floor',
+      'Light effects synced to the music',
+      'Full set-up and take-down',
+    ],
+    ideal: 'Weddings of 50 to 300 guests',
+  },
+  photobooth: {
+    title: 'Photo booth',
+    desc: 'Instant memories for your guests, with unlimited prints and an online gallery.',
+    modalDesc: 'Give your guests instant keepsakes with a professional photo booth.',
+    includes: [
+      'High-quality professional photo booth',
+      'Unlimited prints all evening',
+      'A wide choice of fun props',
+      'Shareable online photo gallery',
+      'Custom photo template',
+    ],
+    ideal: 'Fun for guests of every age',
+  },
+  video: {
+    title: 'Video projection & screen',
+    desc: 'Slideshows, throwback videos and big-screen moments to move your loved ones.',
+    modalDesc: 'Share your favourite moments with every guest on a professional projection system.',
+    includes: [
+      'Large projection screen',
+      'Bright Full HD projector',
+      'Sound system for your videos',
+      'Slideshow and video playback',
+      'Live streaming available',
+    ],
+    ideal: 'Perfect for celebrant-led ceremonies and the drinks reception',
+  },
+  fumee: {
+    title: 'Low fog machine',
+    desc: 'A dreamy cloud across the floor for a fairytale first dance.',
+    modalDesc: 'Create a magical moment for your first dance with a professional low fog machine.',
+    includes: [
+      'Professional low fog machine',
+      '“Dancing on a cloud” floor effect',
+      'Odourless, non-toxic professional fluid',
+      'Triggered right on cue for your dance',
+      'Works even in covered outdoor spaces',
+    ],
+    ideal: 'An unforgettable first dance',
+  },
+  gourmand: {
+    title: 'Candy floss & popcorn',
+    desc: 'A sweet treat stand that delights children and grown-ups during the drinks reception.',
+    modalDesc: 'A sweet treat stand that children and adults alike will love.',
+    includes: [
+      'Professional vintage stand with decoration',
+      'Candy floss machine',
+      'Popcorn machine',
+      'Custom cones and packaging',
+      'Continuous service for 3 to 4 hours',
+      'Unlimited supplies',
+    ],
+    ideal: 'Perfect for the drinks reception or cocktail hour',
+  },
+  sonorisation: {
+    title: 'Ceremony sound',
+    title2: '& drinks reception',
+    desc: 'Wireless microphones and discreet background music for speeches and emotional moments.',
+    modalDesc: 'Clear, reliable sound for your ceremony and drinks reception.',
+    includes: [
+      'Portable sound system suited to the venue',
+      'Wireless handheld microphone for speeches',
+      'Lapel microphone for the officiant',
+      'Background music',
+      'Discreet, professional sound desk',
+      'Quick set-up and discreet removal',
+    ],
+    ideal: 'Celebrant-led and religious ceremonies, cocktail receptions of up to 150 guests',
+  },
+};
+const list = en ? services.map((service) => ({ ...service, ...servicesEn[service.id] })) : services;
+const t = en
+  ? {
+      eyebrow: 'Services & options',
+      title: 'So much more than a DJ <em>behind the decks</em>',
+      intro1: 'Every service adapts to your venue, your schedule and your wishes.',
+      intro2: 'Click a card to see exactly what is included.',
+      more: 'See details',
+      close: 'Close',
+      included: 'What’s included',
+      ideal: 'Ideal for',
+      cta: 'Request a quote for this option',
+    }
+  : null;
 ---
 
 <section class="services" id="prestations">
   <div class="container">
-    <p class="eyebrow reveal">Prestations & options</p>
-    <h2 class="section-title reveal">Bien plus qu'un DJ <em>derrière ses platines</em></h2>
+    <p class="eyebrow reveal">{t ? t.eyebrow : 'Prestations & options'}</p>
+    {t ? <h2 class="section-title reveal" set:html={t.title} /> : <h2 class="section-title reveal">Bien plus qu'un DJ <em>derrière ses platines</em></h2>}
     <p class="section-intro reveal">
-      Chaque prestation s'adapte à votre lieu, votre programme et vos envies.<br class="break-desktop" />
-      Cliquez sur une carte pour voir le détail de ce qui est inclus.
+      {t ? <>{t.intro1}<br class="break-desktop" />{t.intro2}</> : <>Chaque prestation s'adapte à votre lieu, votre programme et vos envies.<br class="break-desktop" />
+      Cliquez sur une carte pour voir le détail de ce qui est inclus.</>}
     </p>
     <div class="services-grid">
-      {services.map((service) => (
+      {list.map((service) => (
         <button class="card reveal" data-dialog={`dialog-${service.id}`} type="button">
           <div class="card-icon">
             <svg
@@ -131,7 +233,7 @@ const services = [
           <h3>{service.title}{service.title2 && <><br />{service.title2}</>}</h3>
           <p>{service.desc}</p>
           <span class="card-more">
-            Voir le détail
+            {t ? t.more : 'Voir le détail'}
             <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
               <path d="M5 12h14m-6-6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
@@ -141,9 +243,9 @@ const services = [
     </div>
   </div>
 
-  {services.map((service) => (
+  {list.map((service) => (
     <dialog class="service-dialog" id={`dialog-${service.id}`} aria-labelledby={`dialog-title-${service.id}`}>
-      <button class="dialog-close" data-close aria-label="Fermer">
+      <button class="dialog-close" data-close aria-label={t ? t.close : 'Fermer'}>
         <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
           <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
         </svg>
@@ -165,7 +267,7 @@ const services = [
         {service.title}{service.title2 && <><br />{service.title2}</>}
       </h3>
       <p class="dialog-desc">{service.modalDesc}</p>
-      <p class="dialog-section-title">Ce qui est inclus</p>
+      <p class="dialog-section-title">{t ? t.included : 'Ce qui est inclus'}</p>
       <ul class="dialog-list">
         {service.includes.map((item) => (
           <li>
@@ -176,9 +278,9 @@ const services = [
           </li>
         ))}
       </ul>
-      <p class="dialog-section-title">Idéal pour</p>
+      <p class="dialog-section-title">{t ? t.ideal : 'Idéal pour'}</p>
       <p class="dialog-ideal">{service.ideal}</p>
-      <a href="#devis" class="btn btn-gold dialog-cta" data-close>Demander un devis pour cette option</a>
+      <a href="#devis" class="btn btn-gold dialog-cta" data-close>{t ? t.cta : 'Demander un devis pour cette option'}</a>
     </dialog>
   ))}
 </section>

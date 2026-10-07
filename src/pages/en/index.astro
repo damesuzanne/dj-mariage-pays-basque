@@ -1,0 +1,95 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Hero from '../../components/Hero.astro';
+import About from '../../components/About.astro';
+import Services from '../../components/Services.astro';
+import Testimonials from '../../components/Testimonials.astro';
+import Faq from '../../components/Faq.astro';
+import Zone from '../../components/Zone.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import Footer from '../../components/Footer.astro';
+import WeddingResources from '../../components/WeddingResources.astro';
+import ambiancePhoto from '../../assets/ambiance-mariage.png';
+import { SITE } from '../../i18n/routes';
+
+// Accueil anglais : mêmes sections que l'accueil français (les composants lisent la langue dans l'URL).
+// Service « destination wedding » : Richard est basé au Pays basque et accepte les mariages partout dans le monde.
+const service = {
+  '@type': 'Service',
+  '@id': `${SITE}/en/#service`,
+  name: 'Wedding DJ in Biarritz and the French Basque Country',
+  serviceType: 'Wedding DJ',
+  description:
+    'Wedding DJ based in the French Basque Country, near Biarritz: ceremony and drinks reception sound, dinner music, dance floor, lighting and photo booth. Available for destination weddings, private events and corporate events worldwide.',
+  url: `${SITE}/en/`,
+  provider: { '@id': `${SITE}/#business` },
+  areaServed: [
+    { '@type': 'AdministrativeArea', name: 'French Basque Country' },
+    { '@type': 'AdministrativeArea', name: 'Landes' },
+    { '@type': 'Country', name: 'France' },
+    'Worldwide',
+  ],
+};
+---
+
+<Layout
+  title="Wedding DJ Biarritz & French Basque Country · Richard DJ Event"
+  description="Wedding DJ based near Biarritz in the French Basque Country, available for destination weddings worldwide. 200+ weddings, lighting, photo booth. Free quote within 24 hours."
+  schema={[service]}
+>
+  <Header />
+  <main>
+    <Hero />
+    <About />
+    <div class="scene">
+      <div class="scene-bg" aria-hidden="true">
+        <Image
+          src={ambiancePhoto}
+          alt=""
+          class="scene-photo"
+          widths={[768, 1280, 1920]}
+          sizes="100vw"
+          format="webp"
+          quality={70}
+        />
+      </div>
+      <div class="scene-content">
+        <Services />
+        <Testimonials />
+        <Zone />
+        <Faq />
+        <WeddingResources />
+        <ContactForm />
+        <Footer />
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  /* Fond photo « sticky » : l'image reste fixe dans le viewport
+     pendant que les sections défilent par-dessus */
+  .scene {
+    position: relative;
+  }
+
+  .scene-bg {
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .scene-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .scene-content {
+    position: relative;
+    margin-top: -100dvh;
+  }
+</style>

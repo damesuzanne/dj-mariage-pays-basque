@@ -1,0 +1,57 @@
+---
+/**
+ * Pages « événements » (entreprises, bars-restaurants, en français et en anglais) :
+ * construites à partir d'un gabarit HTML autonome, mais avec le MÊME pied de page que
+ * l'accueil (composant Footer) : son ancienne copie figée dans le gabarit avait divergé.
+ * Ajoute aussi les balises hreflang et le sélecteur de langue FR / EN au menu du gabarit.
+ */
+import Breadcrumb from './Breadcrumb.astro';
+import Footer from './Footer.astro';
+import { optimiserHeadEvenements } from '../utils/optimiserHeadEvenements';
+import { hreflangHtml, langFromPath, switchHref } from '../i18n/routes';
+
+interface Props {
+  page: string;
+}
+
+const { page } = Astro.props;
+// Mêmes règles que le sélecteur de Header.astro (les gabarits n'utilisent pas ses styles).
+const CSS_SELECTEUR =
+  '.nav{margin-left:auto}@media (min-width:1101px){.header-inner{gap:1.6rem}.nav{gap:clamp(1.2rem,1.55vw,1.8rem)}}' +
+  '.lang-switch{display:flex;align-items:center;gap:.35rem;margin-left:-.5rem;font-family:var(--font-body);font-size:.78rem;font-weight:600;letter-spacing:.08em;color:rgba(255,255,255,.35)}' +
+  '.lang-switch a{color:rgba(255,255,255,.6);text-decoration:none;padding:.35rem .15rem;transition:color var(--transition)}' +
+  '.lang-switch a:hover,.lang-switch a[aria-current="true"]{color:var(--gold-light)}' +
+  '@media (max-width:1100px){.lang-switch{margin-left:auto;z-index:60}}';
+
+const path = Astro.url.pathname;
+const en = langFromPath(path) === 'en';
+
+const debutHead = page.indexOf('<head>') + '<head>'.length;
+const finHead = page.indexOf('</head>');
+const head = optimiserHeadEvenements(page.slice(debutHead, finHead)) + hreflangHtml(path) + `<style>${CSS_SELECTEUR}</style>`;
+const debutBody = page.indexOf('<body>') + '<body>'.length;
+const finBody = page.lastIndexOf('</body>');
+const selecteur =
+  `<div class="lang-switch" role="group" aria-label="${en ? 'Language' : 'Langue'}">` +
+  `<a href="${switchHref(path, 'fr')}" hreflang="fr" lang="fr"${en ? '' : ' aria-current="true"'} title="Version française">FR</a>` +
+  `<span aria-hidden="true">/</span>` +
+  `<a href="${switchHref(path, 'en')}" hreflang="en" lang="en"${en ? ' aria-current="true"' : ''} title="English version">EN</a>` +
+  `</div>`;
+// Le sélecteur se place juste avant le bouton du menu mobile, comme dans Header.astro.
+const body = page.slice(debutBody, finBody).replace('<button class="nav-toggle"', `${selecteur}<button class="nav-toggle"`);
+const debutFooter = body.indexOf('<footer');
+const finFooter = body.indexOf('</footer>') + '</footer>'.length;
+const avant = body.slice(0, debutFooter);
+const apres = body.slice(finFooter);
+---
+<!doctype html>
+<html lang={en ? 'en' : 'fr'}>
+  <head><Fragment set:html={head} /></head>
+  <body>
+    <Breadcrumb />
+    <Fragment set:html={avant} />
+    <Footer />
+    <Fragment set:html={apres} />
+  </body>
+</html>
+

@@ -1,0 +1,107 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import PageHero from '../../components/PageHero.astro';
+import ObfuscatedLink from '../../components/ObfuscatedLink.astro';
+import heroPhoto from '../../assets/contact-hero.png';
+
+const heroAlt = 'A DJ meeting a couple around a table on a terrace overlooking the ocean';
+---
+
+<Layout
+  title="Contact & Booking · Wedding DJ Biarritz · Richard DJ Event"
+  ogImage={heroPhoto}
+  ogImageAlt={heroAlt}
+  description="Contact Richard DJ Event: book a 30-minute video or phone call online, or request a free quote for your wedding, corporate event or private party in the French Basque Country or abroad."
+>
+  <Header />
+  <PageHero
+    kicker="Contact"
+    ligne1="Let’s talk about"
+    accent="your event"
+    texte="Book a video or phone call with Richard, or fill in the quote form: you will hear back within 24 hours. English-speaking support available."
+    image={heroPhoto}
+    imageAlt={heroAlt}
+    position="70% 40%"
+  >
+    <Fragment slot="actions">
+      <button
+        type="button"
+        class="btn btn-gold"
+        data-cal-link="richard-dj/30min"
+        data-cal-namespace="30min"
+        data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+      >Book a call</button>
+      <ObfuscatedLink
+        type="wa"
+        value="33684331824"
+        message="Hello Richard, I would like some information about my event."
+        class="btn btn-outline"
+        target="_blank"
+        rel="noopener"
+      >
+        WhatsApp
+      </ObfuscatedLink>
+    </Fragment>
+  </PageHero>
+
+  <main>
+    <section class="rdv" id="rdv" aria-labelledby="rdv-titre">
+      <div class="container rdv-inner">
+        <div>
+          <p class="eyebrow">Book a call</p>
+          <h2 id="rdv-titre">Book a 30-minute call</h2>
+          <p>
+            Pick a day and time that suits you in Richard’s calendar, then choose how you would like to talk:
+            a video call on Cal Video or a phone call. We will go over your date, your venue and the atmosphere
+            you have in mind.
+          </p>
+        </div>
+        <button
+          type="button"
+          class="btn btn-gold rdv-btn"
+          data-cal-link="richard-dj/30min"
+          data-cal-namespace="30min"
+          data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+        >Book a 30-minute call</button>
+      </div>
+    </section>
+
+    <ContactForm />
+  </main>
+  <Footer />
+
+  <!-- Cal.com : agenda de prise de rendez-vous (chargé uniquement sur cette page) -->
+  <script is:inline>
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    Cal("init", "30min", {origin:"https://app.cal.com"});
+    Cal.config = Cal.config || {};
+    Cal.config.forwardQueryParams = true;
+    Cal.ns["30min"]("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#121723"},"dark":{"cal-brand":"#f9f7f1"}},"hideEventTypeDetails":false,"layout":"month_view"});
+  </script>
+</Layout>
+
+<style>
+  .rdv, :global(#devis) { scroll-margin-top: 5rem; }
+  .rdv {
+    background: var(--cream, #faf7f1);
+    padding: clamp(2.5rem, 6vw, 4rem) 0;
+    border-bottom: 1px solid #eadfc8;
+  }
+  .rdv-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .rdv-inner > div { max-width: 640px; }
+  .rdv h2 { margin: 0.2rem 0 0.6rem; font-size: clamp(1.6rem, 3.5vw, 2.1rem); }
+  .rdv p:not(.eyebrow) { margin: 0; color: var(--ink-soft, #5a6072); }
+  .rdv-btn { flex: none; }
+  @media (max-width: 640px) {
+    .rdv-btn { width: 100%; text-align: center; }
+  }
+</style>

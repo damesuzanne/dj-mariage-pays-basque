@@ -13,8 +13,9 @@ form.addEventListener('submit',async event=>{
   if(!verification.ok||!verified.success)throw new Error(verified.message||'Veuillez vérifier la protection antispam.');
   data.delete('cf-turnstile-response');data.delete('botcheck');
   data.set('access_key','3f6d1840-64d1-4521-bb72-95d8b95071e5');
-  data.set('subject','Demande de devis : '+eventCategory);
-  data.set('from_name','Richard DJ Event');data.set('name',data.get('prenom')+' '+data.get('nom'));
+  data.set('subject', '🚨 ALERTE CONTACT: NOUVEAU MESSAGE SITE !');
+  data.set("Site d’origine", "Pays Basque — https://djmariagepaysbasque.fr");
+  data.set('from_name',"NOUVEAU CONTACT DJ MARIAGE");data.set('name',data.get('prenom')+' '+data.get('nom'));
   const response=await fetch('https://api.web3forms.com/submit',{method:'POST',body:data});
   const result=await response.json();if(!response.ok||!result.success)throw new Error('Votre demande n’a pas pu être envoyée. Réessayez ou contactez Richard par WhatsApp.');
   status.textContent='Votre demande a bien été envoyée à Richard. Merci !';form.reset();

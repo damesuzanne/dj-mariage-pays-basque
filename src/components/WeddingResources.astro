@@ -1,18 +1,28 @@
 ---
+import { langFromPath } from '../i18n/routes';
 import { Image } from 'astro:assets';
 import preparationPhoto from '../assets/blog/retroplanning-mariage-couple.png';
+const en = langFromPath(Astro.url.pathname) === 'en';
 ---
 <section id="ressources" class="wedding-resources" aria-labelledby="resources-title">
   <div class="container resources-inner">
     <div class="resources-photo">
-      <Image src={preparationPhoto} alt="Un couple prépare son mariage ensemble" widths={[480, 720, 960]} sizes="(max-width: 760px) 92vw, 40vw" loading="lazy" />
+      <Image src={preparationPhoto} alt={en ? 'A couple planning their wedding together' : 'Un couple prépare son mariage ensemble'} widths={[480, 720, 960]} sizes="(max-width: 760px) 92vw, 40vw" loading="lazy" />
     </div>
     <div class="resources-copy">
+      {en ? <>
+      <p class="eyebrow">Tips &amp; resources</p>
+      <h2 id="resources-title">Plan your wedding <em>with good ideas.</em></h2>
+      <p>From the first ideas to the final details, the blog shares practical advice and inspiration for a wedding that feels like you, including some of the most beautiful wedding venues in the Basque Country.</p>
+      <p>Planning from abroad? You will find a planning timeline, guest games and tips for choosing your first dance song.</p>
+      <a href="/en/tips/" class="btn btn-gold">Read the tips</a>
+      </> : <>
       <p class="eyebrow">Conseils &amp; ressources gratuites</p>
       <h2 id="resources-title">Votre mariage se prépare <em>avec de bonnes idées.</em></h2>
       <p>Des premières idées aux derniers préparatifs, retrouvez sur le blog des conseils, des astuces et de l’inspiration pour imaginer un mariage qui vous ressemble.</p>
       <p>Pour vous accompagner à chaque étape, profitez aussi de ressources gratuites à télécharger : des guides et des outils pratiques pour avancer sereinement dans vos préparatifs.</p>
       <a href="/conseils/" class="btn btn-gold">Découvrir les conseils &amp; ressources</a>
+      </>}
     </div>
   </div>
 </section>

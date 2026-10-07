@@ -1,24 +1,28 @@
 ---
+import { langFromPath } from '../i18n/routes';
 import ObfuscatedLink from './ObfuscatedLink.astro';
 import ObfuscatedText from './ObfuscatedText.astro';
 
 // Clé publique (site key) du widget Cloudflare Turnstile « mariage dj ».
 const TURNSTILE_SITEKEY = '0x4AAAAAADxOwNEZbVFGF9_e';
+const en = langFromPath(Astro.url.pathname) === 'en';
 ---
 
 <section class="contact" id="devis">
   <div class="container contact-grid">
     <div class="contact-intro reveal">
-      <p class="eyebrow">Devis gratuit</p>
-      <h2 class="section-title">Réservez <em>votre date</em></h2>
+      <p class="eyebrow">{en ? 'Free quote' : 'Devis gratuit'}</p>
+      {en ? <h2 class="section-title">Book <em>your date</em></h2> : <h2 class="section-title">Réservez <em>votre date</em></h2>}
       <p>
-        Votre date, votre lieu, vos envies : je vous réponds sous 24h avec un devis personnalisé et
-        gratuit.
+        {en ? 'Your date, your venue, your wishes: I reply within 24 hours with a free, tailored quote. English-speaking support available.' : <>Votre date, votre lieu, vos envies : je vous réponds sous 24h avec un devis personnalisé et
+        gratuit.</>}
       </p>
       <ul class="assurances">
+        {en ? <><li>Reply within 24 hours</li><li>No commitment</li><li>Your details stay private</li></> : <>
         <li>Réponse sous 24h</li>
         <li>Sans engagement</li>
         <li>Données confidentielles</li>
+        </>}
       </ul>
       <div class="direct" id="contact">
         <ObfuscatedLink type="tel" value="+33684331824" class="direct-item">
@@ -26,8 +30,8 @@ const TURNSTILE_SITEKEY = '0x4AAAAAADxOwNEZbVFGF9_e';
             <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 4h4l2 5-3 2a13 13 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 6a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
           </span>
           <span>
-            <ObfuscatedText value="06 84 33 18 24" tag="strong" />
-            <small>7j/7 sur rendez-vous</small>
+            <ObfuscatedText value={en ? '+33 6 84 33 18 24' : '06 84 33 18 24'} tag="strong" />
+            <small>{en ? '7 days a week, by appointment' : '7j/7 sur rendez-vous'}</small>
           </span>
         </ObfuscatedLink>
         <ObfuscatedLink type="email" value="richarddjevent@gmail.com" class="direct-item">
@@ -36,71 +40,71 @@ const TURNSTILE_SITEKEY = '0x4AAAAAADxOwNEZbVFGF9_e';
           </span>
           <span>
             <ObfuscatedText value="richarddjevent@gmail.com" tag="strong" />
-            <small>Bayonne · Pays Basque & Landes</small>
+            <small>{en ? 'French Basque Country · Worldwide' : 'Bayonne · Pays Basque & Landes'}</small>
           </span>
         </ObfuscatedLink>
       </div>
     </div>
 
-    <form class="form reveal" id="quote-form" novalidate>
-      <input type="hidden" name="subject" value="Nouvelle demande de devis — djmariagepaysbasque.fr" />
+    <form class="form reveal" id="quote-form" novalidate data-lang={en ? 'en' : 'fr'}>
+      <input type="hidden" name="subject" value="🚨 ALERTE CONTACT: NOUVEAU MESSAGE SITE !" />
       <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
       <div class="row">
         <label>
-          Prénom *
+          {en ? 'First name *' : 'Prénom *'}
           <input type="text" name="prenom" required autocomplete="given-name" />
         </label>
         <label>
-          Nom *
+          {en ? 'Last name *' : 'Nom *'}
           <input type="text" name="nom" required autocomplete="family-name" />
         </label>
       </div>
       <div class="row">
         <label>
-          Email *
+          {en ? 'Email *' : 'Email *'}
           <input type="email" name="email" required autocomplete="email" />
         </label>
         <label>
-          Téléphone *
+          {en ? 'Phone *' : 'Téléphone *'}
           <input type="tel" name="telephone" required autocomplete="tel" />
         </label>
       </div>
       <div class="row">
         <label>
-          Date du mariage *
+          {en ? 'Wedding or event date *' : 'Date du mariage *'}
           <input type="date" name="date" required />
         </label>
         <label>
-          Lieu de réception
-          <input type="text" name="lieu" placeholder="Ville ou domaine" />
+          {en ? 'Venue' : 'Lieu de réception'}
+          <input type="text" name="lieu" placeholder={en ? 'Town or venue name' : 'Ville ou domaine'} />
         </label>
       </div>
       <label>
-        Votre projet
-        <textarea name="message" rows="4" placeholder="Nombre d'invités, ambiance souhaitée, options qui vous intéressent…"></textarea>
+        {en ? 'Your plans' : 'Votre projet'}
+        <textarea name="message" rows="4" placeholder={en ? 'Number of guests, the atmosphere you want, options you are interested in…' : "Nombre d'invités, ambiance souhaitée, options qui vous intéressent…"}></textarea>
       </label>
-      <p class="form-error" id="form-error" hidden>Merci de remplir les champs obligatoires (*).</p>
+      <p class="form-error" id="form-error" hidden>{en ? 'Please fill in the required fields (*).' : 'Merci de remplir les champs obligatoires (*).'}</p>
       <p class="form-error" id="form-error-server" hidden>
-        Une erreur est survenue lors de l'envoi. Vous pouvez réessayer ou m'écrire directement par
-        WhatsApp.
+        {en ? 'Something went wrong while sending. Please try again or message me directly on WhatsApp.' : <>Une erreur est survenue lors de l'envoi. Vous pouvez réessayer ou m'écrire directement par
+        WhatsApp.</>}
       </p>
       {TURNSTILE_SITEKEY && (
-        <div class="cf-turnstile ct-captcha" data-sitekey={TURNSTILE_SITEKEY} data-theme="dark" data-language="fr"></div>
+        <div class="cf-turnstile ct-captcha" data-sitekey={TURNSTILE_SITEKEY} data-theme="dark" data-language={en ? 'en' : 'fr'}></div>
       )}
       <div class="form-actions">
-        <button type="submit" class="btn btn-gold" id="submit-btn">Envoyer ma demande</button>
+        <button type="submit" class="btn btn-gold" id="submit-btn">{en ? 'Send my request' : 'Envoyer ma demande'}</button>
         <button type="button" class="btn btn-whatsapp" id="whatsapp-send">
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.9 13.9c-.2.6-1.2 1.1-1.7 1.2-.4 0-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.9 1.7.3.2.5.1.7-.1l1-1.1c.2-.3.4-.2.7-.1l2.1 1c.3.2.5.3.6.4.1.2.1.7-.1 1.3z" fill="currentColor"/></svg>
-          Envoyer via WhatsApp
+          {en ? 'Send via WhatsApp' : 'Envoyer via WhatsApp'}
         </button>
       </div>
       <p class="form-success" id="form-success" hidden>
-        Votre demande a bien été envoyée. Merci, je vous réponds sous 24h !
+        {en ? 'Thank you, your request has been sent. I will reply within 24 hours!' : <>Votre demande a bien été envoyée. Merci, je vous réponds sous 24h !</>}
       </p>
       <p class="form-privacy">
-        Les informations transmises servent uniquement à traiter votre demande de devis. Elles ne
+        {en ? <>Your details are only used to answer your quote request. They are never shared or sold. Learn more in our <a href="/en/privacy-policy/">privacy policy</a>.</> : <>Les informations transmises servent uniquement à traiter votre demande de devis. Elles ne
         sont ni cédées ni revendues. En savoir plus dans notre
-        <a href="/politique-de-confidentialite">politique de confidentialité</a>.
+        <a href="/politique-de-confidentialite">politique de confidentialité</a>.</>}
       </p>
     </form>
   </div>
@@ -320,6 +324,9 @@ const TURNSTILE_SITEKEY = '0x4AAAAAADxOwNEZbVFGF9_e';
   const errorEl = document.getElementById('form-error');
   const successEl = document.getElementById('form-success');
   const whatsappBtn = document.getElementById('whatsapp-send');
+  // Version anglaise du site : même formulaire, textes et message en anglais.
+  const en = form?.dataset.lang === 'en';
+  const submitLabel = en ? 'Send my request' : 'Envoyer ma demande';
 
   function collect(): Record<string, string> | null {
     if (!form) return null;
@@ -338,6 +345,30 @@ const TURNSTILE_SITEKEY = '0x4AAAAAADxOwNEZbVFGF9_e';
   }
 
   function buildMessage(data: Record<string, string>): string {
+    if (en) {
+      const dateEn = data.date
+        ? new Date(`${data.date}T12:00:00`).toLocaleDateString('en-GB', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          })
+        : '';
+      return [
+        `Hello Richard,`,
+        ``,
+        `I would like to check your availability for our wedding or event.`,
+        `• Name: ${data.prenom} ${data.nom}`,
+        `• Date: ${dateEn}`,
+        data.lieu ? `• Venue: ${data.lieu}` : '',
+        `• Phone: ${data.telephone}`,
+        `• Email: ${data.email}`,
+        data.message ? `` : '',
+        data.message ? `Our plans: ${data.message}` : '',
+      ]
+        .filter((line) => line !== '')
+        .join('\n');
+    }
     const dateFr = data.date
       ? new Date(`${data.date}T12:00:00`).toLocaleDateString('fr-FR', {
           weekday: 'long',
@@ -373,12 +404,14 @@ const TURNSTILE_SITEKEY = '0x4AAAAAADxOwNEZbVFGF9_e';
     if (successEl) successEl.hidden = true;
 
     const payload = new FormData(form);
+    payload.set("Site d’origine", "Pays Basque — https://djmariagepaysbasque.fr");
+    if (en) payload.set('Langue', 'Anglais (demande envoyée depuis la version anglaise du site)');
     payload.set('message', buildMessage(data));
     payload.set('name', `${data.prenom} ${data.nom}`);
 
     if (submitBtn) {
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Envoi en cours…';
+      submitBtn.textContent = en ? 'Sending…' : 'Envoi en cours…';
     }
 
     try {
@@ -400,7 +433,7 @@ const TURNSTILE_SITEKEY = '0x4AAAAAADxOwNEZbVFGF9_e';
       payload.delete('cf-turnstile-response');
       payload.delete('botcheck');
       payload.set('access_key', WEB3FORMS_ACCESS_KEY);
-      payload.set('from_name', 'Site DJ Mariage Pays Basque');
+      payload.set('from_name', "NOUVEAU CONTACT DJ MARIAGE");
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { Accept: 'application/json' },
@@ -420,7 +453,7 @@ const TURNSTILE_SITEKEY = '0x4AAAAAADxOwNEZbVFGF9_e';
     } finally {
       if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Envoyer ma demande';
+        submitBtn.textContent = submitLabel;
       }
     }
   });

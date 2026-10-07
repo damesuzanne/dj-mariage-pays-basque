@@ -11,12 +11,18 @@ import '@fontsource/outfit/500.css';
 import '@fontsource/outfit/600.css';
 import '@fontsource/outfit/700.css';
 import '../styles/global.css';
+// Préchargement des polices du haut de page (titre + texte) : réduit le saut de mise en page
+// au moment où elles remplacent la police de secours (CLS 0,036 relevé sur les articles).
+import playfair700 from '@fontsource/playfair-display/files/playfair-display-latin-700-normal.woff2?url';
+import outfit400 from '@fontsource/outfit/files/outfit-latin-400-normal.woff2?url';
+import outfit600 from '@fontsource/outfit/files/outfit-latin-600-normal.woff2?url';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import ObfuscatedLink from '../components/ObfuscatedLink.astro';
 import logoFavicon from '../assets/logo-favicon-98x98.png';
 import richardPhoto from '../assets/richard-dj.png';
 import { getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
+import { langFromPath, hreflangLinks } from '../i18n/routes';
 
 interface Props {
   title: string;
@@ -29,6 +35,8 @@ interface Props {
   ogType?: 'website' | 'article';
   publishedTime?: Date;
   modifiedTime?: Date;
+  /** Nœuds JSON-LD propres à la page, ajoutés au @graph commun (ex. Service). */
+  schema?: Record<string, unknown>[];
 }
 
 const {
@@ -36,11 +44,18 @@ const {
   description,
   noindex = false,
   ogImage: ogSource,
-  ogImageAlt = "Richard aux platines lors d'un mariage",
+  ogImageAlt: ogAltProp,
   ogType = 'website',
   publishedTime,
   modifiedTime,
+  schema = [],
 } = Astro.props;
+
+// Langue déduite de l'adresse : tout ce qui est sous /en/ est en anglais.
+const lang = langFromPath(Astro.url.pathname);
+const en = lang === 'en';
+const ogImageAlt = ogAltProp ?? (en ? 'Richard DJ Event behind the decks at a wedding' : "Richard aux platines lors d'un mariage");
+const alternates = hreflangLinks(Astro.url.pathname);
 
 const siteUrl = 'https://djmariagepaysbasque.fr';
 const logoUrl = new URL(logoFavicon.src, siteUrl).toString();
@@ -61,12 +76,20 @@ const jsonLd = {
       '@id': `${siteUrl}/#business`,
       name: 'Richard DJ Event',
       alternateName: ['DJ Mariage Pays Basque', 'DJ Mariage Landes'],
-      slogan: 'Votre mariage mérite une piste de danse inoubliable',
-      description:
-        "DJ professionnel au Pays Basque et dans les Landes : mariages, événements d'entreprise, bars et restaurants. Sonorisation, éclairage, photobooth et animations. Plus de 200 mariages animés à Bayonne, Biarritz, Anglet, Saint-Jean-de-Luz, Hossegor et Dax.",
+      slogan: en ? 'Your wedding deserves an unforgettable dance floor' : 'Votre mariage mérite une piste de danse inoubliable',
+      description: en
+        ? 'Professional wedding and event DJ based in the French Basque Country, near Biarritz, available for destination weddings, private events and corporate events worldwide. Sound, lighting, photo booth and entertainment. More than 200 weddings in Biarritz, Bayonne, Anglet, Saint-Jean-de-Luz and the Landes.'
+        : "DJ professionnel au Pays Basque et dans les Landes : mariages, événements d'entreprise, bars et restaurants. Sonorisation, éclairage, photobooth et animations. Plus de 200 mariages animés à Bayonne, Biarritz, Anglet, Saint-Jean-de-Luz, Hossegor et Dax.",
       url: siteUrl,
       telephone: '+33684331824',
       email: 'richarddjevent@gmail.com',
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'customer service',
+        telephone: '+33684331824',
+        email: 'richarddjevent@gmail.com',
+        availableLanguage: ['French', 'English'],
+      },
       logo: logoUrl,
       image: imageUrl,
       sameAs: [
@@ -97,28 +120,45 @@ const jsonLd = {
       ],
       priceRange: '€€',
       openingHours: 'Mo-Su 09:00-20:00',
-      knowsAbout: [
-        'DJ mariage',
-        'Animation de mariage',
-        'Sonorisation de cérémonie laïque',
-        'Éclairage de piste de danse',
-        'Photobooth mariage',
-        'Ouverture de bal',
-      ],
+      knowsAbout: en
+        ? ['Wedding DJ', 'Destination weddings', 'Wedding entertainment', 'Outdoor ceremony sound', 'Dance floor lighting', 'Wedding photo booth', 'First dance']
+        : [
+            'DJ mariage',
+            'Animation de mariage',
+            'Sonorisation de cérémonie laïque',
+            'Éclairage de piste de danse',
+            'Photobooth mariage',
+            'Ouverture de bal',
+          ],
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
-        name: 'Prestations DJ mariage Pays Basque & Landes',
-        itemListElement: [
-          "Animation DJ complète de mariage (vin d'honneur, repas, soirée dansante)",
-          "Éclairage d'ambiance et piste de danse",
-          'Photobooth (borne photo) avec impressions illimitées',
-          'Vidéoprojection et écran géant',
-          "Machine à fumée lourde pour l'ouverture de bal",
-          'Stand barbe à papa et pop-corn',
-          "Sonorisation de cérémonie et vin d'honneur",
-        ].map((name) => ({
+        name: en ? 'Wedding DJ services, French Basque Country' : 'Prestations DJ mariage Pays Basque & Landes',
+        itemListElement: (en
+          ? [
+              'Full wedding DJ service (drinks reception, dinner, party)',
+              'Ambient lighting and dance floor lighting',
+              'Photo booth with unlimited prints',
+              'Video projection and big screen',
+              'Low fog machine for the first dance',
+              'Candy floss and popcorn stand',
+              'Ceremony and drinks reception sound',
+            ]
+          : [
+              "Animation DJ complète de mariage (vin d'honneur, repas, soirée dansante)",
+              "Éclairage d'ambiance et piste de danse",
+              'Photobooth (borne photo) avec impressions illimitées',
+              'Vidéoprojection et écran géant',
+              "Machine à fumée lourde pour l'ouverture de bal",
+              'Stand barbe à papa et pop-corn',
+              "Sonorisation de cérémonie et vin d'honneur",
+            ]
+        ).map((name) => ({
           '@type': 'Offer',
-          itemOffered: { '@type': 'Service', name, areaServed: ['Pays Basque', 'Landes'] },
+          itemOffered: {
+            '@type': 'Service',
+            name,
+            areaServed: en ? ['French Basque Country', 'Landes'] : ['Pays Basque', 'Landes'],
+          },
         })),
       },
     },
@@ -127,7 +167,7 @@ const jsonLd = {
       '@id': `${siteUrl}/#website`,
       url: siteUrl,
       name: 'DJ Mariage Pays Basque · Richard DJ Event',
-      inLanguage: 'fr-FR',
+      inLanguage: ['fr-FR', 'en'],
       publisher: { '@id': `${siteUrl}/#business` },
     },
     {
@@ -139,25 +179,31 @@ const jsonLd = {
       primaryImageOfPage: { '@type': 'ImageObject', url: imageUrl },
       isPartOf: { '@id': `${siteUrl}/#website` },
       about: { '@id': `${siteUrl}/#business` },
-      inLanguage: 'fr-FR',
+      inLanguage: en ? 'en' : 'fr-FR',
     },
+    ...schema,
   ],
 };
 ---
 
 <!doctype html>
-<html lang="fr">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preload" href={playfair700} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={outfit400} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={outfit600} as="font" type="font/woff2" crossorigin />
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    {alternates.map((alt) => <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />)}
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:locale" content={en ? 'en_GB' : 'fr_FR'} />
+    {alternates.length > 0 && <meta property="og:locale:alternate" content={en ? 'fr_FR' : 'en_GB'} />}
     <meta property="og:site_name" content="Richard DJ Event" />
     <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={imageUrl} />
@@ -193,23 +239,23 @@ const jsonLd = {
       id="whatsapp-float"
       type="wa"
       value="33684331824"
-      message="Bonjour Richard, je souhaite des informations pour mon mariage."
+      message={en ? 'Hello Richard, I would like some information about my wedding.' : 'Bonjour Richard, je souhaite des informations pour mon mariage.'}
       target="_blank"
       rel="noopener"
-      ariaLabel="Discuter sur WhatsApp"
+      ariaLabel={en ? 'Chat on WhatsApp' : 'Discuter sur WhatsApp'}
     >
       <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
         <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.9 13.9c-.2.6-1.2 1.1-1.7 1.2-.4 0-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.9 1.7.3.2.5.1.7-.1l1-1.1c.2-.3.4-.2.7-.1l2.1 1c.3.2.5.3.6.4.1.2.1.7-.1 1.3z" fill="currentColor"/>
       </svg>
     </ObfuscatedLink>
-    <button id="to-top" aria-label="Revenir en haut de la page">
+    <button id="to-top" aria-label={en ? 'Back to top' : 'Revenir en haut de la page'}>
       <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
         <path d="M12 19V5m-7 7l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
     </button>
     <script
       is:inline
-      src="/assistant-richard.js?v=5"
+      src={en ? '/assistant-richard-en.js?v=1' : '/assistant-richard.js?v=5'}
       defer
     ></script>
     <script>

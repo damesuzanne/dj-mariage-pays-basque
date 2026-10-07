@@ -1,0 +1,104 @@
+---
+/**
+ * Version anglaise de l'encart <Guide /> des articles (/en/tips/…).
+ * Les guides PDF n'existent qu'en français : à la place du formulaire de téléchargement,
+ * l'encart propose un appel de 30 minutes ou une demande de disponibilité.
+ * - variant "encart" : bloc complet avec deux boutons ;
+ * - variant "bandeau" : rappel court, même habillage que le bandeau français.
+ */
+interface Props {
+  variant?: 'encart' | 'bandeau';
+  id?: string;
+  cible?: string;
+  titre?: string;
+}
+
+const { variant = 'encart', id = 'guide', titre } = Astro.props;
+---
+
+{variant === 'bandeau' ? (
+  <aside class="cc-band">
+    <svg class="cc-sprig" viewBox="0 0 220 24" aria-hidden="true"><path d="M2 12 H98 M122 12 H218" stroke="currentColor" stroke-width="1" fill="none"/><g transform="translate(110 12)"><circle r="3.2" fill="none" stroke="currentColor" stroke-width=".9"/><g fill="#9fb09a"><ellipse cx="-12" cy="-1" rx="6" ry="2.4" transform="rotate(-20 -12 -1)"/><ellipse cx="12" cy="-1" rx="6" ry="2.4" transform="rotate(20 12 -1)"/></g></g></svg>
+    <p class="cc-kicker">Wedding DJ · French Basque Country</p>
+    <p class="cc-title">{titre ?? 'Getting married in the Basque Country?'}</p>
+    <a href="/en/#devis" class="btn btn-gold cc-btn">Check my date</a>
+  </aside>
+) : (
+  <section class="cc" id={id} aria-labelledby={`${id}-titre`}>
+    <p class="cc-kicker">Free 30-minute call</p>
+    <h2 class="cc-title" id={`${id}-titre`}>{titre ?? 'Let’s talk about your wedding'}</h2>
+    <p class="cc-text">
+      Planning your wedding in the Basque Country, maybe from abroad? Book a free video or phone call
+      with Richard to talk through your date, your venue and your music. English-speaking support available.
+    </p>
+    <div class="cc-actions">
+      <a href="/en/contact/#rdv" class="btn btn-gold">Book a free call</a>
+      <a href="/en/#devis" class="btn btn-dark">Check my date</a>
+    </div>
+  </section>
+)}
+
+<style>
+  .cc,
+  .cc-band {
+    margin: 2.8rem 0;
+    text-align: center;
+    background: var(--cream);
+    border-top: 1px solid var(--gold-light);
+    border-bottom: 1px solid var(--gold-light);
+  }
+
+  .cc {
+    padding: 2.2rem 1.5rem 2.3rem;
+  }
+
+  .cc-band {
+    padding: 1.8rem 1.5rem 1.9rem;
+  }
+
+  .cc-sprig {
+    display: block;
+    width: 150px;
+    height: 18px;
+    margin: 0 auto 0.7rem;
+    color: var(--gold);
+  }
+
+  .cc .cc-kicker,
+  .cc-band .cc-kicker {
+    margin: 0 0 0.35rem;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #7f6125;
+  }
+
+  .cc .cc-title,
+  .cc-band .cc-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 3vw, 1.65rem);
+    line-height: 1.25;
+    color: var(--night);
+    margin: 0 auto 1.1rem;
+    max-width: 30ch;
+    text-wrap: balance;
+  }
+
+  .cc .cc-text {
+    max-width: 52ch;
+    margin: 0 auto 1.4rem;
+    color: var(--ink-soft);
+  }
+
+  .cc-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+  }
+
+  .cc-btn {
+    padding: 0.8rem 1.6rem;
+  }
+</style>

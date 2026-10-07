@@ -238,7 +238,7 @@ PAGES = [
         'source': 'entreprises.html', 'cible': 'corporate-events.html', 'fr': '/entreprises/', 'en': '/en/corporate-events/',
         'dico': ENTREPRISES,
         'title': 'Corporate Event DJ Biarritz & Basque Country | Richard DJ Event',
-        'description': 'Corporate event DJ based in the French Basque Country: company parties, seminars and receptions in Biarritz, the Basque Country and beyond. Sound, lighting, free quote.',
+        'description': 'Corporate event DJ in the French Basque Country for company parties, seminars and receptions in Biarritz and beyond. Sound, lighting and a free quote.',
         'service': 'Corporate event DJ in Biarritz',
         'serviceType': 'Corporate event DJ',
         'monde': True,

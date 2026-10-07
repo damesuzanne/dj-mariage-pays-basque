@@ -96,7 +96,7 @@ const jsonLd = {
 ---
 
 <Layout
-  title={title.length > 55 ? title : `${title} · Richard DJ Event`}
+  title={title.length > (en ? 45 : 55) ? title : `${title} · Richard DJ Event`}
   description={description}
   ogImage={image ?? ressource.couverture}
   ogImageAlt={imageAlt || (en ? title : ressource.titre)}

@@ -118,7 +118,7 @@ for ville in ['Bayonne', 'Biarritz', 'Anglet', 'Saint-Jean-de-Luz', 'Hendaye', '
     COMMUN[ville] = ville
 
 ENTREPRISES = {
-    'DJ entreprise à Bayonne, Biarritz et dans les Landes': 'Corporate event DJ in Biarritz and the French Basque Country',
+    'DJ entreprise à Bayonne, Biarritz et dans les Landes': 'Corporate event DJ in Biarritz',
     'Votre événement rassemble.': 'Your guests come together.',
     'La musique fait le lien.': 'Music brings them closer.',
     'Un cocktail pour accueillir vos invités, une ambiance pour accompagner les échanges, puis une piste de danse pour célébrer ensemble. Richard DJ Event imagine avec vous le rythme musical de votre événement.':
@@ -177,7 +177,7 @@ ENTREPRISES = {
 }
 
 BARS = {
-    'DJ bar et restaurant au Pays basque et dans les Landes': 'Bar & restaurant DJ in the French Basque Country',
+    'DJ bar et restaurant au Pays basque et dans les Landes': 'Bar & restaurant DJ in Biarritz',
     'Votre lieu a une personnalité.': 'Your venue has a personality.',
     'Donnons-lui le bon rythme.': 'Let’s give it the right rhythm.',
     'Une ambiance qui accompagne les conversations, un dîner qui se prolonge, une soirée qui prend de l’énergie. Richard DJ Event prépare une sélection musicale adaptée à votre établissement et à votre clientèle.':
@@ -239,7 +239,7 @@ PAGES = [
         'dico': ENTREPRISES,
         'title': 'Corporate Event DJ Biarritz & Basque Country | Richard DJ Event',
         'description': 'Corporate event DJ based in the French Basque Country: company parties, seminars and receptions in Biarritz, the Basque Country and beyond. Sound, lighting, free quote.',
-        'service': 'Corporate event DJ in Biarritz and the French Basque Country',
+        'service': 'Corporate event DJ in Biarritz',
         'serviceType': 'Corporate event DJ',
         'monde': True,
         'categorie': 'a corporate event',

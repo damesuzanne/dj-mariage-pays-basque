@@ -161,7 +161,7 @@ ENTREPRISES = {
     'Assistante de direction': 'Executive assistant', 'Responsable des ressources humaines': 'HR manager',
     'Directeur d’agence': 'Branch manager',
     'Richard DJ Event accompagne les entreprises de tout le Pays Basque et se déplace aussi dans les Landes voisines : côte landaise, Dax, Mont-de-Marsan. Le déplacement éventuel est précisé dans le devis.':
-        'Richard DJ Event works with companies across the French Basque Country and the neighbouring Landes, and travels for corporate events elsewhere in France and abroad. Any travel costs are set out in your quote.',
+        'Richard DJ Event works with companies across the French Basque Country and the neighbouring Landes, and travels for corporate events elsewhere in France and abroad.',
     'Pouvez-vous intervenir dans un lieu déjà équipé ?': 'Can you work in a venue that already has equipment?',
     'Oui. Nous faisons le point avec votre lieu ou votre équipe technique pour définir le matériel disponible et ce que je dois apporter.':
         'Yes. We check with your venue or technical team what equipment is available and what I need to bring.',
@@ -218,7 +218,7 @@ BARS = {
     'Gérant de restaurant': 'Restaurant manager', 'Responsable de bar': 'Bar manager', 'Directeur d’établissement': 'Venue director',
     'Manager de bar à cocktails': 'Cocktail bar manager', 'Responsable d’exploitation': 'Operations manager',
     'Richard DJ Event anime des bars et restaurants dans tout le Pays Basque, et aussi dans tout le département des Landes, de la côte à Mont-de-Marsan. Le déplacement éventuel est précisé dans le devis.':
-        'Richard DJ Event plays in bars and restaurants across the French Basque Country and the whole of the Landes, from the coast to Mont-de-Marsan. Any travel costs are set out in your quote.',
+        'Richard DJ Event plays in bars and restaurants across the French Basque Country and the whole of the Landes, from the coast to Mont-de-Marsan.',
     'Proposez-vous une date ponctuelle ou plusieurs soirées ?': 'Do you offer one-off nights or several dates?',
     'Nous pouvons échanger sur une soirée ponctuelle ou plusieurs dates, selon votre calendrier et mes disponibilités.':
         'We can discuss a one-off night or several dates, depending on your calendar and my availability.',

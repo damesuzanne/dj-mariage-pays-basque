@@ -37,6 +37,8 @@ interface Props {
   modifiedTime?: Date;
   /** Nœuds JSON-LD propres à la page, ajoutés au @graph commun (ex. Service). */
   schema?: Record<string, unknown>[];
+  /** false : pas de fil d'Ariane (page de liens /link-tree/). */
+  breadcrumb?: boolean;
 }
 
 const {
@@ -49,6 +51,7 @@ const {
   publishedTime,
   modifiedTime,
   schema = [],
+  breadcrumb = true,
 } = Astro.props;
 
 // Langue déduite de l'adresse : tout ce qui est sous /en/ est en anglais.
@@ -233,7 +236,7 @@ const jsonLd = {
     ></script>
   </head>
   <body>
-    <Breadcrumb title={title} />
+    {breadcrumb && <Breadcrumb title={title} />}
     <slot />
     <ObfuscatedLink
       id="whatsapp-float"

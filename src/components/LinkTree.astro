@@ -4,7 +4,8 @@
  * La langue est lue dans l'adresse, comme pour les autres composants bilingues.
  */
 import Layout from '../layouts/Layout.astro';
-import { langFromPath } from '../i18n/routes';
+import { langFromPath, switchHref } from '../i18n/routes';
+import { DRAPEAU_FR, DRAPEAU_EN } from '../i18n/drapeaux';
 
 const en = langFromPath(Astro.url.pathname) === 'en';
 const phone = '+33684331824';
@@ -73,8 +74,14 @@ const t = en
 const waUrl = `https://wa.me/33684331824?text=${encodeURIComponent(t.waMessage)}`;
 ---
 
-<Layout title={t.title} description={t.description} noindex>
+<Layout title={t.title} description={t.description} noindex breadcrumb={false}>
   <main class="linktree" data-share-text={t.shareText} data-share-url={t.shareUrl} data-copied={t.copied}>
+    {/* Sélecteur de langue FR / EN : mêmes drapeaux que le menu du site. */}
+    <div class="lang-switch" role="group" aria-label={en ? 'Language' : 'Langue'}>
+      <a href={switchHref(Astro.url.pathname, 'fr')} hreflang="fr" lang="fr" aria-current={en ? undefined : 'true'} title="Version française"><Fragment set:html={DRAPEAU_FR} />FR</a>
+      <span aria-hidden="true">/</span>
+      <a href={switchHref(Astro.url.pathname, 'en')} hreflang="en" lang="en" aria-current={en ? 'true' : undefined} title="English version"><Fragment set:html={DRAPEAU_EN} />EN</a>
+    </div>
     <div class="glow glow-one" aria-hidden="true"></div>
     <div class="glow glow-two" aria-hidden="true"></div>
 
@@ -161,8 +168,6 @@ const waUrl = `https://wa.me/33684331824?text=${encodeURIComponent(t.waMessage)}
         <a href={t.legalHref}>{t.legal}</a>
         <span aria-hidden="true">·</span>
         <a href={t.privacyHref}>{t.privacy}</a>
-        <span aria-hidden="true">·</span>
-        {en ? <a href="/link-tree/" hreflang="fr" lang="fr">Français</a> : <a href="/en/link-tree/" hreflang="en" lang="en">English</a>}
       </div>
     </div>
   </main>
@@ -259,6 +264,49 @@ const waUrl = `https://wa.me/33684331824?text=${encodeURIComponent(t.waMessage)}
     background:
       radial-gradient(circle at 50% 12%, rgba(198, 161, 91, 0.18), transparent 40%),
       linear-gradient(150deg, var(--night), #171e2e 58%, #0c101a);
+  }
+
+  .lang-switch {
+    position: absolute;
+    top: 1.1rem;
+    right: 1.2rem;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .lang-switch a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    padding: 0.35rem 0.15rem;
+    transition: color var(--transition);
+  }
+
+  .lang-switch a:hover,
+  .lang-switch a[aria-current='true'] {
+    color: var(--gold-light);
+  }
+
+  .lang-switch :global(.flag) {
+    flex-shrink: 0;
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
+    opacity: 0.7;
+    transition: opacity var(--transition);
+  }
+
+  .lang-switch a[aria-current='true'] :global(.flag),
+  .lang-switch a:hover :global(.flag) {
+    opacity: 1;
   }
 
   .lt-inner {

@@ -172,7 +172,7 @@ ENTREPRISES = {
     'Indiquez-moi la date, le lieu, les horaires, le nombre approximatif de participants et les prestations souhaitées. Ces éléments permettent de préparer une proposition adaptée.':
         'Send me the date, venue, timings, approximate number of guests and the services you would like. That is all I need to prepare a tailored proposal.',
     'Je suis basé au Pays basque et me déplace au Pays basque et dans les Landes, notamment à Biarritz, Anglet, Saint-Jean-de-Luz, Hossegor, Capbreton et Dax. Le déplacement est précisé dans votre devis.':
-        'I am based in the French Basque Country and work across the Basque Country and the Landes, including Biarritz, Anglet, Saint-Jean-de-Luz, Hossegor, Capbreton and Dax. Corporate events elsewhere in France or abroad are welcome too. Travel is set out in your quote.',
+        'I am based in the French Basque Country and work across the Basque Country and the Landes, including Biarritz, Anglet, Saint-Jean-de-Luz, Hossegor, Capbreton and Dax. Corporate events elsewhere in France or abroad are welcome too.',
     'Donnons vie à': 'Let’s bring', 'votre événement': 'your event to life',
 }
 
@@ -229,7 +229,7 @@ BARS = {
     'Le nom et la ville de votre établissement, la date, les horaires, la clientèle attendue et l’équipement déjà présent. Ajoutez quelques mots sur l’ambiance que vous souhaitez créer.':
         'The name and town of your venue, the date, the timings, the expected clientele and the equipment already in place. Add a few words about the atmosphere you want to create.',
     'Je suis basé au Pays basque et me déplace au Pays basque et dans les Landes, notamment à Biarritz, Anglet, Saint-Jean-de-Luz, Hossegor, Capbreton et Dax. Le déplacement est précisé dans votre devis.':
-        'I am based in the French Basque Country and work across the Basque Country and the Landes, including Biarritz, Anglet, Saint-Jean-de-Luz, Hossegor, Capbreton and Dax. Travel is set out in your quote.',
+        'I am based in the French Basque Country and work across the Basque Country and the Landes, including Biarritz, Anglet, Saint-Jean-de-Luz, Hossegor, Capbreton and Dax.',
     'Préparons': 'Let’s plan', 'votre prochaine soirée': 'your next night',
 }
 

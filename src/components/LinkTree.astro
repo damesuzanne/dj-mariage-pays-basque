@@ -33,6 +33,7 @@ const t = en
       inapp1: 'You are viewing this page inside an app (Instagram, Facebook…). To save the contact card, tap the',
       inapp2: 'menu at the top right, then “Open in browser”.',
       copied: 'Link copied to clipboard',
+      clientArea: 'Client area',
       legal: 'Legal notice',
       legalHref: '/en/legal-notice/',
       privacy: 'Privacy',
@@ -63,6 +64,7 @@ const t = en
       inapp1: 'Vous ouvrez cette page dans une application (Instagram, Facebook…). Pour enregistrer la fiche contact, touchez le menu',
       inapp2: 'en haut à droite puis « Ouvrir dans le navigateur ».',
       copied: 'Lien copié dans le presse-papiers',
+      clientArea: 'Espace client',
       legal: 'Mentions légales',
       legalHref: '/mentions-legales',
       privacy: 'Confidentialité',
@@ -167,6 +169,9 @@ const waUrl = `https://wa.me/33684331824?text=${encodeURIComponent(t.waMessage)}
         <a href={t.legalHref}>{t.legal}</a>
         <span aria-hidden="true">·</span>
         <a href={t.privacyHref}>{t.privacy}</a>
+        <span aria-hidden="true">·</span>
+        {/* Lien discret vers le portail des clients déjà invités (17/10/2026, accord de Suzanne). */}
+        <a href="https://espace.djmariagepaysbasque.fr/">{t.clientArea}</a>
       </div>
     </div>
   </main>

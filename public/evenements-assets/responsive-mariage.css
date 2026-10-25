@@ -17,3 +17,11 @@
    sur fond crème. Le hero et les sections sombres gardent l'or d'origine. */
 .about .eyebrow,.about-content .eyebrow,.testimonials .eyebrow,.faq .eyebrow{color:#7f6125}
 .btn-whatsapp{background:#15803d}
+
+/* Pages Entreprises et Bars & restaurants (25/10/26) : le titre principal (h1)
+   est le surtitre doré, avec les mots-clés de la page ; la grande phrase
+   d'ambiance devient un paragraphe .hero-title à l'apparence identique. */
+.hero .hero-title{font-family:var(--font-display);font-weight:700;letter-spacing:-.02em;line-height:1.15;font-size:clamp(1.5rem,6.4vw,3.4rem);color:var(--cream);max-width:780px;margin:0 auto 1.2rem}
+.hero .hero-title span{display:block;white-space:nowrap}
+.hero .hero-title em{font-style:italic;font-weight:400;background:linear-gradient(120deg,var(--gold-light),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1.eyebrow{font-family:inherit;font-size:.8rem;font-weight:400;letter-spacing:.3em;line-height:inherit;color:var(--gold-light);max-width:700px;margin:0 0 1.4rem}

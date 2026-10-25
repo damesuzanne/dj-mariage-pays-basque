@@ -25,3 +25,10 @@
 .hero .hero-title span{display:block;white-space:nowrap}
 .hero .hero-title em{font-style:italic;font-weight:400;background:linear-gradient(120deg,var(--gold-light),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero h1.eyebrow{font-family:inherit;font-size:.8rem;font-weight:400;letter-spacing:.3em;line-height:inherit;color:var(--gold-light);max-width:700px;margin:0 0 1.4rem}
+
+/* Titres de section (25/10/26) : le surtitre doré porte le h2 avec les
+   mots-clés et la ville ; le grand titre en dessous est un h3. Le h2 garde
+   l'apparence du surtitre (les couleurs par section restent celles de .eyebrow). */
+h2.eyebrow{font-family:inherit;font-size:.78rem;font-weight:600;letter-spacing:.22em;line-height:inherit;margin-top:1em}
+.contact h2.eyebrow{margin-top:0}
+.dark h2.eyebrow{color:var(--gold)}

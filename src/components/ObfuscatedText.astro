@@ -8,6 +8,8 @@ interface Props {
 const { value, tag = 'span', class: className } = Astro.props;
 const Tag = tag;
 const encoded = Buffer.from(value, 'utf-8').toString('base64');
+// Numéro de téléphone : en clair dans le HTML (lisible sans JavaScript).
+const direct = /^[+\d][\d\s]{8,}$/.test(value);
 ---
 
-<Tag class={className} data-clink-text data-value={encoded}></Tag>
+{direct ? <Tag class={className}>{value}</Tag> : <Tag class={className} data-clink-text data-value={encoded}></Tag>}

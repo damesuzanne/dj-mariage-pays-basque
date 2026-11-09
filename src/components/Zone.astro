@@ -27,9 +27,28 @@ const en = langFromPath(Astro.url.pathname) === 'en';
       <li>Dax</li>
     </ul>
   </div>
+  <div class="container zone-map reveal">
+    <iframe
+      title={en ? 'Google map of the area covered' : "Carte Google de la zone d'intervention"}
+      src="https://www.google.com/maps?q=Bayonne%2C+Pays+Basque&z=9&output=embed"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      width="100%"
+      height="340"
+      allowfullscreen></iframe>
+  </div>
 </section>
 
 <style>
+  .zone-map {
+    margin-top: clamp(2rem, 4vw, 3rem);
+  }
+  .zone-map iframe {
+    display: block;
+    border: 0;
+    border-radius: 18px;
+    filter: grayscale(0.25);
+  }
   .zone {
     background: var(--night);
     color: var(--white);

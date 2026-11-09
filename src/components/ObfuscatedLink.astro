@@ -14,16 +14,18 @@ const { type, value, message, id, class: className, ariaLabel, target, rel } = A
 
 const raw = type === 'wa' && message ? `${value}|${message}` : value;
 const encoded = Buffer.from(raw, 'utf-8').toString('base64');
+// Le téléphone reste lisible sans JavaScript (audit SEO local, 09/11/26) ; e-mail et WhatsApp restent encodés.
+const direct = type === 'tel';
 ---
 
 <a
   id={id}
-  href="#"
+  href={direct ? `tel:${value}` : '#'}
   class={className}
   aria-label={ariaLabel}
   target={target}
   rel={rel}
-  data-clink
+  data-clink={direct ? undefined : ''}
   data-type={type}
   data-value={encoded}
 >
